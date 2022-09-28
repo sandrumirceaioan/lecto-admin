@@ -19,7 +19,7 @@
           "options": {
             "allowedCommonJsDependencies":[
             ],
-            "outputPath": "dist/maxypress-admin",
+            "outputPath": "dist/lecto-admin",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",

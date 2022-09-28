@@ -1,0 +1,110 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use "@angular/material" as mat;
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// import oth custom theme
+@import "./lecto/themes/theme.scss";
+
+// include theme styles each component used
+@include mat.all-component-themes($lecto-theme);
+
+.text-primary {
+    color: mat.get-color-from-palette($primary);
+}
+
+.text-accent {
+    color: mat.get-color-from-palette($accent);
+}
+
+.text-warn {
+    color: mat.get-color-from-palette($warn);
+}
+
+.text-success {
+    color: mat.get-color-from-palette($success);
+}
+
+.text-dark {
+    color: mat.get-color-from-palette($dark);
+}
+
+.text-white {
+    color: mat.get-color-from-palette($white);
+}
+
+.text-gray {
+    color: #bebebe;
+}
+
+.background-primary {
+    background: mat.get-color-from-palette($primary);
+}
+
+.background-accent {
+    background: mat.get-color-from-palette($accent);
+}
+
+.background-warn {
+    background: mat.get-color-from-palette($warn);
+}
+
+.background-success {
+    background: mat.get-color-from-palette($success);
+}
+
+.background-white {
+    background: mat.get-color-from-palette($white);
+}
+
+.background-dark {
+    background: mat.get-color-from-palette($dark);
+}
+
+/* Here you can add other styles */
+
+.mat-list-single-selected-option,
+.mat-list-single-selected-option:hover,
+.mat-list-single-selected-option:focus {
+    background: mat.get-color-from-palette($primary) !important;
+    color: mat.get-color-from-palette($primary, A700-contrast) !important;
+}
+
+.mat-sidenav-container,
+.mat-sidenav-content {
+    transform: none !important;
+}
+
+.mat-button-toggle-checked {
+    background-color: mat.get-color-from-palette($accent);
+    color: mat.get-color-from-palette($accent, default-contrast) !important;
+}
+
+.mat-drawer {
+    background-color: mat.get-color-from-palette($primary);
+}
+.mat-header-cell,
+.mat-sort-header-arrow {
+    color: mat.get-color-from-palette($dark, 200) !important;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.mat-tab-label-content {
+    color: mat.get-color-from-palette($dark, 300) !important;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+.mat-cell {
+    color: mat.get-color-from-palette($dark, 300) !important;
+}
+
+.mat-step-header {
+    margin-bottom: 20px !important;
+    background-color: #e0e0e0 !important;
+}

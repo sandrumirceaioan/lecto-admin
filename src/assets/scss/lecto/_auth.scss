@@ -1,0 +1,36 @@
+.auth-container {
+    background: #f2f2f2;
+    min-height: 100vh;
+    height: 100%;
+    width: 100%;
+
+    .auth-card {
+        width: 400px;
+    }
+    
+    .auth-btn {
+        width: 100%;
+    }
+    
+    .auth-options {
+        width: 400px;
+        background: none;
+        padding: 10px 0;
+        margin: 0px;
+    }
+
+    .auth-options a,
+    .auth-options span {
+        font-size: 15px;
+        text-decoration: none;
+    }
+    
+    .auth-info span {
+        font-size: 16px;
+    }
+    
+    .app-info-icon {
+        float: left;
+        font-size: 25px;
+    }
+}

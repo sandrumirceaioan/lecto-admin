@@ -1,0 +1,54 @@
+<div class="content" flexLayout="column">
+
+  <form [formGroup]="userForm">
+    <mat-card fxFlex="50" fxFlex.lt-sm="100">
+      <section fxLayout="column">
+        <mat-form-field appearance="fill" class="mt-10 mb-5">
+          <mat-label>Nume</mat-label>
+          <input matInput formControlName="lastName">
+          <mat-error *ngIf="userForm.get('firstName').hasError('required')">Numele este necesar
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="mb-5">
+          <mat-label>Prenume</mat-label>
+          <input matInput formControlName="firstName">
+          <mat-error *ngIf="userForm.get('lastName').hasError('required')">Prenumele este necesar
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="mb-5">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email">
+          <mat-error *ngIf="userForm.get('email').hasError('required')">Email-ul este necesar
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="mb-5">
+          <mat-label>Rol</mat-label>
+          <mat-select formControlName="role">
+            <mat-option value="user">Utilizator</mat-option>
+            <mat-option value="admin">Administrator</mat-option>
+          </mat-select>
+          <mat-error *ngIf="userForm.get('role').hasError('required')">Rolul este necesar</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="mb-5">
+          <mat-label>Status</mat-label>
+          <mat-select formControlName="status">
+            <mat-option [value]="true">Activ</mat-option>
+            <mat-option [value]="false">Inactiv</mat-option>
+          </mat-select>
+          <mat-error *ngIf="userForm.get('status').hasError('required')">Statusul este necesar</mat-error>
+        </mat-form-field>
+      </section>
+
+      <section fxLayout="row" fxLayoutAlign="end center" fxLayoutAlign.lt-sm="center center">
+        <button mat-flat-button color="accent" [disabled]="!userForm.valid" class="create-contract-btn p-10"
+          (click)="updateCategory()">
+          Salveaza
+        </button>
+      </section>
+    </mat-card>
+  </form>
+</div>

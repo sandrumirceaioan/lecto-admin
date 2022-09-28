@@ -1,0 +1,39 @@
+<div class="admin-container" [class.example-is-mobile]="mobileQuery.matches" fxLayout="column">
+    <app-navbar class="navbar mat-elevation-z3" [sidenav]="snav" [mobile]="mobileQuery.matches"></app-navbar>
+
+    <mat-sidenav-container fxFlex>
+        <mat-sidenav class="sidenav text-white" #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
+            [fixedInViewport]="mobileQuery.matches" fixedTopGap="60" [opened]="!mobileQuery.matches">
+            <perfect-scrollbar>
+                <mat-nav-list class="nav-list" fxLayout="column" fxLayoutAlign="start">
+                    <a mat-flat-button class="nav-button background-dark" *ngFor="let menuItem of menuItems" matLine
+                        routerLinkActive="active" [routerLink]="[menuItem.path]"
+                        (click)="mobileQuery.matches && snav.toggle()" fxLayout="row">
+                        <mat-icon class="text-white mr-10" fxFlex>{{menuItem.icon}}</mat-icon>
+                        <div class="nav-text" fxFlex>{{ menuItem.title }}</div>
+                    </a>
+                </mat-nav-list>
+            </perfect-scrollbar>
+        </mat-sidenav>
+
+        <mat-sidenav-content class="background-white">
+
+            <div class="spinner-container" *ngIf="loading$ | async">
+                <mat-spinner></mat-spinner>
+            </div>
+
+            <mat-toolbar class="head" color="accent">
+                <h3 *ngIf="currentRoute">{{currentRoute}}</h3>
+                <span fxFlex></span>
+
+                <button mat-button color="white" (click)="back()">
+                    <mat-icon>arrow_left</mat-icon> inapoi
+                </button>
+            </mat-toolbar>
+
+            <router-outlet></router-outlet>
+            
+        </mat-sidenav-content>
+
+    </mat-sidenav-container>
+</div>

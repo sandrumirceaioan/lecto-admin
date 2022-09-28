@@ -1,0 +1,56 @@
+.table-header {
+    display: flex;
+    justify-content: space-between;
+
+    .header {
+        display: flex;
+        align-items: center;
+        height: 100px;
+    }
+}
+
+.table-container {
+    position: relative;
+
+    table {
+        width: 100%;
+
+        .no-data-container {
+            .no-data-cell {
+                text-align: center;
+            }
+            .no-data-cell > span {
+                display: block;
+                margin-top: 4px;
+            }
+            .no-data-cell > span.retry {
+                display: block;
+                color: #00ff00;
+                cursor: pointer;
+            }
+        }
+
+        .dc.actions {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .clickable {
+            cursor: pointer;
+        }
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .content {
+     .table-container {
+       position: relative;
+       height: 100%;
+       width: 100%;
+       overflow: auto;
+       table {
+         width: 1200px;
+       }
+     }
+    }
+   }

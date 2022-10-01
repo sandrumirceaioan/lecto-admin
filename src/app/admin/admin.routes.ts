@@ -19,6 +19,10 @@ export const AdminRoutes: Routes = [
                 loadChildren: () => import('./discounts/discounts.routes').then(m => m.DiscountsRoutes),
             },
             {
+                path: 'locations',
+                loadChildren: () => import('./locations/locations.routes').then(m => m.LocationsRoutes),
+            },
+            {
                 path: '**',
                 redirectTo: '/admin/users'
             }

@@ -81,7 +81,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     OverlayModule,
     DragDropModule,
     ClipboardModule,
-    MatSnackBarModule
+    MatSnackBarModule,
   ]
 })
 export class MaterialModule { }

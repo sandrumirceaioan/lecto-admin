@@ -1,18 +1,18 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { merge, Subject, Subscription, tap } from 'rxjs';
-import { MaterialModule } from '../../shared/modules/material.module';
+import { MaterialModule } from 'src/app/shared/modules/material.module';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { Location } from '../../shared/models/location.model';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { DiscountsService } from './discounts.service';
-import { Discount } from '../../shared/models/discount.model';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { merge, Subject, Subscription, tap } from 'rxjs';
+import { LocationsService } from './locations.service';
 
 @Component({
-  selector: 'app-discounts',
+  selector: 'app-locations',
   standalone: true,
   imports: [
     CommonModule,
@@ -21,41 +21,41 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     RouterModule,
     FlexLayoutModule
   ],
-  templateUrl: './discounts.component.html',
-  styleUrls: ['./discounts.component.scss']
+  templateUrl: './locations.component.html',
+  styleUrls: ['./locations.component.scss']
 })
-export class DiscountsComponent implements OnInit {
+export class LocationsComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
 
-  displayedColumns: string[] = ['category', 'details', 'status', 'createdAt', 'createdBy', 'actions'];
-  public dataSource: MatTableDataSource<Discount>;
-  public discountsTotal: number;
-  public noData: Discount[] = [<Discount>{}];
+  displayedColumns: string[] = ['imagine', 'locatie', 'oras', 'status', 'createdAt', 'createdBy', 'actions'];
+  public dataSource: MatTableDataSource<Location>;
+  public locationsTotal: number;
+  public noData: Location[] = [<Location>{}];
   public filterSubject = new Subject<string>();
-  public defaultSort: Sort = { active: 'name', direction: 'asc' };
+  public defaultSort: Sort = { active: 'locatie', direction: 'asc' };
 
   filter: string = '';
-  discountsSubcription: Subscription = new Subscription();
-  discountsSubjectSubcription: Subscription = new Subscription();
+  locationsSubcription: Subscription = new Subscription();
+  locationsSubjectSubcription: Subscription = new Subscription();
   totalSubcription: Subscription = new Subscription();
   paginatorSubscription: Subscription = new Subscription();
 
   constructor(
-    private readonly discountsService: DiscountsService,
+    private readonly locationsService: LocationsService,
   ) { }
 
   ngOnInit(): void {
-    this.discountsSubjectSubcription = this.discountsService.discountsSubject.subscribe(data => {
-        this.initializeData(data.discounts);
-        this.discountsTotal = data.total;
+    this.locationsSubjectSubcription = this.locationsService.locationsSubject.subscribe(data => {
+        this.initializeData(data.locations);
+        this.locationsTotal = data.total;
     });
   }
 
   public ngAfterViewInit(): void {
     this.paginator.pageIndex = 0;
     this.filter = '';
-    this.loadDiscounts();
+    this.loadLocations();
 
     let filter$ = this.filterSubject.pipe(
       tap((value: string) => {
@@ -66,11 +66,11 @@ export class DiscountsComponent implements OnInit {
 
     let sort$ = this.sort.sortChange.pipe(tap(() => this.paginator.pageIndex = 0));
     this.paginatorSubscription.add(merge(filter$, sort$, this.paginator.page).pipe(
-      tap(() => this.loadDiscounts())
+      tap(() => this.loadLocations())
     ).subscribe());
   }
 
-  private loadDiscounts(): void {
+  private loadLocations(): void {
     let payload = {
       sortDirection: this.sort.direction,
       sortField: this.sort.active,
@@ -79,16 +79,16 @@ export class DiscountsComponent implements OnInit {
       filter: this.filter.toLocaleLowerCase()
     };
 
-    this.discountsSubcription = this.discountsService.getDiscounts(payload).subscribe(discounts => this.initializeData(discounts));
+    this.locationsSubcription = this.locationsService.getLocations(payload).subscribe(locations => this.initializeData(locations));
   }
 
-  private initializeData(users: Discount[]): void {
-    this.dataSource = new MatTableDataSource(users.length ? users : this.noData);
+  private initializeData(locations: Location[]): void {
+    this.dataSource = new MatTableDataSource(locations.length ? locations : this.noData);
   }
 
   public ngOnDestroy(): void {
-    this.discountsSubcription.unsubscribe();
-    this.discountsSubjectSubcription.unsubscribe();
+    this.locationsSubcription.unsubscribe();
+    this.locationsSubjectSubcription.unsubscribe();
     this.paginatorSubscription.unsubscribe();
   }
 

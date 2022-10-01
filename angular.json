@@ -18,6 +18,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "allowedCommonJsDependencies":[
+              "froala-editor"
             ],
             "outputPath": "dist/lecto-admin",
             "index": "src/index.html",
@@ -35,7 +36,12 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/froala-editor/css/froala_editor.pkgd.min.css",
+              "node_modules/froala-editor/css/froala_style.min.css",
+              "node_modules/froala-editor/css/plugins/draggable.min.css",
+              "node_modules/froala-editor/css/plugins/image.min.css",
+              "node_modules/froala-editor/css/plugins/colors.min.css"
             ],
             "scripts": [
             ]

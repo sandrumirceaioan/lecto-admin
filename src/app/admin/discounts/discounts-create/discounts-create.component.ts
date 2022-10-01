@@ -28,11 +28,6 @@ export class DiscountsCreateComponent implements OnInit {
   discount: Discount;
   mode: 'create' | 'edit';
 
-
-  volumeDiscounts: FormGroup;
-  signupDiscounts: FormGroup;
-  fidelityDiscounts: FormGroup;
-
   constructor(
     private discountsService: DiscountsService,
     private route: ActivatedRoute,

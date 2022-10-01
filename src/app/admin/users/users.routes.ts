@@ -5,18 +5,18 @@ import { UserResolve } from "./user.resolve";
 export const UsersRoutes: Routes = [
     {
         path: '',
-        data: { title: 'Users' },
+        data: { title: 'Utilizatori' },
         loadComponent: () => import('./users.component').then((x) => x.UsersComponent),
-        title: 'Lectoform - Users'
+        title: 'Lectoform - Utilizatori'
     },
     {
         path: ':id',
-        data: { title: 'Edit User', roles: ['admin'] },
+        data: { title: 'Editeaza utilizator', roles: ['admin'] },
         canActivate: [RoleGuard],
         loadComponent: () => import('./users-edit/users-edit.component').then((x) => x.UsersEditComponent),
         resolve: {
             data: UserResolve
         },
-        title: 'Lectoform - Edit User'
+        title: 'Lectoform - Editeaza utilizator'
     },
 ];

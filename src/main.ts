@@ -16,6 +16,7 @@ import { MaterialModule } from './app/shared/modules/material.module';
 import { AlertModule } from '@full-fledged/alerts';
 import { UserResolve } from './app/admin/users/user.resolve';
 import { DiscountResolve } from './app/admin/discounts/discount.resolve';
+import { LocationResolve } from './app/admin/locations/location.resolve';
 
 if (environment.production) {
   enableProdMode();
@@ -30,6 +31,7 @@ bootstrapApplication(AppComponent, {
     RoleGuard,
     UserResolve,
     DiscountResolve,
+    LocationResolve,
     importProvidersFrom(
       BrowserModule,
       BrowserAnimationsModule,
@@ -37,7 +39,7 @@ bootstrapApplication(AppComponent, {
       HttpClientModule,
       FlexLayoutModule,
       MaterialModule,
-      AlertModule.forRoot({ maxMessages: 1, timeout: 5000, positionX: 'right', positionY: 'bottom' }),
+      AlertModule.forRoot({ maxMessages: 1, timeout: 5000, positionX: 'right', positionY: 'bottom' }), BrowserAnimationsModule,
     ),
   ]
 }).catch((err) => console.error(err));

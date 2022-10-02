@@ -14,8 +14,11 @@
 
                 <!-- location content -->
                 <textarea [froalaEditor]="froalaOptions" formControlName="descriere"></textarea>
-                <mat-error *ngIf="locationsForm.get('locatie').touched && locationsForm.get('descriere').hasError('required')"><small>Descrierea locatiei este
-                    necesara</small></mat-error>
+                <mat-error
+                    *ngIf="locationsForm.get('locatie').touched && locationsForm.get('descriere').hasError('required')">
+                    <small>Descrierea locatiei este
+                        necesara</small>
+                </mat-error>
 
                 <!-- location city -->
                 <mat-form-field appearance="fill">
@@ -81,7 +84,8 @@
                             <ul fxLayout="column">
                                 <li *ngFor="let selected of selectedFiles; let i = index" fxLayout="row">
                                     <div class="preview">
-                                        <img [src]="selected.preview" [alt]="selected.name">
+                                        <img [src]="selected.preview" [alt]="selected.name"
+                                            (click)="openDialog(selected)">
                                     </div>
                                     <div class="details" fxFlex>
                                         <span class="file-name">{{selected.name}}</span><br />
@@ -101,10 +105,9 @@
                                     </div>
                                 </li>
                             </ul>
+
                         </div>
-
                     </div>
-
                 </div>
             </section>
         </mat-card>

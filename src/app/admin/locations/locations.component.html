@@ -24,14 +24,19 @@
       <ng-container matColumnDef="imagine">
         <th mat-header-cell class="dc-label" *matHeaderCellDef></th>
         <td mat-cell class="dc-content" *matCellDef="let element">
-          <img [src]="element.imagine && element.imagine.small ? element.imagine.small : './assets/images/placeholder.png'" />
+          <a (click)="openDialog(element)">
+            <img
+              [src]="element.imagine && element.imagine.small ? element.imagine.small : './assets/images/placeholder.png'" />
+          </a>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="locatie">
         <th mat-header-cell class="dc-label" *matHeaderCellDef mat-sort-header>Locatie</th>
         <td mat-cell class="dc-content" *matCellDef="let element">
+          <a mat-button [routerLink]="'/admin/locations/' + element._id">
           {{element.locatie}}
+          </a>
         </td>
       </ng-container>
 

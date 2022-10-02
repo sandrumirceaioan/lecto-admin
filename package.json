@@ -22,9 +22,9 @@
     "@angular/platform-browser-dynamic": "^14.1.0",
     "@angular/router": "^14.1.0",
     "@full-fledged/alerts": "^14.0.0",
+    "angular-froala-wysiwyg": "^4.0.14",
     "express": "^4.18.1",
     "ngx-perfect-scrollbar": "^10.1.0",
-    "angular-froala-wysiwyg": "^4.0.14",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

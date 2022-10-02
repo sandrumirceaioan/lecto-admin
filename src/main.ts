@@ -39,7 +39,7 @@ bootstrapApplication(AppComponent, {
       HttpClientModule,
       FlexLayoutModule,
       MaterialModule,
-      AlertModule.forRoot({ maxMessages: 1, timeout: 5000, positionX: 'right', positionY: 'bottom' }), BrowserAnimationsModule,
+      AlertModule.forRoot({ maxMessages: 1, timeout: 5000, positionX: 'right', positionY: 'bottom' }),
     ),
   ]
 }).catch((err) => console.error(err));

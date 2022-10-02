@@ -33,7 +33,6 @@
                 border-radius: 5px;
 
                 .preview {
-
                     img {
                         width: 40px;
                         height: 40px;
@@ -47,7 +46,7 @@
                 }
 
                 .details {
-                    padding-left:10px;
+                    padding-left: 10px;
                     line-height: 20px;
 
                     .file-name {
@@ -58,7 +57,6 @@
                     .file-size {
                         color: #757575;
                     }
-
                 }
 
                 .actions {
@@ -72,8 +70,6 @@
         }
     }
 }
-
-
 
 /* Shake animation */
 @keyframes shake {
@@ -121,3 +117,4 @@
         transform: translate(1px, -2px) rotate(-1deg);
     }
 }
+

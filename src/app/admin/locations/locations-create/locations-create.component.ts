@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from 'src/app/shared/modules/material.module';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -11,7 +11,8 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { DndDirective } from '../../../shared/directives/dnd.directive';
 import { EditorModule } from '../../../shared/modules/editor.module';
 import { environment } from '../../../../environments/environment';
-
+import { MatDialog } from '@angular/material/dialog';
+import { ImageDialogComponent } from '../../../shared/components/dialogs/image-dialog/image-dialog.component';
 
 @Component({
   selector: 'app-locations-create',
@@ -26,9 +27,12 @@ import { environment } from '../../../../environments/environment';
     EditorModule,
   ],
   templateUrl: './locations-create.component.html',
-  styleUrls: ['./locations-create.component.scss']
+  styleUrls: ['./locations-create.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LocationsCreateComponent implements OnInit, OnDestroy {
+  @ViewChild('dialogRef') dialogRef: TemplateRef<any>;
+
   apiPath: string = environment.BACKEND_URL;
 
   saveLocationSubscription: Subscription = new Subscription();
@@ -43,7 +47,8 @@ export class LocationsCreateComponent implements OnInit, OnDestroy {
   selectedFiles: {
     name: string;
     file: File;
-    preview: any;
+    preview?: any;
+    view?: any;
     main?: boolean;
   }[] = [];
 
@@ -82,6 +87,7 @@ export class LocationsCreateComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -105,6 +111,7 @@ export class LocationsCreateComponent implements OnInit, OnDestroy {
           name: item.name,
           file: item.file,
           preview: item.small,
+          view: item.original,
           main: item.main
         }
       })
@@ -129,6 +136,22 @@ export class LocationsCreateComponent implements OnInit, OnDestroy {
           )
         )
       );
+
+  }
+
+  // view image
+  openDialog(selected: any): void {
+      this.dialog.open(ImageDialogComponent, {
+      data: {
+        url: selected.view,
+        name: selected.name
+      },
+      height: 'auto',
+      maxHeight: '90vh',
+      width: 'auto',
+      maxWidth: '90%',
+      autoFocus: false
+    });
   }
 
   // on new files selected
@@ -178,7 +201,8 @@ export class LocationsCreateComponent implements OnInit, OnDestroy {
         this.selectedFiles.push({
           name: file.name,
           file: file,
-          preview: filePreview
+          preview: filePreview,
+          view: filePreview
         });
       }
 

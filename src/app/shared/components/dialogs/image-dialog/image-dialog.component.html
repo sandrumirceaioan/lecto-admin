@@ -1,0 +1,11 @@
+<div class="dialog-image" fxLayout="column">
+    <div class="dialog-image-header" fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+        <span class="text-success pl-15">{{data.name}}</span>
+        <button mat-icon-button class="mr-10" color="default" [mat-dialog-close]>
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <div class="dialog-image-content" fxFlex fxLayout="column">
+        <img [src]="data.url">
+    </div>
+</div>

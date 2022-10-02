@@ -10,6 +10,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { merge, Subject, Subscription, tap } from 'rxjs';
 import { LocationsService } from './locations.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ImageDialogComponent } from '../../shared/components/dialogs/image-dialog/image-dialog.component';
 
 @Component({
   selector: 'app-locations',
@@ -43,6 +45,7 @@ export class LocationsComponent implements OnInit {
 
   constructor(
     private readonly locationsService: LocationsService,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -85,6 +88,21 @@ export class LocationsComponent implements OnInit {
   private initializeData(locations: Location[]): void {
     this.dataSource = new MatTableDataSource(locations.length ? locations : this.noData);
   }
+
+  // view image
+  openDialog(element: any): void {
+    this.dialog.open(ImageDialogComponent, {
+    data: {
+      url: element.imagine.original || element.imagine.small,
+      name: element.locatie
+    },
+    height: 'auto',
+    maxHeight: '90vh',
+    width: 'auto',
+    maxWidth: '90%',
+    autoFocus: false
+  });
+}
 
   public ngOnDestroy(): void {
     this.locationsSubcription.unsubscribe();

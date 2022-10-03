@@ -10,11 +10,11 @@ export const LocationsRoutes: Routes = [
         title: 'Lectoform - Locatii'
     },
     {
-        path: 'create',
+        path: 'adauga',
         data: { title: 'Adauga Locatie', roles: ['admin'] },
         canActivate: [RoleGuard],
         loadComponent: () => import('./locations-create/locations-create.component').then((x) => x.LocationsCreateComponent),
-        title: 'Lectoform - Create Location',
+        title: 'Lectoform - Adauga Locatie',
     },
     {
         path: ':id',

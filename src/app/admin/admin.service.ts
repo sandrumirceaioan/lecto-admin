@@ -14,9 +14,10 @@ export class AdminService {
         // { path: 'categories', title: 'Categories', icon: 'article', allow: [UserRoles.admin, UserRoles.user] },
         // { path: 'articles', title: 'Articles', icon: 'wysiwyg', allow: [UserRoles.admin, UserRoles.user] },
         // { path: 'widgets', title: 'Widgets', icon: 'widgets', allow: [UserRoles.admin, UserRoles.user] },
-        { path: 'users', title: 'Utilizatori', icon: 'people', allow: [UserRoles.admin] },
-        { path: 'locations', title: 'Locatii', icon: 'place', allow: [UserRoles.admin] },
-        { path: 'discounts', title: 'Discounturi', icon: 'money_off', allow: [UserRoles.admin] },
+        { path: 'utilizatori', title: 'Utilizatori', icon: 'people', allow: [UserRoles.admin] },
+        { path: 'profesori', title: 'Profesori', icon: 'school', allow: [UserRoles.admin] },
+        { path: 'locatii', title: 'Locatii', icon: 'place', allow: [UserRoles.admin] },
+        { path: 'discounturi', title: 'Discounturi', icon: 'money_off', allow: [UserRoles.admin] },
     ];
 
     constructor() { }

@@ -1,0 +1,44 @@
+.preview-container {
+    height: 100%;
+    padding: 10% 0;
+
+    .preview-card {
+        width:250px;
+        
+
+        .preview-header {
+            padding:10px 10px 25px 10px;
+            box-sizing: border-box;
+            width: 250px;
+            margin-bottom: 15px;
+            border-bottom: 3px dashed #bebebe;
+
+            img {
+                width: 200px;
+                height: 200px;
+                display: block;
+                margin: 0 auto;
+                border-radius: 250px;
+            }
+        }
+
+        .preview-title {
+            margin-bottom: 0px !important;
+            padding: 10px;
+            border-bottom: 3px dashed #bebebe;
+        }
+
+        .preview-content {
+            max-height:150px;
+            overflow-x: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 0px !important;
+            padding: 20px 10px;
+            border-bottom: 3px dashed #bebebe;
+        }
+
+        .preview-footer {
+            padding:  20px 15px;
+        }
+    }
+}

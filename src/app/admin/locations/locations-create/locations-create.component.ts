@@ -4,7 +4,7 @@ import { MaterialModule } from 'src/app/shared/modules/material.module';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { debounceTime, distinctUntilChanged, filter, finalize, Observable, Subscription, switchMap, tap } from 'rxjs';
-import { Localitate, Location, LocationGroup } from '../../../shared/models/location.model';
+import { Location, LocationGroup } from '../../../shared/models/location.model';
 import { LocationsService } from '../locations.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
@@ -28,11 +28,8 @@ import { ImageDialogComponent } from '../../../shared/components/dialogs/image-d
   ],
   templateUrl: './locations-create.component.html',
   styleUrls: ['./locations-create.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LocationsCreateComponent implements OnInit, OnDestroy {
-  @ViewChild('dialogRef') dialogRef: TemplateRef<any>;
-
   apiPath: string = environment.BACKEND_URL;
 
   saveLocationSubscription: Subscription = new Subscription();
@@ -160,7 +157,6 @@ export class LocationsCreateComponent implements OnInit, OnDestroy {
     if (!files || !files.length) return;
 
     await this.setSelectedFiles(files);
-    console.log(this.selectedFiles);
   }
 
   // on new files dropped
@@ -267,7 +263,7 @@ export class LocationsCreateComponent implements OnInit, OnDestroy {
 
 
     this.saveLocationSubscription = this.locationsService[method](...params).subscribe(() => {
-      if (this.mode === 'create') this.router.navigate(['/admin/locations']);
+      if (this.mode === 'create') this.router.navigate(['/admin/locatii']);
     });
   }
 

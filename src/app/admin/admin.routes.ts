@@ -7,24 +7,28 @@ export const AdminRoutes: Routes = [
         children: [
             {
                 path: '',
-                redirectTo: 'users',
+                redirectTo: 'utilizatori',
                 pathMatch: 'full',
             },
             {
-                path: 'users',
+                path: 'utilizatori',
                 loadChildren: () => import('./users/users.routes').then(m => m.UsersRoutes),
             },
             {
-                path: 'discounts',
+                path: 'profesori',
+                loadChildren: () => import('./teachers/teachers.routes').then(m => m.TeachersRoutes),
+            },
+            {
+                path: 'discounturi',
                 loadChildren: () => import('./discounts/discounts.routes').then(m => m.DiscountsRoutes),
             },
             {
-                path: 'locations',
+                path: 'locatii',
                 loadChildren: () => import('./locations/locations.routes').then(m => m.LocationsRoutes),
             },
             {
                 path: '**',
-                redirectTo: '/admin/users'
+                redirectTo: '/admin/utilizatori'
             }
         ]
     },

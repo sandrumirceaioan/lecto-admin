@@ -84,7 +84,7 @@ export class LocationsService {
         return this.http.post(`${this.apiPath}/locations/create`, formData).pipe(
             map((result: any) => {
                 this.adminService.setLoading(false);
-                this.alertService.success('Created');
+                this.alertService.success('Locatie salvata');
                 return result;
             }),
             catchError((error) => {
@@ -144,7 +144,7 @@ export class LocationsService {
             return this.http.post(`${this.apiPath}/locations/update/${id}`, formData).pipe(
                 map((result: any) => {
                     this.adminService.setLoading(false);
-                    this.alertService.success('Updated');
+                    this.alertService.success('Locatie salvata');
                     return result;
                 }),
                 catchError((error) => {

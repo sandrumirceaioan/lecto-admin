@@ -56,7 +56,7 @@ export class UsersEditComponent implements OnInit, OnDestroy {
   updateCategory() {
     this.updateUserSubscription = this.usersService
       .updateUserById(this.user._id, this.userForm.value)
-      .subscribe(() => this.router.navigate(['/admin/users']));
+      .subscribe(() => this.router.navigate(['/admin/utilizatori']));
   }
 
   ngOnDestroy(): void {

@@ -7,15 +7,15 @@ import { AlertService } from '@full-fledged/alerts';
 import { catchError, map, Observable, throwError, Subject } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AdminService } from '../admin.service';
-import { Discount } from '../../shared/models/discount.model';
+import { Teacher } from '../../shared/models/teacher.model';
 
 @Injectable({
     providedIn: 'root',
 })
-export class DiscountsService {
+export class TeachersService {
     apiPath: string = environment.BACKEND_URL;
-    discounts: Discount[];
-    discountsSubject: Subject<{ discounts: Discount[], total: number }> = new Subject();
+    teachers: Teacher[];
+    teachersSubject: Subject<{ teachers: Teacher[], total: number }> = new Subject();
 
 
     constructor(
@@ -24,7 +24,7 @@ export class DiscountsService {
         private adminService: AdminService
     ) { }
 
-    getDiscounts(payload?: any): Observable<Discount[]> {
+    getTeachers(payload?: any): Observable<Teacher[]> {
         this.adminService.setLoading(true);
         let params = new HttpParams();
 
@@ -35,11 +35,11 @@ export class DiscountsService {
         if (payload.filter) params = params.append('search', payload.filter.toString());
 
 
-        return this.http.get(`${this.apiPath}/discounts/paginated`, { params }).pipe(
+        return this.http.get(`${this.apiPath}/teachers/paginated`, { params }).pipe(
             map((result: any) => {
                 this.adminService.setLoading(false);
-                this.discountsSubject.next(result);
-                return result.discounts;
+                this.teachersSubject.next(result);
+                return result.teachers;
             }),
             catchError((error) => {
                 this.adminService.setLoading(false);
@@ -49,10 +49,10 @@ export class DiscountsService {
         );
     }
 
-    getAllDiscounts(): Observable<Discount[]> {
-        return this.http.get(`${this.apiPath}/discounts`).pipe(
+    getAllTeachers(): Observable<Teacher[]> {
+        return this.http.get(`${this.apiPath}/teachers`).pipe(
             map((result: any) => {
-                this.discounts = result;
+                this.teachers = result;
                 return result;
             }),
             catchError((error) => {
@@ -62,12 +62,37 @@ export class DiscountsService {
         );
     }
 
-    createDiscount(data): Observable<Discount> {
+    getTeacherById(id): Observable<Teacher> {
+        return this.http.get(`${this.apiPath}/teachers/${id}`).pipe(
+            map((result: any) => {
+                return result;
+            }),
+            catchError((error) => {
+                this.alertService.danger(error.error.message);
+                return throwError(() => error.error);
+            })
+        );
+    }
+
+    createTeacher(teacher: Teacher): Observable<Teacher> {
         this.adminService.setLoading(true);
-        return this.http.post(`${this.apiPath}/discounts/create`, data).pipe(
+        let formData = new FormData();
+
+        if (teacher.nume) formData.append("nume", teacher.nume);
+        if (teacher.experienta) formData.append("experienta", teacher.experienta);
+        if (teacher.descriere) formData.append("descriere", teacher.descriere);
+        if (teacher.email) formData.append("email", teacher.email);
+        if (teacher.telefon) formData.append("telefon", teacher.telefon);
+
+        if (teacher.imagine && teacher.imagine.file) {
+            formData.append("imagine", JSON.stringify(teacher.imagine));
+            formData.append("file", teacher.imagine.file);
+        }
+
+        return this.http.post(`${this.apiPath}/teachers/create`, formData).pipe(
             map((result: any) => {
                 this.adminService.setLoading(false);
-                this.alertService.success('Discount salvat');
+                this.alertService.success('Profesor salvat');
                 return result;
             }),
             catchError((error) => {
@@ -78,24 +103,29 @@ export class DiscountsService {
         );
     }
 
-    getDiscountById(id): Observable<Discount> {
-        return this.http.get(`${this.apiPath}/discounts/${id}`).pipe(
-            map((result: any) => {
-                return result;
-            }),
-            catchError((error) => {
-                this.alertService.danger(error.error.message);
-                return throwError(() => error.error);
-            })
-        );
-    }
-
-    updateDiscountById(id, data): Observable<Discount> {
+    updateTeacherById(id, teacher): Observable<Teacher> {
         this.adminService.setLoading(true);
-        return this.http.put(`${this.apiPath}/discounts/${id}`, data).pipe(
+        let formData = new FormData();
+
+        if (teacher.nume) formData.append("nume", teacher.nume);
+        if (teacher.experienta) formData.append("experienta", teacher.experienta);
+        if (teacher.descriere) formData.append("descriere", teacher.descriere);
+        if (teacher.email) formData.append("email", teacher.email);
+        if (teacher.telefon) formData.append("telefon", teacher.telefon);
+
+        if (teacher.imagine) {
+            formData.append("imagine", JSON.stringify(teacher.imagine));
+
+            if (teacher.imagine.file && !teacher.imagine.small && !teacher.imagine.original) {
+                formData.append("file", teacher.imagine.file);
+            }
+        }
+
+        this.adminService.setLoading(true);
+        return this.http.put(`${this.apiPath}/teachers/${id}`, formData).pipe(
             map((result: any) => {
                 this.adminService.setLoading(false);
-                this.alertService.success('Discount salvat');
+                this.alertService.success('Profesor salvat');
                 return result;
             }),
             catchError((error) => {

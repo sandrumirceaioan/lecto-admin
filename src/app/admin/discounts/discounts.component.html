@@ -10,7 +10,7 @@
       </mat-form-field>
     </div>
     <div class="actions" fxLayoutAlign="end center">
-      <button class="mb-10" mat-flat-button color="primary" [routerLink]="'/admin/discounts/create'">
+      <button class="mb-10" mat-flat-button color="primary" [routerLink]="'/admin/discounturi/adauga'">
         <mat-icon class="mr-10">add</mat-icon>
         Adauga discount
       </button>
@@ -81,7 +81,7 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell class="dc-actions" *matHeaderCellDef>Actiuni</th>
         <td mat-cell class="dc-content" *matCellDef="let element">
-          <button mat-icon-button [routerLink]="'/admin/discounts/' + element._id">
+          <button mat-icon-button [routerLink]="'/admin/discounturi/' + element._id">
             <mat-icon color="accent">edit</mat-icon>
           </button>
         </td>

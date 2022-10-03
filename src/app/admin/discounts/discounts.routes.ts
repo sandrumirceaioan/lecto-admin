@@ -10,7 +10,7 @@ export const DiscountsRoutes: Routes = [
         title: 'Lectoform - Discounts'
     },
     {
-        path: 'create',
+        path: 'adauga',
         data: { title: 'Adauga Discount', roles: ['admin'] },
         canActivate: [RoleGuard],
         loadComponent: () => import('./discounts-create/discounts-create.component').then((x) => x.DiscountsCreateComponent),

@@ -57,56 +57,47 @@
 
         <mat-card fxFlex="50" fxFlex.lt-sm="100">
             <section fxLayout="column">
+                <h2 class="text-accent">Galerie Foto Locatie <small *ngIf="locationsForm.get('locatie').value"
+                        class="text-gray">({{locationsForm.get('locatie').value}})</small></h2>
+                <mat-divider class="mb-10"></mat-divider>
 
-                <div class="uploader-wrapper">
-                    <h2 class="text-accent">Galerie Foto Locatie <small *ngIf="locationsForm.get('locatie').value"
-                            class="text-gray">({{locationsForm.get('locatie').value}})</small></h2>
-                    <mat-divider class="mb-10"></mat-divider>
-
-
-                    <div class="files-upload" fxLayout="column">
-
-                        <label for="dzone" appDnd (fileDropped)="onDroppedFiles($event)">
-                            <div class="files-selector" fxFlex fxLayoutAlign="center center">
-                                <input id="dzone" class="input-selector" type="file" class="file-input"
-                                    (change)="onFileSelected($event)" #fileUpload multiple style="display: none;">
-                                <button mat-raised-button color="accent" (click)="fileUpload.click()">
-                                    <mat-icon>cloud_upload</mat-icon>
-                                    &nbsp;&nbsp;Adauga imagini
-                                </button>
-                            </div>
-                        </label>
-
-                        <div class="files-preview" fxFlex>
-                            <span *ngIf="!selectedFiles.length" class="text-gray">Nu ai selectat nici o
-                                imagine...</span>
-
-                            <ul fxLayout="column">
-                                <li *ngFor="let selected of selectedFiles; let i = index" fxLayout="row">
-                                    <div class="preview">
-                                        <img [src]="selected.preview" [alt]="selected.name"
-                                            (click)="openDialog(selected)">
-                                    </div>
-                                    <div class="details" fxFlex>
-                                        <span class="file-name">{{selected.name}}</span><br />
-                                        <span
-                                            class="file-size"><small>{{formatBytes(selected.file.size)}}</small></span>
-
-                                    </div>
-                                    <div class="actions" fxFlex fxLayoutAlign="end center">
-                                        <button mat-icon-button class="mr-10"
-                                            [ngClass]="selected.main ? 'text-accent' : 'text-gray'"
-                                            (click)="onFileMain(i)">
-                                            <mat-icon>favorite</mat-icon>
-                                        </button>
-                                        <button mat-icon-button color="default" (click)="onFileRemoved(i)">
-                                            <mat-icon>close</mat-icon>
-                                        </button>
-                                    </div>
-                                </li>
-                            </ul>
-
+                <div class="files-upload" fxLayout="column">
+                    <label for="dzone" appDnd (fileDropped)="onDroppedFiles($event)">
+                        <div class="files-selector" fxFlex fxLayoutAlign="center center">
+                            <input id="dzone" class="input-selector" type="file" class="file-input"
+                                (change)="onFileSelected($event)" #fileUpload multiple style="display: none;" onclick="value = null">
+                            <button mat-raised-button color="accent" (click)="fileUpload.click()" type="button">
+                                <mat-icon>cloud_upload</mat-icon>
+                                &nbsp;&nbsp;Adauga imagini
+                            </button>
                         </div>
+                    </label>
+
+                    <div class="files-preview" fxFlex>
+                        <span *ngIf="!selectedFiles.length" class="text-gray">Nu ai selectat nici o
+                            imagine...</span>
+
+                        <ul fxLayout="column">
+                            <li *ngFor="let selected of selectedFiles; let i = index" fxLayout="row">
+                                <div class="preview">
+                                    <img [src]="selected.preview" [alt]="selected.name" (click)="openDialog(selected)">
+                                </div>
+                                <div class="details" fxFlex>
+                                    <span class="file-name">{{selected.name}}</span><br />
+                                    <span class="file-size"><small>{{formatBytes(selected.file.size)}}</small></span>
+
+                                </div>
+                                <div class="actions" fxFlex fxLayoutAlign="end center">
+                                    <button mat-icon-button class="mr-10"
+                                        [ngClass]="selected.main ? 'text-accent' : 'text-gray'" (click)="onFileMain(i)">
+                                        <mat-icon>favorite</mat-icon>
+                                    </button>
+                                    <button mat-icon-button color="default" (click)="onFileRemoved(i)">
+                                        <mat-icon>close</mat-icon>
+                                    </button>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </section>

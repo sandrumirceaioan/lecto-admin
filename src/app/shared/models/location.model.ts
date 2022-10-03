@@ -1,12 +1,7 @@
 export interface OfertaLocatie {
-    nume: string; // 6 nopti demipensiune, 7 nopti demipensiune, 6 nopti pensiune completa, 7 nopti pensiune completa
-    pret: number; // 4090
-    status: boolean;
-}
-
-export interface Localitate {
-  nume?: string;
-  simplu?: string;
+  nume: string; // 6 nopti demipensiune, 7 nopti demipensiune, 6 nopti pensiune completa, 7 nopti pensiune completa
+  pret: number; // 4090
+  status: boolean;
 }
 export interface LocationGroup {
   nume: string;
@@ -21,24 +16,20 @@ export interface GalleryImage {
   main?: boolean;
 }
 
-export interface Localitate {
-    nume?: string;
-    simplu?: string;
-  }
-  export interface LocationGroup {
-    nume: string;
-    localitati: { nume?: string; simplu?: string; }[];
-  }
+export interface LocationGroup {
+  nume: string;
+  localitati: { nume?: string; simplu?: string; }[];
+}
 
 export interface Location {
-    _id?: string;
-    locatie: string;
-    imagine?: string;
-    galerie?: GalleryImage[];
-    descriere: string;
-    oras: string;
-    judet: string;
-    status: boolean;
-    createdBy?: string;
-    createdAt?: Date;
+  _id?: string;
+  locatie: string;
+  imagine?: string;
+  galerie?: GalleryImage[];
+  descriere: string;
+  oras: string;
+  judet: string;
+  status: boolean;
+  createdBy?: string;
+  createdAt?: Date;
 }

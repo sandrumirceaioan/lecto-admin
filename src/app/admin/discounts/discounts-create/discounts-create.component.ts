@@ -154,7 +154,7 @@ export class DiscountsCreateComponent implements OnInit {
   createDiscount() {
     let method = this.mode === 'create' ? 'createDiscount' : 'updateDiscountById';
     let params = this.mode === 'create' ? [this.discountForm.value] : [this.discount._id, this.discountForm.value];
-    this.saveDiscountSubscription = this.discountsService[method](...params).subscribe(() => this.router.navigate(['/admin/discounts']));
+    this.saveDiscountSubscription = this.discountsService[method](...params).subscribe(() => this.router.navigate(['/admin/discounturi']));
   }
 
   ngOnDestroy(): void {

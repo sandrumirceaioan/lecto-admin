@@ -10,7 +10,7 @@
       </mat-form-field>
     </div>
     <div class="actions" fxLayoutAlign="end center">
-      <button class="mb-10" mat-flat-button color="primary" [routerLink]="'/admin/locations/create'">
+      <button class="mb-10" mat-flat-button color="primary" [routerLink]="'/admin/locatii/adauga'">
         <mat-icon class="mr-10">add</mat-icon>
         Adauga locatie
       </button>
@@ -34,7 +34,7 @@
       <ng-container matColumnDef="locatie">
         <th mat-header-cell class="dc-label" *matHeaderCellDef mat-sort-header>Locatie</th>
         <td mat-cell class="dc-content" *matCellDef="let element">
-          <a mat-button [routerLink]="'/admin/locations/' + element._id">
+          <a mat-button [routerLink]="'/admin/locatii/' + element._id">
           {{element.locatie}}
           </a>
         </td>
@@ -72,7 +72,7 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell class="dc-actions" *matHeaderCellDef>Actiuni</th>
         <td mat-cell class="dc-content" *matCellDef="let element">
-          <button mat-icon-button [routerLink]="'/admin/locations/' + element._id">
+          <button mat-icon-button [routerLink]="'/admin/locatii/' + element._id">
             <mat-icon color="accent">edit</mat-icon>
           </button>
         </td>

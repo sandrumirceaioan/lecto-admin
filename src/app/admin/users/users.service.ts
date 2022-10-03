@@ -67,7 +67,7 @@ export class UsersService {
     return this.http.post(`${this.apiPath}/users/create`, data).pipe(
       map((result: any) => {
         this.adminService.setLoading(false);
-        this.alertService.success('Created');
+        this.alertService.success('Utilizator salvat');
         return result;
       }),
       catchError((error) => {
@@ -95,7 +95,7 @@ export class UsersService {
     return this.http.put(`${this.apiPath}/users/${id}`, data).pipe(
       map((result: any) => {
         this.adminService.setLoading(false);
-        this.alertService.success('Updated');
+        this.alertService.success('Utilizator salvat');
         return result;
       }),
       catchError((error) => {

@@ -6,9 +6,17 @@
 
                 <!-- location name -->
                 <mat-form-field appearance="fill" class="mt-10 mb-5">
-                    <mat-label>Nume</mat-label>
+                    <mat-label>Nume locatie</mat-label>
                     <input matInput formControlName="locatie" placeholder="ex. Hotel Aro Palace">
                     <mat-error *ngIf="locationsForm.get('locatie').hasError('required')">Numele locatiei este necesar
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- location url -->
+                <mat-form-field appearance="fill" class="mt-10 mb-5">
+                    <mat-label>URL locatie</mat-label>
+                    <input matInput formControlName="url" placeholder="ex. hotel-aro-palace">
+                    <mat-error *ngIf="locationsForm.get('url').hasError('required')">URL-ul locatiei este necesar
                     </mat-error>
                 </mat-form-field>
 
@@ -65,7 +73,8 @@
                     <label for="dzone" appDnd (fileDropped)="onDroppedFiles($event)">
                         <div class="files-selector" fxFlex fxLayoutAlign="center center">
                             <input id="dzone" class="input-selector" type="file" class="file-input"
-                                (change)="onFileSelected($event)" #fileUpload multiple style="display: none;" onclick="value = null">
+                                (change)="onFileSelected($event)" #fileUpload multiple style="display: none;"
+                                onclick="value = null">
                             <button mat-raised-button color="accent" (click)="fileUpload.click()" type="button">
                                 <mat-icon>cloud_upload</mat-icon>
                                 &nbsp;&nbsp;Adauga imagini

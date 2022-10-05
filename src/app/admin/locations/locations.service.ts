@@ -68,6 +68,7 @@ export class LocationsService {
         let formData = new FormData();
 
         if (location.locatie) formData.append("locatie", location.locatie);
+        if (location.url) formData.append("url", location.url);
         if (location.descriere) formData.append("descriere", location.descriere);
         if (location.oras) formData.append("oras", location.oras);
         if (location.judet) formData.append("judet", location.judet);
@@ -127,6 +128,7 @@ export class LocationsService {
             let formData = new FormData();
     
             if (location.locatie) formData.append("locatie", location.locatie);
+            if (location.url) formData.append("url", location.url);
             if (location.descriere) formData.append("descriere", location.descriere);
             if (location.oras) formData.append("oras", location.oras);
             if (location.judet) formData.append("judet", location.judet);

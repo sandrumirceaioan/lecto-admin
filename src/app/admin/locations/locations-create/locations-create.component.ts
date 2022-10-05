@@ -94,6 +94,7 @@ export class LocationsCreateComponent implements OnInit, OnDestroy {
     // form initialization
     this.locationsForm = this.fb.group({
       locatie: new FormControl(this.location && this.location.locatie ? this.location.locatie : null, [Validators.required]),
+      url: new FormControl(this.location && this.location.url ? this.location.url : null, [Validators.required]),
       descriere: new FormControl(this.location && this.location.descriere ? this.location.descriere : null, [Validators.required]),
       galerie: this.fb.array(this.location && this.location.galerie && this.location.galerie.length ? this.location.galerie.map(item => this.createImage(item)) : [], [Validators.required]),
       localitate: new FormControl(this.location && this.location.oras ? this.location.oras : null, [Validators.required]),
@@ -257,7 +258,6 @@ export class LocationsCreateComponent implements OnInit, OnDestroy {
   }
 
   createLocation() {
-    console.log(this.locationsForm.value);
     let method = this.mode === 'create' ? 'createLocation' : 'updateLocationById';
     let params = this.mode === 'create' ? [this.locationsForm.value] : [this.location._id, this.locationsForm.value];
 

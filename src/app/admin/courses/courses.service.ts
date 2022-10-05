@@ -7,15 +7,15 @@ import { AlertService } from '@full-fledged/alerts';
 import { catchError, map, Observable, throwError, Subject } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AdminService } from '../admin.service';
-import { Teacher } from '../../shared/models/teacher.model';
+import { Course } from '../../shared/models/course.model';
 
 @Injectable({
     providedIn: 'root',
 })
-export class TeachersService {
+export class CoursesService {
     apiPath: string = environment.BACKEND_URL;
-    teachers: Teacher[];
-    teachersSubject: Subject<{ teachers: Teacher[], total: number }> = new Subject();
+    courses: Course[];
+    coursesSubject: Subject<{ courses: Course[], total: number }> = new Subject();
 
 
     constructor(
@@ -24,7 +24,7 @@ export class TeachersService {
         private adminService: AdminService
     ) { }
 
-    getTeachers(payload?: any): Observable<Teacher[]> {
+    getCourses(payload?: any): Observable<Course[]> {
         this.adminService.setLoading(true);
         let params = new HttpParams();
 
@@ -35,11 +35,11 @@ export class TeachersService {
         if (payload.filter) params = params.append('search', payload.filter.toString());
 
 
-        return this.http.get(`${this.apiPath}/teachers/paginated`, { params }).pipe(
+        return this.http.get(`${this.apiPath}/courses/paginated`, { params }).pipe(
             map((result: any) => {
                 this.adminService.setLoading(false);
-                this.teachersSubject.next(result);
-                return result.teachers;
+                this.coursesSubject.next(result);
+                return result.courses;
             }),
             catchError((error) => {
                 this.adminService.setLoading(false);
@@ -49,10 +49,10 @@ export class TeachersService {
         );
     }
 
-    getAllTeachers(): Observable<Teacher[]> {
-        return this.http.get(`${this.apiPath}/teachers`).pipe(
+    getAllCourses(): Observable<Course[]> {
+        return this.http.get(`${this.apiPath}/courses`).pipe(
             map((result: any) => {
-                this.teachers = result;
+                this.courses = result;
                 return result;
             }),
             catchError((error) => {
@@ -62,8 +62,8 @@ export class TeachersService {
         );
     }
 
-    getTeacherById(id): Observable<Teacher> {
-        return this.http.get(`${this.apiPath}/teachers/${id}`).pipe(
+    getCourseById(id): Observable<Course> {
+        return this.http.get(`${this.apiPath}/courses/${id}`).pipe(
             map((result: any) => {
                 return result;
             }),
@@ -74,22 +74,20 @@ export class TeachersService {
         );
     }
 
-    createTeacher(teacher: Teacher): Observable<Teacher> {
+    createCourse(course: Course): Observable<Course> {
         this.adminService.setLoading(true);
         let formData = new FormData();
 
-        if (teacher.nume) formData.append("nume", teacher.nume);
-        if (teacher.experienta) formData.append("experienta", teacher.experienta);
-        if (teacher.descriere) formData.append("descriere", teacher.descriere);
-        if (teacher.email) formData.append("email", teacher.email);
-        if (teacher.telefon) formData.append("telefon", teacher.telefon);
+        if (course.titlu) formData.append("titlu", course.titlu);
+        if (course.url) formData.append("url", course.url);
+        if (course.descriere) formData.append("descriere", course.descriere);
+        if (course.certificare) formData.append("certificare", JSON.stringify(course.certificare));
+        if (course.pret) formData.append("pret", JSON.stringify(course.pret));
+        if (course.status) formData.append("course", JSON.stringify(course.status));
 
-        if (teacher.imagine && teacher.imagine.file) {
-            formData.append("imagine", JSON.stringify(teacher.imagine));
-            formData.append("file", teacher.imagine.file);
-        }
+        if (course.imagine && course.imagine.file) formData.append("file", course.imagine.file);
 
-        return this.http.post(`${this.apiPath}/teachers/create`, formData).pipe(
+        return this.http.post(`${this.apiPath}/courses/create`, formData).pipe(
             map((result: any) => {
                 this.adminService.setLoading(false);
                 this.alertService.success('Profesor salvat');
@@ -103,26 +101,27 @@ export class TeachersService {
         );
     }
 
-    updateTeacherById(id, teacher: Teacher): Observable<Teacher> {
+    updateCourseById(id, course: Course): Observable<Course> {
         this.adminService.setLoading(true);
         let formData = new FormData();
 
-        if (teacher.nume) formData.append("nume", teacher.nume);
-        if (teacher.experienta) formData.append("experienta", teacher.experienta);
-        if (teacher.descriere) formData.append("descriere", teacher.descriere);
-        if (teacher.email) formData.append("email", teacher.email);
-        if (teacher.telefon) formData.append("telefon", teacher.telefon);
+        if (course.titlu) formData.append("titlu", course.titlu);
+        if (course.url) formData.append("url", course.url);
+        if (course.descriere) formData.append("descriere", course.descriere);
+        if (course.certificare) formData.append("certificare", JSON.stringify(course.certificare));
+        if (course.pret) formData.append("pret", JSON.stringify(course.pret));
+        if (course.status) formData.append("course", JSON.stringify(course.status));
 
-        if (teacher.imagine) {
-            formData.append("imagine", JSON.stringify(teacher.imagine));
+        if (course.imagine) {
+            formData.append("imagine", JSON.stringify(course.imagine));
 
-            if (teacher.imagine.file && !teacher.imagine.small && !teacher.imagine.original) {
-                formData.append("file", teacher.imagine.file);
+            if (course.imagine.file && !course.imagine.small && !course.imagine.original) {
+                formData.append("file", course.imagine.file);
             }
         }
 
         this.adminService.setLoading(true);
-        return this.http.put(`${this.apiPath}/teachers/${id}`, formData).pipe(
+        return this.http.put(`${this.apiPath}/courses/${id}`, formData).pipe(
             map((result: any) => {
                 this.adminService.setLoading(false);
                 this.alertService.success('Profesor salvat');

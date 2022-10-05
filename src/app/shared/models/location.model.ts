@@ -24,6 +24,7 @@ export interface LocationGroup {
 export interface Location {
   _id?: string;
   locatie: string;
+  url: string;
   imagine?: string;
   galerie?: GalleryImage[];
   descriere: string;

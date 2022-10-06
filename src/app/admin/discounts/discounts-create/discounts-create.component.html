@@ -34,9 +34,11 @@
             </section>
 
             <section fxLayout="row" fxLayoutAlign="end center" fxLayoutAlign.lt-sm="center center">
-                <button mat-flat-button color="accent" [disabled]="!discountForm.valid" class="create-contract-btn p-10"
-                    (click)="createDiscount()">
-                    Salveaza
+                <button mat-flat-button color="accent" [disabled]="!discountForm.valid || (loading$ | async)"
+                    class="save-button create-contract-btn p-10" (click)="createDiscount()" fxLayout="row"
+                    fxLayoutAlign="center center" fxFill>
+                    <mat-spinner *ngIf="loading$ | async" class="text-white" diameter="20"></mat-spinner>
+                    <span *ngIf="!(loading$ | async)">Salveaza</span>
                 </button>
             </section>
         </mat-card>
@@ -169,11 +171,13 @@
                                     <mat-form-field appearance="fill" fxFlex.gt-sm="20">
                                         <mat-label>Numar de Participari</mat-label>
                                         <input matInput type="number" formControlName="participare" color="warn">
-                                        <mat-error *ngIf="control.get('participare').hasError('required')">Numar de participari necesar</mat-error>
+                                        <mat-error *ngIf="control.get('participare').hasError('required')">Numar de
+                                            participari necesar</mat-error>
                                     </mat-form-field>
 
                                     <div class="checkbox-container" fxLayoutAlign="center center" fxFlex.gt-sm="40">
-                                        <mat-checkbox formControlName="consecutiva">Participari Consecutive</mat-checkbox>
+                                        <mat-checkbox formControlName="consecutiva">Participari Consecutive
+                                        </mat-checkbox>
                                     </div>
 
                                     <mat-form-field appearance="fill" class="mb-5" fxFlex.gt-sm="20">

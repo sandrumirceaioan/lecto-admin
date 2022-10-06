@@ -7,11 +7,12 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { merge, Subject, Subscription, tap } from 'rxjs';
+import { debounceTime, merge, Observable, Subject, Subscription, tap } from 'rxjs';
 import { TeachersService } from './teachers.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ImageDialogComponent } from '../../shared/components/dialogs/image-dialog/image-dialog.component';
 import { Teacher } from '../../shared/models/teacher.model';
+import { AdminService } from '../admin.service';
 
 @Component({
   selector: 'app-teachers',
@@ -29,6 +30,8 @@ import { Teacher } from '../../shared/models/teacher.model';
 export class TeachersComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  
+  loading$: Observable<boolean>;
 
   displayedColumns: string[] = ['imagine', 'nume', 'experienta', 'email', 'createdAt', 'createdBy', 'actions'];
   public dataSource: MatTableDataSource<Teacher>;
@@ -45,10 +48,12 @@ export class TeachersComponent implements OnInit {
 
   constructor(
     private readonly teachersService: TeachersService,
+    private adminService: AdminService,
     public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
+    this.loading$ = this.adminService.loading$;
     this.teachersSubjectSubcription = this.teachersService.teachersSubject.subscribe(data => {
         this.initializeData(data.teachers);
         this.teachersTotal = data.total;
@@ -61,6 +66,7 @@ export class TeachersComponent implements OnInit {
     this.loadTeachers();
 
     let filter$ = this.filterSubject.pipe(
+      debounceTime(500),
       tap((value: string) => {
         this.paginator.pageIndex = 0;
         this.filter = value;

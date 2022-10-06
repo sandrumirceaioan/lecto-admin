@@ -5,7 +5,7 @@ import { catchError, map } from 'rxjs/operators';
 import { CoursesService } from './courses.service';
 
 @Injectable()
-export class CoursesResolve implements Resolve<any> {
+export class CourseResolve implements Resolve<any> {
     constructor(
         private coursesService: CoursesService,
     ) { }

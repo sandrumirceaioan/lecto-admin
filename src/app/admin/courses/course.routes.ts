@@ -1,6 +1,6 @@
 import { Routes } from "@angular/router";
 import { RoleGuard } from "src/app/shared/guards/role.guard";
-//import { TeacherResolve } from "./teacher.resolve";
+import { CourseResolve } from "./course.resolve";
 
 export const CoursesRoutes: Routes = [
     {
@@ -21,9 +21,9 @@ export const CoursesRoutes: Routes = [
         data: { title: 'Editeaza Curs', roles: ['admin'] },
         canActivate: [RoleGuard],
         loadComponent: () => import('./courses-create/courses-create.component').then((x) => x.CoursesCreateComponent),
-        // resolve: {
-        //     data: TeacherResolve
-        // },
+        resolve: {
+            data: CourseResolve
+        },
         title: 'Lectoform - Editeaza Curs'
     },
 ];

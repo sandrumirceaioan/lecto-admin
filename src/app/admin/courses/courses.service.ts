@@ -83,7 +83,7 @@ export class CoursesService {
         if (course.descriere) formData.append("descriere", course.descriere);
         if (course.certificare) formData.append("certificare", JSON.stringify(course.certificare));
         if (course.pret) formData.append("pret", JSON.stringify(course.pret));
-        if (course.status) formData.append("course", JSON.stringify(course.status));
+        if (course.status) formData.append("status", JSON.stringify(course.status));
 
         if (course.imagine && course.imagine.file) formData.append("file", course.imagine.file);
 
@@ -110,7 +110,7 @@ export class CoursesService {
         if (course.descriere) formData.append("descriere", course.descriere);
         if (course.certificare) formData.append("certificare", JSON.stringify(course.certificare));
         if (course.pret) formData.append("pret", JSON.stringify(course.pret));
-        if (course.status) formData.append("course", JSON.stringify(course.status));
+        if (course.status) formData.append("status", JSON.stringify(course.status));
 
         if (course.imagine) {
             formData.append("imagine", JSON.stringify(course.imagine));

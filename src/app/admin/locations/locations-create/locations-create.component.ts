@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from 'src/app/shared/modules/material.module';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -13,6 +13,7 @@ import { EditorModule } from '../../../shared/modules/editor.module';
 import { environment } from '../../../../environments/environment';
 import { MatDialog } from '@angular/material/dialog';
 import { ImageDialogComponent } from '../../../shared/components/dialogs/image-dialog/image-dialog.component';
+import { AdminService } from '../../admin.service';
 
 @Component({
   selector: 'app-locations-create',
@@ -74,13 +75,16 @@ export class LocationsCreateComponent implements OnInit, OnDestroy {
       H1: 'Heading 1',
       H2: 'Heading 2'
     },
-    toolbarButtons: ['paragraphFormat', 'fontSize', 'fontFamily', 'textColor', 'backgroundColor', 'bold', 'italic', 'underline', 'undo', 'redo', 'align', 'indent', 'outdent', 'formatUL', 'lineHeight', 'insertLink', 'insertImage', 'html'],
-    pluginsEnabled: ['paragraphFormat', 'fontSize', 'fontFamily', 'align', 'codeBeautifier', 'codeView', 'draggable', 'image', 'imageManager', 'inlineClass', 'lineBreaker', 'lineHeight', 'link', 'colors'],
+    toolbarButtons: ['paragraphFormat', 'fontSize', 'fontFamily', 'textColor', 'backgroundColor', 'bold', 'italic', 'underline', 'undo', 'redo', 'align', 'indent', 'outdent', 'formatUL', 'lineHeight', 'insertLink', 'insertImage', 'html', 'fullscreen'],
+    pluginsEnabled: ['paragraphFormat', 'fontSize', 'fontFamily', 'align', 'codeBeautifier', 'codeView', 'draggable', 'image', 'imageManager', 'inlineClass', 'lineBreaker', 'lineHeight', 'link', 'colors', 'fullscreen'],
     attribution: false
   };
 
+  loading$: Observable<boolean>;
+
   constructor(
     private locationsService: LocationsService,
+    private adminService: AdminService,
     private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,
@@ -88,6 +92,7 @@ export class LocationsCreateComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.loading$ = this.adminService.loading$;
     this.location = this.route.snapshot.data['data'] ? this.route.snapshot.data['data'].location : null;
     this.mode = !this.location ? 'create' : 'edit';
 

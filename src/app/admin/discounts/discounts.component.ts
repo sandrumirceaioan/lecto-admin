@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { merge, Subject, Subscription, tap } from 'rxjs';
+import { debounceTime, merge, Observable, Subject, Subscription, tap } from 'rxjs';
 import { MaterialModule } from '../../shared/modules/material.module';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -10,6 +10,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { DiscountsService } from './discounts.service';
 import { Discount } from '../../shared/models/discount.model';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { AdminService } from '../admin.service';
 
 @Component({
   selector: 'app-discounts',
@@ -28,6 +29,8 @@ export class DiscountsComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
 
+  loading$: Observable<boolean>;
+
   displayedColumns: string[] = ['category', 'details', 'status', 'createdAt', 'createdBy', 'actions'];
   public dataSource: MatTableDataSource<Discount>;
   public discountsTotal: number;
@@ -43,9 +46,11 @@ export class DiscountsComponent implements OnInit {
 
   constructor(
     private readonly discountsService: DiscountsService,
+    private adminService: AdminService,
   ) { }
 
   ngOnInit(): void {
+    this.loading$ = this.adminService.loading$;
     this.discountsSubjectSubcription = this.discountsService.discountsSubject.subscribe(data => {
         this.initializeData(data.discounts);
         this.discountsTotal = data.total;
@@ -58,6 +63,7 @@ export class DiscountsComponent implements OnInit {
     this.loadDiscounts();
 
     let filter$ = this.filterSubject.pipe(
+      debounceTime(500),
       tap((value: string) => {
         this.paginator.pageIndex = 0;
         this.filter = value;

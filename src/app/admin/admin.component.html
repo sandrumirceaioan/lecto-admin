@@ -18,10 +18,6 @@
 
         <mat-sidenav-content class="background-white">
 
-            <div class="spinner-container" *ngIf="loading$ | async">
-                <mat-spinner></mat-spinner>
-            </div>
-
             <mat-toolbar class="head" color="accent">
                 <h3 *ngIf="currentRoute">{{currentRoute}}</h3>
                 <span fxFlex></span>

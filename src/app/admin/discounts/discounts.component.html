@@ -18,6 +18,11 @@
   </div>
 
   <div class="table-container">
+
+    <div class="spinner-container" *ngIf="loading$ | async">
+      <mat-spinner></mat-spinner>
+    </div>
+
     <table mat-table [dataSource]="dataSource" matSort matSortDisableClear="true" [matSortActive]="defaultSort.active"
       [matSortDirection]="defaultSort.direction">
 

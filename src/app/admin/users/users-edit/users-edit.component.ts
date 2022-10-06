@@ -1,14 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MaterialModule } from '../../../shared/modules/material.module';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { UsersService } from '../users.service';
 import { User } from '../../../shared/models/user.model';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { AdminService } from '../../admin.service';
 
 @Component({
   selector: 'app-categories-edit',
@@ -32,15 +33,18 @@ export class UsersEditComponent implements OnInit, OnDestroy {
   showPasswordText: boolean = true;
   showRPasswordText: boolean = true;
 
+  loading$: Observable<boolean>;
+
   constructor(
     private authService: AuthService,
     private usersService: UsersService,
+    private adminService: AdminService,
     private route: ActivatedRoute,
-    private router: Router,
     private fb: FormBuilder,
   ) { }
 
   ngOnInit(): void {
+    this.loading$ = this.adminService.loading$;
     this.user = this.route.snapshot.data['data'].user;
     this.isSelf = this.authService.currentUser._id === this.user._id ? true : false;
 
@@ -56,7 +60,7 @@ export class UsersEditComponent implements OnInit, OnDestroy {
   updateCategory() {
     this.updateUserSubscription = this.usersService
       .updateUserById(this.user._id, this.userForm.value)
-      .subscribe(() => this.router.navigate(['/admin/utilizatori']));
+      .subscribe();
   }
 
   ngOnDestroy(): void {

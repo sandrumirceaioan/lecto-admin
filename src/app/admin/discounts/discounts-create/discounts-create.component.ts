@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../../shared/modules/material.module';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Discount } from '../../../shared/models/discount.model';
 import { DiscountsService } from '../discounts.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AdminService } from '../../admin.service';
 
 @Component({
   selector: 'app-discounts-create',
@@ -28,14 +29,18 @@ export class DiscountsCreateComponent implements OnInit {
   discount: Discount;
   mode: 'create' | 'edit';
 
+  loading$: Observable<boolean>;
+
   constructor(
     private discountsService: DiscountsService,
+    private adminService: AdminService,
     private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,
   ) { }
 
   ngOnInit(): void {
+    this.loading$ = this.adminService.loading$;
     this.discount = this.route.snapshot.data['data'] ? this.route.snapshot.data['data'].discount : null;
     this.mode = !this.discount ? 'create' : 'edit';
 

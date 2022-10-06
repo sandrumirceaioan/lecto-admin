@@ -44,9 +44,11 @@
       </section>
 
       <section fxLayout="row" fxLayoutAlign="end center" fxLayoutAlign.lt-sm="center center">
-        <button mat-flat-button color="accent" [disabled]="!userForm.valid" class="create-contract-btn p-10"
-          (click)="updateCategory()">
-          Salveaza
+        <button mat-flat-button color="accent" [disabled]="!userForm.valid || (loading$ | async)"
+          class="save-button create-contract-btn p-10" (click)="updateCategory()" fxLayout="row"
+          fxLayoutAlign="center center" fxFill>
+          <mat-spinner *ngIf="loading$ | async" class="text-white" diameter="20"></mat-spinner>
+          <span *ngIf="!(loading$ | async)">Salveaza</span>
         </button>
       </section>
     </mat-card>

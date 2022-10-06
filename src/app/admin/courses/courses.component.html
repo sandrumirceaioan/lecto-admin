@@ -1,1 +1,122 @@
-<p>courses works!</p>
+<div class="content">
+    <div class="table-header" fxLayout="row" fxLayoutAlign="space-between center">
+      <div class="search-bar">
+        <mat-form-field>
+          <mat-label>Cauta</mat-label>
+          <input matInput type="text" class="dc-search" (keyup)="filterSubject.next(filter)" [(ngModel)]="filter">
+          <button mat-button *ngIf="filter" matSuffix mat-icon-button aria-label="Clear" (click)="filterSubject.next('')">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+      <div class="actions" fxLayoutAlign="end center">
+        <button class="mb-10" mat-flat-button color="primary" [routerLink]="'/admin/cursuri/adauga'">
+          <mat-icon class="mr-10">add</mat-icon>
+          Adauga curs
+        </button>
+      </div>
+    </div>
+  
+    <div class="table-container">
+
+      <div class="spinner-container" *ngIf="loading$ | async">
+        <mat-spinner></mat-spinner>
+      </div>
+
+      <table mat-table [dataSource]="dataSource" matSort matSortDisableClear="true" [matSortActive]="defaultSort.active"
+        [matSortDirection]="defaultSort.direction">
+  
+        <ng-container matColumnDef="imagine">
+          <th mat-header-cell class="dc-label" *matHeaderCellDef></th>
+          <td mat-cell class="dc-content" *matCellDef="let element">
+            <a (click)="openDialog(element)">
+              <img
+                [src]="element.imagine && element.imagine.small ? element.imagine.small : './assets/images/placeholder.png'" />
+            </a>
+          </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="titlu">
+          <th mat-header-cell class="dc-label" *matHeaderCellDef mat-sort-header>Titlu</th>
+          <td mat-cell class="dc-content" *matCellDef="let element">
+            <a mat-button [routerLink]="'/admin/cursuri/' + element._id">
+            {{element.titlu}}
+            </a>
+          </td>
+        </ng-container>
+
+          <ng-container matColumnDef="pret">
+            <th mat-header-cell class="dc-label" *matHeaderCellDef mat-sort-header>Pret</th>
+            <td mat-cell class="dc-content" *matCellDef="let element">
+                <span *ngIf="element.pret && element.pret.anc">{{element.pret.anc}} RON</span><br>
+                <span *ngIf="element.pret && element.pret.participare">{{element.pret.participare}} RON</span>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="certificare">
+            <th mat-header-cell class="dc-label" *matHeaderCellDef>Certificare</th>
+            <td mat-cell class="dc-content" *matCellDef="let element">
+              <span *ngIf="element.certificare && element.certificare.anc">ANC</span><br>
+              <span *ngIf="element.certificare && element.certificare.participare">Participare</span>
+            </td>
+          </ng-container>
+  
+        <ng-container matColumnDef="status">
+          <th mat-header-cell class="dc-label" *matHeaderCellDef mat-sort-header>Status</th>
+          <td mat-cell class="dc-content" *matCellDef="let element">
+            <span *ngIf="element.status" class="text-success">Activ</span>
+            <span *ngIf="!element.status" class="text-warn">Inactiv</span>
+          </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="createdAt">
+          <th mat-header-cell class="dc-label" *matHeaderCellDef>Creat in</th>
+          <td mat-cell class="dc-content" *matCellDef="let element">
+            {{element.createdAt | date: 'dd/MM/yyyy'}}
+          </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="createdBy">
+          <th mat-header-cell class="dc-label" *matHeaderCellDef>Creat de</th>
+          <td mat-cell class="dc-content" *matCellDef="let element">
+            {{element.createdBy }}
+          </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell class="dc-actions" *matHeaderCellDef>Actiuni</th>
+          <td mat-cell class="dc-content" *matCellDef="let element">
+            <button mat-icon-button [routerLink]="'/admin/cursuri/' + element._id">
+              <mat-icon color="accent">edit</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+  
+  
+        <ng-container matColumnDef="noData">
+          <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+            <ng-container>
+              <div class="no-data-container">
+                No data...
+              </div>
+            </ng-container>
+          </td>
+        </ng-container>
+  
+  
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <ng-container *ngIf="coursesTotal">
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="customer-row"></tr>
+        </ng-container>
+  
+        <ng-container *ngIf="!coursesTotal">
+          <tr mat-row *matRowDef="let row; columns: ['noData'];" class="customer-row"></tr>
+        </ng-container>
+  
+  
+      </table>
+    </div>
+  
+    <mat-paginator [length]="coursesTotal" [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons>
+    </mat-paginator>
+  </div>

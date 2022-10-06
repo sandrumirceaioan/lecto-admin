@@ -105,11 +105,13 @@ body {
 }
 
 .fr-wrapper .show-placeholder, .fr-element, .fr-view .fr-element-scroll-visible {
-    height: 500px !important;
+    min-height: 900px !important;
+    height: 100% !important;
 }
 
 .fr-wrapper, .show-placeholder {
-    height: 500px !important;
+    min-height: 900px !important;
+    height: 100% !important;
     overflow: auto !important;
 }
 
@@ -127,3 +129,10 @@ gallery-thumb {
     padding: 0px !important;
 }
 
+
+.save-button {
+    height: 50px !important;
+    .mat-progress-spinner circle, .mat-spinner circle {
+        stroke: #515151;
+        }
+}

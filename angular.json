@@ -41,7 +41,8 @@
               "node_modules/froala-editor/css/froala_style.min.css",
               "node_modules/froala-editor/css/plugins/draggable.min.css",
               "node_modules/froala-editor/css/plugins/image.min.css",
-              "node_modules/froala-editor/css/plugins/colors.min.css"
+              "node_modules/froala-editor/css/plugins/colors.min.css",
+              "node_modules/froala-editor/css/plugins/fullscreen.min.css"
             ],
             "scripts": [
             ]

@@ -16,7 +16,7 @@ export const AdminRoutes: Routes = [
             },
             {
                 path: 'cursuri',
-                loadChildren: () => import('./courses/courses.routes').then(m => m.CoursesRoutes),
+                loadChildren: () => import('./courses/course.routes').then(m => m.CoursesRoutes),
             },
             {
                 path: 'locatii',

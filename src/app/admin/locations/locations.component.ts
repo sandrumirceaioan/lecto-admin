@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from 'src/app/shared/modules/material.module';
 import { FormsModule } from '@angular/forms';
@@ -8,10 +8,11 @@ import { Location } from '../../shared/models/location.model';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { merge, Subject, Subscription, tap } from 'rxjs';
+import { debounceTime, merge, Observable, Subject, Subscription, tap } from 'rxjs';
 import { LocationsService } from './locations.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ImageDialogComponent } from '../../shared/components/dialogs/image-dialog/image-dialog.component';
+import { AdminService } from '../admin.service';
 
 @Component({
   selector: 'app-locations',
@@ -26,9 +27,11 @@ import { ImageDialogComponent } from '../../shared/components/dialogs/image-dial
   templateUrl: './locations.component.html',
   styleUrls: ['./locations.component.scss']
 })
-export class LocationsComponent implements OnInit {
+export class LocationsComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+
+  loading$: Observable<boolean>;
 
   displayedColumns: string[] = ['imagine', 'locatie', 'oras', 'status', 'createdAt', 'createdBy', 'actions'];
   public dataSource: MatTableDataSource<Location>;
@@ -45,10 +48,12 @@ export class LocationsComponent implements OnInit {
 
   constructor(
     private readonly locationsService: LocationsService,
+    private adminService: AdminService,
     public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
+    this.loading$ = this.adminService.loading$;
     this.locationsSubjectSubcription = this.locationsService.locationsSubject.subscribe(data => {
         this.initializeData(data.locations);
         this.locationsTotal = data.total;
@@ -61,6 +66,7 @@ export class LocationsComponent implements OnInit {
     this.loadLocations();
 
     let filter$ = this.filterSubject.pipe(
+      debounceTime(500),
       tap((value: string) => {
         this.paginator.pageIndex = 0;
         this.filter = value;

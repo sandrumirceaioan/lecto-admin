@@ -4,12 +4,13 @@ import { MaterialModule } from 'src/app/shared/modules/material.module';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { Teacher } from '../../../shared/models/teacher.model';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { TeachersService } from '../teachers.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ImageDialogComponent } from 'src/app/shared/components/dialogs/image-dialog/image-dialog.component';
 import { DndDirective } from 'src/app/shared/directives/dnd.directive';
+import { AdminService } from '../../admin.service';
 
 @Component({
   selector: 'app-teachers-create',
@@ -27,7 +28,6 @@ import { DndDirective } from 'src/app/shared/directives/dnd.directive';
 })
 export class TeachersCreateComponent implements OnInit, OnDestroy {
   saveTeacherSubscription: Subscription = new Subscription();
-  discountTypes: string[] = ['volum', 'inscriere', 'fidelitate'];
   teacherForm: FormGroup;
   teacher: Teacher;
   mode: 'create' | 'edit';
@@ -39,8 +39,11 @@ export class TeachersCreateComponent implements OnInit, OnDestroy {
     view?: any;
   }[] = [];
 
+  loading$: Observable<boolean>;
+
   constructor(
     private teachersService: TeachersService,
+    private adminService: AdminService,
     private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,
@@ -48,6 +51,7 @@ export class TeachersCreateComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.loading$ = this.adminService.loading$;
     this.teacher = this.route.snapshot.data['data'] ? this.route.snapshot.data['data'].teacher : null;
     this.mode = !this.teacher ? 'create' : 'edit';
 

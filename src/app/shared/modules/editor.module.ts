@@ -15,6 +15,7 @@ import "froala-editor/js/plugins/font_size.min.js";
 import "froala-editor/js/plugins/font_family.min.js";
 import "froala-editor/js/plugins/colors.min.js";
 import "froala-editor/js/plugins/line_height.min.js";
+import "froala-editor/js/plugins/fullscreen.min.js";
 
 @NgModule({
     exports: [

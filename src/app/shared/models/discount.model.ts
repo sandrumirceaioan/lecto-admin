@@ -28,7 +28,7 @@ export interface Discount {
     fidelitate?: DiscountFidelitate[];
     descriere?: string;
     activ: boolean;
-    createdBy?: string;
+    createdBy?: any;
     createdAt?: Date;
 }
 

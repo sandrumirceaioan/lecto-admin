@@ -31,6 +31,6 @@ export interface Location {
   oras: string;
   judet: string;
   status: boolean;
-  createdBy?: string;
+  createdBy?: any;
   createdAt?: Date;
 }

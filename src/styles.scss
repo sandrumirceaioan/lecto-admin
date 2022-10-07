@@ -129,10 +129,17 @@ gallery-thumb {
     padding: 0px !important;
 }
 
-
 .save-button {
     height: 50px !important;
     .mat-progress-spinner circle, .mat-spinner circle {
         stroke: #515151;
         }
+}
+
+.mat-form-field-required-marker {
+    font-size: 25px;
+    line-height: 0px;
+    position: absolute;
+    top: 10px;
+    padding: 0px 6px;
 }

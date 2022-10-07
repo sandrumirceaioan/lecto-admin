@@ -13,6 +13,6 @@ export class Teacher {
   imagine: TeacherImage;
   email: string;
   telefon: string;
-  createdBy?: string;
+  createdBy?: any;
   createdAt?: Date;
 }

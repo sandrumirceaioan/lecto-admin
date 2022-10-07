@@ -25,6 +25,6 @@ export interface Course {
     certificare: CourseCertification;
     pret: CoursePrices;
     status: boolean;
-    createdBy?: string;
+    createdBy?: any;
     createdAt?: Date;
 }

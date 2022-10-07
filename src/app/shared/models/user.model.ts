@@ -6,7 +6,6 @@ export interface User {
     role: string;
     status: boolean;
     createdAt: string;
-    updatedBy: string;
 }
 
 export interface RegisterParams {

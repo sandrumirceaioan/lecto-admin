@@ -72,7 +72,7 @@ export class LocationsService {
         if (location.descriere) formData.append("descriere", location.descriere);
         if (location.oras) formData.append("oras", location.oras);
         if (location.judet) formData.append("judet", location.judet);
-        if (location.status) formData.append("status", JSON.stringify(location.status));
+        formData.append("status", JSON.stringify(location.status));
 
         if (location.galerie && location.galerie.length) {
             formData.append("galerie", JSON.stringify(location.galerie));
@@ -126,13 +126,15 @@ export class LocationsService {
     updateLocationById(id, location): Observable<Location> {
             this.adminService.setLoading(true);
             let formData = new FormData();
+
+            console.log(location);
     
             if (location.locatie) formData.append("locatie", location.locatie);
             if (location.url) formData.append("url", location.url);
             if (location.descriere) formData.append("descriere", location.descriere);
             if (location.oras) formData.append("oras", location.oras);
             if (location.judet) formData.append("judet", location.judet);
-            if (location.status) formData.append("status", JSON.stringify(location.status));
+            formData.append("status", JSON.stringify(location.status));
     
             if (location.galerie && location.galerie.length) {
                 formData.append("galerie", JSON.stringify(location.galerie));

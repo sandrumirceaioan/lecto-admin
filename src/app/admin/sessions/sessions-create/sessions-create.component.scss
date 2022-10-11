@@ -1,0 +1,172 @@
+.selected-location {
+    padding: 10px;
+    margin-bottom: 25px;
+    background: #ffffff;
+    box-shadow: 0px 0px 7px -1px #6f6f6f;
+    border-radius: 5px;
+
+    .info {
+        margin-bottom: 10px;
+        .imagine {
+            img {
+                width: 40px;
+                height: 40px;
+                object-fit: cover;
+                border-radius: 5px;
+            }
+        }
+
+        .descriere {
+            padding-left: 10px;
+            line-height: 20px;
+        }
+    }
+
+    .offers {
+        border-top: 1px solid #dbdbdb;
+        padding: 15px 10px;
+    }
+}
+
+.selected-course {
+    padding: 10px;
+    margin-bottom: 25px;
+    background: #ffffff;
+    box-shadow: 0px 0px 7px -1px #6f6f6f;
+    border-radius: 5px;
+
+    .info {
+        margin-bottom: 10px;
+        .imagine {
+            img {
+                width: 70px;
+                height: 70px;
+                object-fit: cover;
+                border-radius: 5px;
+            }
+        }
+
+        .descriere {
+            padding-left: 10px;
+            line-height: 20px;
+        }
+    }
+
+    .options,
+    .teachers {
+        border-top: 1px solid #dbdbdb;
+        transition: all 0.2s;
+
+        .options-header,
+        .teachers-header {
+            padding: 0 10px;
+            height: 50px;
+            transition: all 0.2s;
+            user-select: none;
+
+            cursor: pointer;
+
+            span {
+                line-height: 10px;
+                color: #67bb51;
+            }
+
+            &:hover {
+                background: #eeeeee;
+            }
+        }
+
+        &:has(> div.active) {
+            box-shadow: 1px 1px 6px -1px #a0a0a0 !important;
+            margin: 10px 20px 20px 20px;
+        }
+
+        .active {
+            transition: none !important;
+            background: #eeeeee;
+        }
+
+        .options-container,
+        .teachers-container {
+            border-top: 1px solid #dbdbdb;
+            padding: 25px 20px 0 20px;
+
+            .selected-teachers {
+                border-bottom: 1px solid #eeeeee;
+
+                .teacher-info {
+                    .imagine {
+                        img {
+                            width: 40px;
+                            height: 40px;
+                            object-fit: cover;
+                            border-radius: 5px;
+                        }
+                    }
+
+                    .details {
+                        margin-left: 15px;
+                    }
+                }
+
+                &:last-of-type {
+                    border: 0px;
+                }
+            }
+        }
+    }
+
+    .discounts {
+        border-top: 1px solid #dbdbdb;
+        transition: all 0.2s;
+
+        .options-header,
+        .discounts-header {
+            padding: 0 10px;
+            height: 50px;
+            transition: all 0.2s;
+            user-select: none;
+
+            cursor: pointer;
+
+            span {
+                line-height: 10px;
+                color: #67bb51;
+            }
+
+            &:hover {
+                background: #eeeeee;
+            }
+        }
+
+        &:has(> div.active) {
+            box-shadow: 1px 1px 6px -1px #a0a0a0 !important;
+            margin: 10px 20px 20px 20px;
+        }
+
+        .active {
+            transition: none !important;
+            background: #eeeeee;
+        }
+
+        .options-container,
+        .discounts-container {
+            border-top: 1px solid #dbdbdb;
+            padding: 25px 20px 0 20px;
+
+            .selected-discounts {
+                border-bottom: 1px solid #eeeeee;
+
+                .teacher-info {
+                    .details {
+                        margin-left: 15px;
+                    }
+                }
+
+                &:last-of-type {
+                    border: 0px;
+                }
+            }
+        }
+    }
+}

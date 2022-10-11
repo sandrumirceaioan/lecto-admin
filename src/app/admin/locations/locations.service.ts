@@ -123,6 +123,21 @@ export class LocationsService {
         );
     }
 
+    searchLocations(filter): Observable<Location[]> {
+        let params = new HttpParams();
+        if (filter) params = params.append('search', filter.toString());
+
+        return this.http.get(`${this.apiPath}/locations/search`, { params }).pipe(
+            map((result: any) => {
+                return result;
+            }),
+            catchError((error) => {
+                this.alertService.danger(error.error.message);
+                return throwError(() => error.error);
+            })
+        );
+    }
+
     updateLocationById(id, location): Observable<Location> {
             this.adminService.setLoading(true);
             let formData = new FormData();

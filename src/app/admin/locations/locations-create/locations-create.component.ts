@@ -39,7 +39,6 @@ export class LocationsCreateComponent implements OnInit, OnDestroy {
   romania: Observable<LocationGroup[]>;
   mode: 'create' | 'edit';
 
-  judetGroupOptions: Observable<LocationGroup[]>;
   minLengthTerm = 1;
   isLoading = false;
   selectedFiles: {
@@ -51,7 +50,7 @@ export class LocationsCreateComponent implements OnInit, OnDestroy {
   }[] = [];
 
   public froalaOptions: Object = {
-    height: 500,
+    height: 850,
     charCounterCount: true,
     codeBeautifier: true,
     dragInline: false,
@@ -260,6 +259,14 @@ export class LocationsCreateComponent implements OnInit, OnDestroy {
     this.locationsForm.get('oras').setValue(value);
     this.locationsForm.get('judet').setValue(label);
     this.locationsForm.updateValueAndValidity();
+  }
+
+  convertToUrl(value) {
+    let url = value.toLowerCase()
+    .replace(/ /g, '-')
+    .replace(/[^\w-]+/g, '');
+    this.locationsForm.get('url').setValue(url);
+    this.locationsForm.updateValueAndValidity({emitEvent: true});
   }
 
   createLocation() {

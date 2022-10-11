@@ -1,0 +1,403 @@
+<div class="content" flexLayout="column">
+
+    <form [formGroup]="sessionGroup" fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="25px">
+        <mat-card fxFlex="50" fxFlex.lt-sm="100" fxFill="false" fxLayoutGap="25px">
+
+            <section class="session-settings" fxLayout="column">
+                <h2 class="text-accent">Informatii Generale</h2>
+                <mat-divider class="mb-20"></mat-divider>
+
+                <!-- session title -->
+                <mat-form-field appearance="fill" class="mb-5">
+                    <mat-label>Titlu</mat-label>
+                    <input matInput formControlName="titlu" (change)="convertToUrl(sessionGroup.get('titlu').value)" />
+                    <mat-error *ngIf="sessionGroup.get('titlu').hasError('required')">Titlu sesiune
+                        necesar
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- session url -->
+                <mat-form-field appearance="fill" class="mb-5">
+                    <mat-label>URL</mat-label>
+                    <input matInput formControlName="url" />
+                    <mat-error *ngIf="sessionGroup.get('url').hasError('required')">URL sesiune necesar
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- session tyoe -->
+                <mat-form-field appearance="fill" class="mb-5" fxFlex.gt-sm="20">
+                    <mat-label>Tip Sesiune</mat-label>
+                    <mat-select formControlName="type">
+                        <mat-option value="online">Online</mat-option>
+                        <mat-option value="local">Local</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="sessionGroup.get('type').hasError('required')">Tip sesiune necesar
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- signup -->
+                <div formGroupName="inscriere" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="25px">
+                    <mat-form-field appearance="fill" class="mb-5" fxFlex>
+                        <mat-label>Inscriere de la</mat-label>
+                        <input matInput [matDatepicker]="picker1" formControlName="start">
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                        <mat-error *ngIf="inscriere.get('start').hasError('required')">Inscriere incepand de la </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill" class="mb-5" fxFlex>
+                        <mat-label>Inscriere pana la</mat-label>
+                        <input matInput [matDatepicker]="picker2" formControlName="end">
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                        <mat-error *ngIf="inscriere.get('end').hasError('required')">Inscriere pana la </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <!-- duration -->
+                <div formGroupName="perioada" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="25px">
+                    <mat-form-field appearance="fill" class="mb-5" fxFlex>
+                        <mat-label>Desfasurare de la</mat-label>
+                        <input matInput [matDatepicker]="picker3" formControlName="start">
+                        <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                        <mat-datepicker #picker3></mat-datepicker>
+                        <mat-error *ngIf="inscriere.get('start').hasError('required')">Desfasurare incepand de la </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill" class="mb-5" fxFlex>
+                        <mat-label>Desfasurare pana la</mat-label>
+                        <input matInput [matDatepicker]="picker4" formControlName="end">
+                        <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                        <mat-datepicker #picker4></mat-datepicker>
+                        <mat-error *ngIf="inscriere.get('end').hasError('required')">Desfasurare pana la </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <!-- session status -->
+                <mat-form-field appearance="fill" class="mb-5">
+                    <mat-label>Status</mat-label>
+                    <mat-select formControlName="status">
+                        <mat-option [value]="true">Activ</mat-option>
+                        <mat-option [value]="false">Inactiv</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="sessionGroup.get('status').hasError('required')">Status sesiune
+                        necesar</mat-error>
+                </mat-form-field>
+
+                <!-- session description -->
+                <h2 class="text-accent">Descriere Sesiune</h2>
+                <mat-divider class="mb-20"></mat-divider>
+
+                <textarea [froalaEditor]="froalaOptions" formControlName="descriere"></textarea>
+
+            </section>
+
+        </mat-card>
+
+        <div fxFlex="50" fxFlex.lt-sm="100" fxFill="false" fxLayout="column" fxLayoutGap="25">
+
+            <!-- session location -->
+            <mat-card *ngIf="sessionGroup.get('type').value === 'local'">
+                <section fxLayout="column">
+
+                    <h2 class="text-accent">Locatie Sesiune</h2>
+                    <mat-divider class="mb-20"></mat-divider>
+
+                    <mat-form-field appearance="fill">
+                        <mat-label>Adauga Locatie</mat-label>
+                        <input type="text" matInput formControlName="searchLocation" [matAutocomplete]="autoGroup">
+                        <mat-autocomplete #autoGroup="matAutocomplete" (optionSelected)="onSelectedLocation($event, autoGroup)" [displayWith]="getLocationLabel.bind(this)">
+                            <mat-option *ngFor="let item of locations | async" [value]="item">
+                                {{ item.locatie }}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+
+                    <div formGroupName="locatie" fxLayout="column">
+
+                        <div class="selected-location" *ngIf="locatie.get('data').value" fxLayout="column" fxFlex>
+                            <div class="info" fxLayout="row">
+                                <div class="imagine">
+                                    <img [src]="locatie.get('data').value.imagine.small">
+                                </div>
+                                <div class="descriere">
+                                    <span class="text-success">{{locatie.get('data').value.locatie}}</span><br />
+                                    <span>{{locatie.get('data').value.oras}},
+                                        {{locatie.get('data').value.judet}}</span>
+                                </div>
+                            </div>
+
+                            <div class="offers" formArrayName="oferte">
+                                <p class="text-gray" *ngIf="!oferte.controls.length">Adauga oferta de cazare</p>
+                                <div *ngFor="let oferta of oferte.controls; let i=index">
+                                    <div [formGroupName]="i">
+                                        <section fxLayout="row" fxLayout.lt-md="column" fxLayoutGap.gt-sm="20px">
+                                            <mat-form-field appearance="fill" fxFlex.gt-sm="60">
+                                                <mat-label>Descriere oferta cazare</mat-label>
+                                                <input matInput type="text" formControlName="nume" color="warn">
+                                                <mat-error *ngIf="oferta.get('nume').hasError('required')">Descriere
+                                                    oferta
+                                                    necesara </mat-error>
+                                            </mat-form-field>
+
+                                            <mat-form-field appearance="fill" hideRequiredMarker="true" fxFlex.gt-sm="20">
+                                                <mat-label>Pret oferta cazare</mat-label>
+                                                <input matInput type="number" formControlName="valoare" color="warn">
+                                                <mat-error *ngIf="oferta.get('valoare').hasError('required')">Pret
+                                                    oferta
+                                                    necesar </mat-error>
+                                            </mat-form-field>
+
+                                            <div fxFlex.gt-sm="20">
+                                                <button type="button" mat-icon-button (click)="removeOffer(i)" color="warn">
+                                                    <mat-icon>remove</mat-icon>
+                                                </button>
+                                            </div>
+                                        </section>
+                                    </div>
+                                </div>
+                                <button type="button" mat-icon-button (click)="addOffer()" color="accent">
+                                    <mat-icon>add</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </mat-card>
+
+            <!-- session courses -->
+            <mat-card>
+                <section fxLayout="column">
+
+                    <h2 class="text-accent">Cursuri Sesiune <small class="text-gray" *ngIf="cursuri.controls.length">({{
+                            cursuri.controls.length }})</small></h2>
+                    <mat-divider class="mb-20"></mat-divider>
+
+                    <mat-form-field appearance="fill">
+                        <mat-label>Adauga Curs</mat-label>
+                        <input type="text" matInput formControlName="searchCourse" [matAutocomplete]="autoGroup">
+                        <mat-autocomplete #autoGroup="matAutocomplete" (optionSelected)="onSelectedCourse($event, autoGroup)" [displayWith]="getCourseLabel.bind(this)">
+                            <mat-option *ngFor="let item of courses | async" [value]="item">
+                                {{ item.titlu }}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+
+                    <div formArrayName="cursuri" *ngFor="let curs of cursuri.controls; let i=index;" class="selected-course">
+
+                        <div [formGroupName]="i" *ngIf="curs.get('data').value" fxLayout="column" fxFlex>
+                            <div class="info" fxLayout="row">
+                                <div class="imagine">
+                                    <img [src]="curs.get('data').value.imagine.small">
+                                </div>
+                                <div class="descriere" fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+                                    <div class="price">
+                                        <span class="text-success">{{curs.get('data').value.titlu}}</span><br />
+                                        <small><span *ngIf="curs.get('data').value.certificare.anc">Certificat ANC:
+                                                {{curs.get('data').value.pret.anc}} RON</span><br />
+                                            <span *ngIf="curs.get('data').value.certificare.participare">Certificat
+                                                Participare: {{curs.get('data').value.pret.participare}}
+                                                RON</span></small>
+                                    </div>
+                                    <button mat-icon-button type="button" color="warn" (click)="removeCourse(i)">
+                                        <mat-icon>close</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- teachers -->
+                            <div class="teachers">
+                                <div class="teachers-header" fxLayout="row" fxLayoutAlign="space-between center" (click)="toggleCourse(curs, 'Teachers')" [class.active]="curs.get('toggleTeachers').value">
+                                    <span>Formatori</span>
+                                    <button mat-icon-button type="button" color="dark">
+                                        <mat-icon *ngIf="curs.get('toggleTeachers').value">keyboard_arrow_up</mat-icon>
+                                        <mat-icon *ngIf="!curs.get('toggleTeachers').value">keyboard_arrow_down
+                                        </mat-icon>
+                                    </button>
+                                </div>
+
+                                <div class="teachers-container" fxLayout="column" fxLayoutGap="15px" *ngIf="curs.get('toggleTeachers').value">
+
+                                    <mat-form-field appearance="fill" fxFlex class="mb-0">
+                                        <mat-label>Adauga Formatori</mat-label>
+                                        <mat-select formControlName="selectTeacher" (selectionChange)="onTeacherSelect($event, curs)">
+                                            <mat-option *ngFor="let teacher of this.sessionData.teachers" [value]="teacher">{{teacher.nume}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+
+                                    <p class="text-gray" *ngIf="!curs.get('teachers').value.length" fxFlex>* Nu ai
+                                        adaugat
+                                        nici un profesor formator</p>
+                                    <div class="selected-teachers" formArrayName="teachers" *ngFor="let teacher of curs.get('teachers').value; let j=index" fxLayout="row" fxLayoutAlign="space-between center">
+
+                                        <div class="teacher-info" fxLayout="row">
+                                            <div class="imagine">
+                                                <img [src]="teacher.imagine && teacher.imagine.small ? teacher.imagine.small : './assets/images/placeholder.png'">
+                                            </div>
+                                            <div class="details">
+                                                <p><span class="text-success">{{teacher.nume}}</span><br />
+                                                    <span class="text-gray">{{teacher.email}}</span><span *ngIf="teacher.telefon" class="text-gray">;
+                                                        {{teacher.telefon}}</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <button type="button" mat-icon-button (click)="onTeacherRemove(teacher, curs)" color="warn">
+                                            <mat-icon>close</mat-icon>
+                                        </button>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- discounts -->
+                            <div class="discounts">
+                                <div class="discounts-header" fxLayout="row" fxLayoutAlign="space-between center" (click)="toggleCourse(curs, 'Discounts')" [class.active]="curs.get('toggleDiscounts').value">
+                                    <span>Discounturi</span>
+                                    <button mat-icon-button type="button" color="dark">
+                                        <mat-icon *ngIf="curs.get('toggleDiscounts').value">keyboard_arrow_up</mat-icon>
+                                        <mat-icon *ngIf="!curs.get('toggleDiscounts').value">keyboard_arrow_down
+                                        </mat-icon>
+                                    </button>
+                                </div>
+
+                                <div class="discounts-container" fxLayout="column" fxLayoutGap="15px" *ngIf="curs.get('toggleDiscounts').value">
+
+                                    <mat-form-field appearance="fill" fxFlex class="mb-0">
+                                        <mat-label>Adauga Discount</mat-label>
+                                        <mat-select formControlName="selectDiscount" (selectionChange)="onDiscountSelect($event, curs)">
+                                            <div class="custom-select">
+                                                <mat-option *ngFor="let discount of this.sessionData.discounts" [value]="discount">
+                                                    <div class="detalii-discount" fxLayout="row" fxLayoutAlign="space-between center">
+                                                        <div class="tip-discount">
+                                                            <span>Discount <strong class="text-success">{{discount.categorie}}</strong></span>
+                                                        </div>
+
+                                                        <ul class="volum" *ngIf="discount.categorie === 'volum'">
+                                                            <li *ngFor="let item of discount[discount.categorie]">
+                                                                <p *ngIf="item.min_cursanti && item.max_cursanti">Intre <strong class="text-accent">{{item.min_cursanti}}</strong>
+                                                                    si <strong class="text-accent">{{item.max_cursanti}}</strong> cursanti, discount de <strong class="text-accent">
+                                                                        {{item.value}}{{item.type ==='fix' ? ' RON' : '%'}}</strong>
+                                                                </p>
+                                                                <p *ngIf="item.min_cursanti && !item.max_cursanti">Peste <strong class="text-accent">{{item.min_cursanti}}</strong> cursanti, discount de <strong class="text-accent">{{item.value}}{{item.type ==='fix' ? ' RON' : '%'}}</strong>
+                                                                </p>
+                                                            </li>
+                                                        </ul>
+
+                                                        <ul class="inscriere" *ngIf="discount.categorie === 'inscriere'">
+                                                            <li *ngFor="let item of discount[discount.categorie]">
+                                                                <p>Inscriere inainte de <strong class="text-accent">{{item.max_inscriere | date: 'dd/MM/yyyy'}}</strong>, discount de <strong class="text-accent">{{item.value}}{{item.type ==='fix' ? ' RON' : '%'}}</strong></p>
+                                                            </li>
+                                                        </ul>
+
+                                                        <ul class="fidelitate" *ngIf="discount.categorie === 'fidelitate'">
+                                                            <li *ngFor="let item of discount[discount.categorie]">
+                                                                <p><strong class="text-accent">{{item.participare}}</strong> participari<span *ngIf="item.consecutiva"><strong class="text-accent">
+                                                                            consecutive</strong></span>, discount de <strong class="text-accent">{{item.value}}{{item.type ==='fix' ? ' RON' : '%'}}</strong>
+                                                                </p>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+
+                                                </mat-option>
+                                            </div>
+                                        </mat-select>
+                                    </mat-form-field>
+
+                                    <p class="text-gray" *ngIf="!curs.get('discounts').value.length" fxFlex>* Nu ai adaugat nici un discount</p>
+                                    <div class="selected-discounts" formArrayName="discounts" *ngFor="let discount of curs.get('discounts').value; let j=index" fxLayout="row" fxLayoutAlign="space-between center">
+
+                                        <div class="detalii-discount" fxLayout="column">
+                                            <div class="tip-discount">
+                                                <span>Tip Discount: <strong class="text-success">{{discount.categorie}}</strong></span>
+                                            </div>
+
+                                            <ul class="volum" *ngIf="discount.categorie === 'volum'">
+                                                <li *ngFor="let item of discount[discount.categorie]">
+                                                    <p *ngIf="item.min_cursanti && item.max_cursanti">Intre <strong class="text-accent">{{item.min_cursanti}}</strong>
+                                                        si <strong class="text-accent">{{item.max_cursanti}}</strong> cursanti, discount de <strong class="text-accent">
+                                                            {{item.value}}{{item.type ==='fix' ? ' RON' : '%'}}</strong>
+                                                    </p>
+                                                    <p *ngIf="item.min_cursanti && !item.max_cursanti">Peste <strong class="text-accent">{{item.min_cursanti}}</strong> cursanti, discount de <strong class="text-accent">{{item.value}}{{item.type ==='fix' ? ' RON' : '%'}}</strong>
+                                                    </p>
+                                                </li>
+                                            </ul>
+
+                                            <ul class="inscriere" *ngIf="discount.categorie === 'inscriere'">
+                                                <li *ngFor="let item of discount[discount.categorie]">
+                                                    <p>Inscriere inainte de <strong class="text-accent">{{item.max_inscriere | date: 'dd/MM/yyyy'}}</strong>, discount de <strong class="text-accent">{{item.value}}{{item.type ==='fix' ? ' RON' : '%'}}</strong></p>
+                                                </li>
+                                            </ul>
+
+                                            <ul class="fidelitate" *ngIf="discount.categorie === 'fidelitate'">
+                                                <li *ngFor="let item of discount[discount.categorie]">
+                                                    <p><strong class="text-accent">{{item.participare}}</strong> participari<span *ngIf="item.consecutiva"><strong class="text-accent">
+                                                                consecutive</strong></span>, discount de <strong class="text-accent">{{item.value}}{{item.type ==='fix' ? ' RON' : '%'}}</strong>
+                                                    </p>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <button type="button" mat-icon-button (click)="onDiscountRemove(discount, curs)" color="warn">
+                                            <mat-icon>close</mat-icon>
+                                        </button>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- options -->
+                            <div class="options" formGroupName="options" fxLayout="column">
+                                <div class="options-header" fxLayout="row" fxLayoutAlign="space-between center" (click)="toggleCourse(curs, 'Options')" [class.active]="curs.get('toggleOptions').value">
+                                    <span>Optiuni</span>
+                                    <button mat-icon-button type="button" color="dark">
+                                        <mat-icon *ngIf="curs.get('toggleOptions').value">keyboard_arrow_up</mat-icon>
+                                        <mat-icon *ngIf="!curs.get('toggleOptions').value">keyboard_arrow_down </mat-icon>
+                                    </button>
+                                </div>
+
+                                <div class="options-container" fxLayout="column" fxLayout.lt-md="column" fxLayoutGap="15px" *ngIf="curs.get('toggleOptions').value">
+
+                                    <!-- pret -->
+                                    <div class="options-form mb-0">
+                                        <div formGroupName="pret" fxFlex fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
+                                            <mat-form-field appearance="fill" class="mb-5" fxFlex>
+                                                <mat-label>Pret Certificat ANC</mat-label>
+                                                <input type="number" matInput formControlName="anc" />
+                                                <mat-error *ngIf="curs.get('options.pret.anc').hasError('required')">
+                                                    Pret
+                                                    necesar
+                                                </mat-error>
+                                            </mat-form-field>
+                                            <mat-form-field appearance="fill" class="mb-5" fxFlex>
+                                                <mat-label>Pret Certificat Participare</mat-label>
+                                                <input type="number" matInput formControlName="participare" />
+                                                <mat-error *ngIf="curs.get('options.pret.participare').hasError('required')">
+                                                    Pret
+                                                    necesar
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <p class="text-gray" *ngIf="!curs.get('options.pret.anc').value && curs.get('options.pret.participare')" fxFlex>* Nu ai adaugat preturi optionale - se aplica preturile cursului original
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- discounts -->
+
+                        </div>
+
+                    </div>
+                </section>
+
+                <section fxLayout="row" fxLayoutAlign="end center" fxLayoutAlign.lt-sm="center center">
+                    <button mat-flat-button color="accent" [disabled]="!sessionGroup.valid || (loading$ | async)" class="save-button create-contract-btn p-10" (click)="createSession()" fxLayout="row" fxLayoutAlign="center center" fxFill>
+                        <mat-spinner *ngIf="loading$ | async" class="text-white" diameter="20"></mat-spinner>
+                        <span *ngIf="!(loading$ | async)">Salveaza</span>
+                    </button>
+                </section>
+            </mat-card>
+        </div>
+    </form>
+</div>

@@ -10,7 +10,7 @@
                 <!-- titlu curs -->
                 <mat-form-field appearance="fill" class="mb-5">
                     <mat-label>Titlu</mat-label>
-                    <input matInput formControlName="titlu" />
+                    <input matInput formControlName="titlu" (change)="convertToUrl(courseForm.get('titlu').value)" />
                     <mat-error *ngIf="courseForm.get('titlu').hasError('required')">Titlu curs necesar</mat-error>
                 </mat-form-field>
 

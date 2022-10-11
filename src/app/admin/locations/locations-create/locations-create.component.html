@@ -9,7 +9,7 @@
                 <!-- location name -->
                 <mat-form-field appearance="fill" class="mt-5 mb-5">
                     <mat-label>Nume locatie</mat-label>
-                    <input matInput formControlName="locatie" placeholder="ex. Hotel Aro Palace">
+                    <input matInput formControlName="locatie" placeholder="ex. Hotel Aro Palace" (change)="convertToUrl(locationsForm.get('locatie').value)">
                     <mat-error *ngIf="locationsForm.get('locatie').hasError('required')">Numele locatiei este necesar
                     </mat-error>
                 </mat-form-field>

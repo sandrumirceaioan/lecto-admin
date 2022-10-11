@@ -19,6 +19,8 @@ import { DiscountResolve } from './app/admin/discounts/discount.resolve';
 import { LocationResolve } from './app/admin/locations/location.resolve';
 import { TeacherResolve } from './app/admin/teachers/teacher.resolve';
 import { CourseResolve } from './app/admin/courses/course.resolve';
+import { SessionResolve } from './app/admin/sessions/session.resolve';
+import { SessionDataResolve } from './app/admin/sessions/session-data.resolve';
 
 if (environment.production) {
   enableProdMode();
@@ -36,6 +38,8 @@ bootstrapApplication(AppComponent, {
     LocationResolve,
     TeacherResolve,
     CourseResolve,
+    SessionResolve,
+    SessionDataResolve,
     importProvidersFrom(
       BrowserModule,
       BrowserAnimationsModule,

@@ -135,4 +135,16 @@ export class CoursesService {
         );
     }
 
+    searchCourses(search): Observable<Course[]> {
+        return this.http.post(`${this.apiPath}/courses/search`, {search}).pipe(
+            map((result: any) => {
+                return result;
+            }),
+            catchError((error) => {
+                this.alertService.danger(error.error.message);
+                return throwError(() => error.error);
+            })
+        );
+    }
+
 }

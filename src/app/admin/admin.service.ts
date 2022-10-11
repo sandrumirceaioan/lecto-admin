@@ -17,6 +17,7 @@ export class AdminService {
         { path: 'utilizatori', title: 'Utilizatori', icon: 'people', allow: [UserRoles.admin] },
         { path: 'cursuri', title: 'Cursuri', icon: 'folder_special', allow: [UserRoles.admin] },
         { path: 'locatii', title: 'Locatii', icon: 'place', allow: [UserRoles.admin] },
+        { path: 'sesiuni', title: 'Sesiuni', icon: 'date_range', allow: [UserRoles.admin] },
         { path: 'profesori', title: 'Profesori', icon: 'school', allow: [UserRoles.admin] },
         { path: 'discounturi', title: 'Discounturi', icon: 'money_off', allow: [UserRoles.admin] },
     ];

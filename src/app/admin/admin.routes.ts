@@ -23,6 +23,10 @@ export const AdminRoutes: Routes = [
                 loadChildren: () => import('./locations/locations.routes').then(m => m.LocationsRoutes),
             },
             {
+                path: 'sesiuni',
+                loadChildren: () => import('./sessions/session.routes').then(m => m.SessionsRoutes),
+            },
+            {
                 path: 'profesori',
                 loadChildren: () => import('./teachers/teachers.routes').then(m => m.TeachersRoutes),
             },

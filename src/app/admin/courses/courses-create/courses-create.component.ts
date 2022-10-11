@@ -44,7 +44,7 @@ export class CoursesCreateComponent implements OnInit, OnDestroy {
   }[] = [];
 
   public froalaOptions: Object = {
-    height: 500,
+    height: 850,
     charCounterCount: true,
     codeBeautifier: true,
     dragInline: false,
@@ -150,6 +150,13 @@ export class CoursesCreateComponent implements OnInit, OnDestroy {
 
   }
 
+  convertToUrl(value) {
+    let url = value.toLowerCase()
+    .replace(/ /g, '-')
+    .replace(/[^\w-]+/g, '');
+    this.courseForm.get('url').setValue(url);
+    this.courseForm.updateValueAndValidity({emitEvent: true});
+  }
 
   // on new files selected
   async onFileSelected(event) {

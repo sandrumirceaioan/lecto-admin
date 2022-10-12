@@ -61,7 +61,7 @@
                         <input matInput [matDatepicker]="picker3" formControlName="start">
                         <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
                         <mat-datepicker #picker3></mat-datepicker>
-                        <mat-error *ngIf="inscriere.get('start').hasError('required')">Desfasurare incepand de la </mat-error>
+                        <mat-error *ngIf="perioada.get('start').hasError('required')">Desfasurare incepand de la </mat-error>
                     </mat-form-field>
 
                     <mat-form-field appearance="fill" class="mb-5" fxFlex>
@@ -69,7 +69,7 @@
                         <input matInput [matDatepicker]="picker4" formControlName="end">
                         <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
                         <mat-datepicker #picker4></mat-datepicker>
-                        <mat-error *ngIf="inscriere.get('end').hasError('required')">Desfasurare pana la </mat-error>
+                        <mat-error *ngIf="perioada.get('end').hasError('required')">Desfasurare pana la </mat-error>
                     </mat-form-field>
                 </div>
 
@@ -121,8 +121,8 @@
                                     <img [src]="locatie.get('data').value.imagine.small">
                                 </div>
                                 <div class="descriere">
-                                    <span class="text-success">{{locatie.get('data').value.locatie}}</span><br />
-                                    <span>{{locatie.get('data').value.oras}},
+                                    <span class="name">{{locatie.get('data').value.locatie}}</span><br />
+                                    <span class="city">{{locatie.get('data').value.oras}},
                                         {{locatie.get('data').value.judet}}</span>
                                 </div>
                             </div>
@@ -166,7 +166,7 @@
             </mat-card>
 
             <!-- session courses -->
-            <mat-card>
+            <mat-card *ngIf="sessionGroup.get('type').value">
                 <section fxLayout="column">
 
                     <h2 class="text-accent">Cursuri Sesiune <small class="text-gray" *ngIf="cursuri.controls.length">({{
@@ -192,14 +192,14 @@
                                 </div>
                                 <div class="descriere" fxFlex fxLayout="row" fxLayoutAlign="space-between center">
                                     <div class="price">
-                                        <span class="text-success">{{curs.get('data').value.titlu}}</span><br />
-                                        <small><span *ngIf="curs.get('data').value.certificare.anc">Certificat ANC:
+                                        <span class="course-name">{{curs.get('data').value.titlu}}</span><br />
+                                        <small><span class="course-certification" *ngIf="curs.get('data').value.certificare.anc">Certificat ANC:
                                                 {{curs.get('data').value.pret.anc}} RON</span><br />
-                                            <span *ngIf="curs.get('data').value.certificare.participare">Certificat
+                                            <span class="course-certification" *ngIf="curs.get('data').value.certificare.participare">Certificat
                                                 Participare: {{curs.get('data').value.pret.participare}}
                                                 RON</span></small>
                                     </div>
-                                    <button mat-icon-button type="button" color="warn" (click)="removeCourse(i)">
+                                    <button mat-icon-button type="button" color="warn" class="remove-course" (click)="removeCourse(i)">
                                         <mat-icon>close</mat-icon>
                                     </button>
                                 </div>
@@ -253,7 +253,7 @@
                             <!-- discounts -->
                             <div class="discounts">
                                 <div class="discounts-header" fxLayout="row" fxLayoutAlign="space-between center" (click)="toggleCourse(curs, 'Discounts')" [class.active]="curs.get('toggleDiscounts').value">
-                                    <span>Discounturi</span>
+                                    <span>Discount</span>
                                     <button mat-icon-button type="button" color="dark">
                                         <mat-icon *ngIf="curs.get('toggleDiscounts').value">keyboard_arrow_up</mat-icon>
                                         <mat-icon *ngIf="!curs.get('toggleDiscounts').value">keyboard_arrow_down
@@ -261,86 +261,181 @@
                                     </button>
                                 </div>
 
-                                <div class="discounts-container" fxLayout="column" fxLayoutGap="15px" *ngIf="curs.get('toggleDiscounts').value">
+                                <div class="discounts-container" formGroupName="discounts" fxLayout="column" fxLayoutGap="15px" *ngIf="curs.get('toggleDiscounts').value">
 
-                                    <mat-form-field appearance="fill" fxFlex class="mb-0">
-                                        <mat-label>Adauga Discount</mat-label>
-                                        <mat-select formControlName="selectDiscount" (selectionChange)="onDiscountSelect($event, curs)">
-                                            <div class="custom-select">
-                                                <mat-option *ngFor="let discount of this.sessionData.discounts" [value]="discount">
-                                                    <div class="detalii-discount" fxLayout="row" fxLayoutAlign="space-between center">
-                                                        <div class="tip-discount">
-                                                            <span>Discount <strong class="text-success">{{discount.categorie}}</strong></span>
+                                    <!--volum -->
+                                    <div class="volum-group">
+                                        <div class="group-header" fxLayout="row" fxLayoutAlign="start center">
+                                            <span class="text-dark">Volum</span>
+                                            <button type="button" mat-icon-button (click)="addVolum(curs)" color="accent">
+                                                <mat-icon>add</mat-icon>
+                                            </button>
+                                        </div>
+                                        <mat-divider class="mb-10"></mat-divider>
+                                        <div formArrayName="volum">
+                                            <p *ngIf="!curs.get('discounts.volum')['controls'].length" class="text-gray">Adauga conditie de discount</p>
+                                            <div *ngFor="let vol of curs.get('discounts.volum')['controls']; let v=index">
+                                                <div [formGroupName]="v">
+                                                    <section fxLayout="row" fxLayout.lt-md="column" fxLayoutGap.gt-sm="20px">
+
+                                                        <mat-form-field appearance="fill" fxFlex.gt-sm="20">
+                                                            <mat-label>Numar minim de cursanti</mat-label>
+                                                            <input matInput type="number" formControlName="min_cursanti" color="warn">
+                                                            <mat-error *ngIf="vol.get('min_cursanti').hasError('required')">Numar minim
+                                                                de cursanti necesar
+                                                            </mat-error>
+                                                        </mat-form-field>
+
+                                                        <mat-form-field appearance="fill" hideRequiredMarker="true" fxFlex.gt-sm="20">
+                                                            <mat-label>Numar maxim de cursanti</mat-label>
+                                                            <input matInput type="number" formControlName="max_cursanti" color="warn">
+                                                        </mat-form-field>
+
+                                                        <mat-form-field appearance="fill" class="mb-5" fxFlex.gt-sm="20">
+                                                            <mat-label>Tip Discount Volum</mat-label>
+                                                            <mat-select formControlName="type">
+                                                                <mat-option value="fix">Fix</mat-option>
+                                                                <mat-option value="procent">Procent</mat-option>
+                                                            </mat-select>
+                                                            <mat-error *ngIf="vol.get('type').hasError('required')">Tipul de discount
+                                                                necesar
+                                                            </mat-error>
+                                                        </mat-form-field>
+
+                                                        <mat-form-field appearance="fill" fxFlex.gt-sm="20">
+                                                            <mat-label>Valoare Discount</mat-label>
+                                                            <input matInput type="number" formControlName="value" color="warn">
+                                                            <mat-error *ngIf="vol.get('value').hasError('required')">Valoare discount
+                                                                necesara </mat-error>
+                                                        </mat-form-field>
+
+                                                        <div fxFlex.gt-sm="20">
+                                                            <button type="button" mat-icon-button (click)="removeVolum(curs, v)" color="warn">
+                                                                <mat-icon>remove</mat-icon>
+                                                            </button>
                                                         </div>
 
-                                                        <ul class="volum" *ngIf="discount.categorie === 'volum'">
-                                                            <li *ngFor="let item of discount[discount.categorie]">
-                                                                <p *ngIf="item.min_cursanti && item.max_cursanti">Intre <strong class="text-accent">{{item.min_cursanti}}</strong>
-                                                                    si <strong class="text-accent">{{item.max_cursanti}}</strong> cursanti, discount de <strong class="text-accent">
-                                                                        {{item.value}}{{item.type ==='fix' ? ' RON' : '%'}}</strong>
-                                                                </p>
-                                                                <p *ngIf="item.min_cursanti && !item.max_cursanti">Peste <strong class="text-accent">{{item.min_cursanti}}</strong> cursanti, discount de <strong class="text-accent">{{item.value}}{{item.type ==='fix' ? ' RON' : '%'}}</strong>
-                                                                </p>
-                                                            </li>
-                                                        </ul>
+                                                    </section>
 
-                                                        <ul class="inscriere" *ngIf="discount.categorie === 'inscriere'">
-                                                            <li *ngFor="let item of discount[discount.categorie]">
-                                                                <p>Inscriere inainte de <strong class="text-accent">{{item.max_inscriere | date: 'dd/MM/yyyy'}}</strong>, discount de <strong class="text-accent">{{item.value}}{{item.type ==='fix' ? ' RON' : '%'}}</strong></p>
-                                                            </li>
-                                                        </ul>
-
-                                                        <ul class="fidelitate" *ngIf="discount.categorie === 'fidelitate'">
-                                                            <li *ngFor="let item of discount[discount.categorie]">
-                                                                <p><strong class="text-accent">{{item.participare}}</strong> participari<span *ngIf="item.consecutiva"><strong class="text-accent">
-                                                                            consecutive</strong></span>, discount de <strong class="text-accent">{{item.value}}{{item.type ==='fix' ? ' RON' : '%'}}</strong>
-                                                                </p>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-
-                                                </mat-option>
+                                                </div>
                                             </div>
-                                        </mat-select>
-                                    </mat-form-field>
-
-                                    <p class="text-gray" *ngIf="!curs.get('discounts').value.length" fxFlex>* Nu ai adaugat nici un discount</p>
-                                    <div class="selected-discounts" formArrayName="discounts" *ngFor="let discount of curs.get('discounts').value; let j=index" fxLayout="row" fxLayoutAlign="space-between center">
-
-                                        <div class="detalii-discount" fxLayout="column">
-                                            <div class="tip-discount">
-                                                <span>Tip Discount: <strong class="text-success">{{discount.categorie}}</strong></span>
-                                            </div>
-
-                                            <ul class="volum" *ngIf="discount.categorie === 'volum'">
-                                                <li *ngFor="let item of discount[discount.categorie]">
-                                                    <p *ngIf="item.min_cursanti && item.max_cursanti">Intre <strong class="text-accent">{{item.min_cursanti}}</strong>
-                                                        si <strong class="text-accent">{{item.max_cursanti}}</strong> cursanti, discount de <strong class="text-accent">
-                                                            {{item.value}}{{item.type ==='fix' ? ' RON' : '%'}}</strong>
-                                                    </p>
-                                                    <p *ngIf="item.min_cursanti && !item.max_cursanti">Peste <strong class="text-accent">{{item.min_cursanti}}</strong> cursanti, discount de <strong class="text-accent">{{item.value}}{{item.type ==='fix' ? ' RON' : '%'}}</strong>
-                                                    </p>
-                                                </li>
-                                            </ul>
-
-                                            <ul class="inscriere" *ngIf="discount.categorie === 'inscriere'">
-                                                <li *ngFor="let item of discount[discount.categorie]">
-                                                    <p>Inscriere inainte de <strong class="text-accent">{{item.max_inscriere | date: 'dd/MM/yyyy'}}</strong>, discount de <strong class="text-accent">{{item.value}}{{item.type ==='fix' ? ' RON' : '%'}}</strong></p>
-                                                </li>
-                                            </ul>
-
-                                            <ul class="fidelitate" *ngIf="discount.categorie === 'fidelitate'">
-                                                <li *ngFor="let item of discount[discount.categorie]">
-                                                    <p><strong class="text-accent">{{item.participare}}</strong> participari<span *ngIf="item.consecutiva"><strong class="text-accent">
-                                                                consecutive</strong></span>, discount de <strong class="text-accent">{{item.value}}{{item.type ==='fix' ? ' RON' : '%'}}</strong>
-                                                    </p>
-                                                </li>
-                                            </ul>
                                         </div>
-                                        <button type="button" mat-icon-button (click)="onDiscountRemove(discount, curs)" color="warn">
-                                            <mat-icon>close</mat-icon>
-                                        </button>
+                                    </div>
 
+                                    <!-- inscriere -->
+                                    <div class="inscriere-group">
+                                        <div class="group-header" fxLayout="row" fxLayoutAlign="start center">
+                                            <span class="text-dark">Inscriere</span>
+                                            <button type="button" mat-icon-button (click)="addInscriere(curs)" color="accent">
+                                                <mat-icon>add</mat-icon>
+                                            </button>
+                                        </div>
+                                        <mat-divider class="mb-10"></mat-divider>
+                                        <div formArrayName="inscriere">
+                                            <p *ngIf="!curs.get('discounts.inscriere')['controls'].length" class="text-gray">Adauga conditie de discount</p>
+                                            <div *ngFor="let signup of curs.get('discounts.inscriere')['controls']; let s=index">
+                                                <div [formGroupName]="s">
+                                                    <section fxLayout="row" fxLayout.lt-md="column" fxLayoutGap.gt-sm="20px">
+
+                                                        <mat-form-field appearance="fill" class="mb-5" fxFlex.gt-sm="40">
+                                                            <mat-label>Data Maxima de Inscriere Timpurie</mat-label>
+                                                            <input matInput [matDatepicker]="picker" formControlName="max_inscriere">
+                                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                            <mat-datepicker #picker></mat-datepicker>
+                                                            <mat-error *ngIf="signup.get('max_inscriere').hasError('required')">Data
+                                                                inscriere timpurie necesara
+                                                            </mat-error>
+                                                        </mat-form-field>
+
+                                                        <mat-form-field appearance="fill" class="mb-5" fxFlex.gt-sm="20">
+                                                            <mat-label>Tip Discount Volum</mat-label>
+                                                            <mat-select formControlName="type">
+                                                                <mat-option value="fix">Fix</mat-option>
+                                                                <mat-option value="procent">Procent</mat-option>
+                                                            </mat-select>
+                                                            <mat-error *ngIf="signup.get('type').hasError('required')">Tipul de discount
+                                                                necesar
+                                                            </mat-error>
+                                                        </mat-form-field>
+
+                                                        <mat-form-field appearance="fill" fxFlex.gt-sm="20">
+                                                            <mat-label>Valoare Discount</mat-label>
+                                                            <input matInput type="number" formControlName="value" color="warn">
+                                                            <mat-error *ngIf="signup.get('value').hasError('required')">Valoare discount
+                                                                necesara </mat-error>
+                                                        </mat-form-field>
+
+                                                        <div fxFlex.gt-sm="20">
+                                                            <button type="button" mat-icon-button (click)="removeInscriere(curs, s)"
+                                                                    color="warn" fxFlex.gt-sm="20">
+                                                                <mat-icon>remove</mat-icon>
+                                                            </button>
+                                                        </div>
+
+                                                    </section>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- fidelitate -->
+                                    <div class="fidelitate-group">
+                                        <div class="group-header" fxLayout="row" fxLayoutAlign="start center">
+                                            <span class="text-dark">Fidelitate</span>
+                                            <button type="button" mat-icon-button (click)="addFidelitate(curs)" color="accent">
+                                                <mat-icon>add</mat-icon>
+                                            </button>
+                                        </div>
+                                        <mat-divider class="mb-10"></mat-divider>
+                                        <div formArrayName="fidelitate">
+                                            <p *ngIf="!curs.get('discounts.fidelitate')['controls'].length" class="text-gray">Adauga conditie de discount</p>
+                                            <div *ngFor="let fidel of curs.get('discounts.fidelitate')['controls']; let f=index">
+                                                <div [formGroupName]="f">
+                                                    <section fxLayout="row" fxLayout.lt-md="column" fxLayoutGap.gt-sm="20px">
+
+                                                        <mat-form-field appearance="fill" fxFlex.gt-sm="20">
+                                                            <mat-label>Numar de Participari</mat-label>
+                                                            <input matInput type="number" formControlName="participare" color="warn">
+                                                            <mat-error *ngIf="fidel.get('participare').hasError('required')">Numar de
+                                                                participari necesar</mat-error>
+                                                        </mat-form-field>
+
+                                                        <div class="checkbox-container" fxLayoutAlign="center center" fxFlex.gt-sm="40">
+                                                            <mat-checkbox formControlName="consecutiva">Consecutive
+                                                            </mat-checkbox>
+                                                        </div>
+
+                                                        <mat-form-field appearance="fill" class="mb-5" fxFlex.gt-sm="20">
+                                                            <mat-label>Tip Discount Volum</mat-label>
+                                                            <mat-select formControlName="type">
+                                                                <mat-option value="fix">Fix</mat-option>
+                                                                <mat-option value="procent">Procent</mat-option>
+                                                            </mat-select>
+                                                            <mat-error *ngIf="fidel.get('type').hasError('required')">Tipul de discount
+                                                                necesar
+                                                            </mat-error>
+                                                        </mat-form-field>
+
+                                                        <mat-form-field appearance="fill" fxFlex.gt-sm="20">
+                                                            <mat-label>Valoare Discount</mat-label>
+                                                            <input matInput type="number" formControlName="value" color="warn">
+                                                            <mat-error *ngIf="fidel.get('value').hasError('required')">Valoare discount
+                                                                necesara </mat-error>
+                                                        </mat-form-field>
+
+                                                        <div fxFlex.gt-sm="20">
+                                                            <button type="button" mat-icon-button (click)="removeFidelitate(curs, i)"
+                                                                    color="warn" fxFlex.gt-sm="20">
+                                                                <mat-icon>remove</mat-icon>
+                                                            </button>
+                                                        </div>
+
+                                                    </section>
+
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
 
                                 </div>

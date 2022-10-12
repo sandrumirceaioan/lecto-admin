@@ -267,8 +267,11 @@ export class SessionsCreateComponent implements OnInit, OnDestroy {
         })
       }),
 
-      selectDiscount: new FormControl(''),
-      discounts: this.fb.array([], [Validators.required]),
+      discounts: this.fb.group({
+        volum: this.fb.array(value.discounts && value.discounts.volum && value.discounts.volum.length ? value.discounts.volum.map(item => this.createVolum(item)) : []),
+        inscriere: this.fb.array(value.discounts && value.discounts.inscriere && value.discounts.inscriere.length ? value.discounts.inscriere.map(item => this.createInscriere(item)) : []),
+        fidelitate: this.fb.array(value.discounts && value.discounts.fidelitate && value.discounts.fidelitate.length ? value.discounts.fidelitate.map(item => this.createFidelitate(item)) : []),
+      }),
 
       selectTeacher: new FormControl(''),
       teachers: this.fb.array([], [Validators.required]),
@@ -337,25 +340,89 @@ export class SessionsCreateComponent implements OnInit, OnDestroy {
 
   // DISCOUNTS
 
-  onDiscountSelect(event, course) {
-    let discount = event.value;
-    const discountArray = course.get('discounts') as FormArray;
-    course.get('selectDiscount').patchValue('');
-
-    let index = discountArray.controls.findIndex((x) => x.value._id === discount._id);
-    if (index !== -1) {
-      this.alertService.danger('Discountul a fost deja adaugat');
-      return false;
-    }
-
-    const group = this.fb.control(discount);
-    discountArray.push(group);
+  // volum
+  createVolum(volum) {
+    return this.fb.group({
+      min_cursanti: volum.min_cursanti || null,
+      max_cursanti: volum.max_cursanti || null,
+      type: volum.type || null,
+      value: volum.value || null
+    });
   }
 
-  onDiscountRemove(teacher, course) {
-    const discountArray = course.get('discounts') as FormArray;
-    let index = discountArray.controls.findIndex((x) => x.value._id === teacher._id);
-    discountArray.removeAt(index);
+  addVolum(curs) {
+    const group = this.fb.group({
+      min_cursanti: new FormControl(null, [Validators.required]),
+      max_cursanti: new FormControl(null),
+      type: new FormControl(null, [Validators.required]),
+      value: new FormControl(null, [Validators.required])
+    })
+
+    const volumArray = curs.get('discounts.volum') as FormArray;
+    volumArray.push(group);
+  }
+
+  removeVolum(curs, index) {
+    let volumArray = curs.get('discounts.volum') as FormArray;
+    volumArray.removeAt(index);
+  }
+
+
+  // inscriere
+  createInscriere(inscriere) {
+    return this.fb.group({
+      max_inscriere: inscriere.max_inscriere || null,
+      type: inscriere.type || null,
+      value: inscriere.value || null
+    });
+  }
+
+  addInscriere(curs) {
+    const group = this.fb.group({
+      max_inscriere: new FormControl(null, [Validators.required]),
+      type: new FormControl(null, [Validators.required]),
+      value: new FormControl(null, [Validators.required])
+    })
+
+    const inscriereArray = curs.get('discounts.inscriere') as FormArray;
+    inscriereArray.push(group);
+  }
+
+  removeInscriere(curs, index) {
+    let inscriereArray = curs.get('discounts.inscriere') as FormArray;
+    inscriereArray.removeAt(index);
+  }
+
+
+  // fidelitate
+  createFidelitate(fidelitate) {
+    return this.fb.group({
+      participare: fidelitate.participare || null,
+      consecutiva: fidelitate.consecutiva || false,
+      type: fidelitate.type || null,
+      value: fidelitate.value || null
+    });
+  }
+
+  addFidelitate(curs) {
+    const group = this.fb.group({
+      participare: new FormControl(null, [Validators.required]),
+      consecutiva: new FormControl(null),
+      type: new FormControl(null, [Validators.required]),
+      value: new FormControl(null, [Validators.required]),
+    })
+
+    const fidelitateArray = curs.get('discounts.fidelitate') as FormArray;
+    fidelitateArray.push(group);
+  }
+
+  removeFidelitate(curs, index) {
+    let fidelitateArray = curs.get('discounts.fidelitate') as FormArray;
+    fidelitateArray.removeAt(index);
+  }
+
+  get discountFidelitate(): FormArray {
+    return this.cursuri.get('discounts.fidelitate') as FormArray;
   }
 
 

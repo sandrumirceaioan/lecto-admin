@@ -41,8 +41,8 @@
   .mat-column-details {
     word-wrap: break-word !important;
     white-space: unset !important;
-    flex: 0 0 25% !important;
-    width: 25% !important;
+    flex: 0 0 30% !important;
+    width: 30% !important;
     overflow-wrap: break-word;
     word-wrap: break-word;
   
@@ -52,6 +52,17 @@
     -moz-hyphens: auto;
     -webkit-hyphens: auto;
     hyphens: auto;
+    padding: 5px 0;
+
+    ul {
+      list-style: none;
+      margin: 0px;
+      padding: 0px;
+    }
+
+    .course-name {
+      text-decoration: underline;
+    }
   }
   
   .mat-column-status {
@@ -89,8 +100,8 @@
   .mat-column-createdAt {
     word-wrap: break-word !important;
     white-space: unset !important;
-    flex: 0 0 15% !important;
-    width: 15% !important;
+    flex: 0 0 10% !important;
+    width: 10% !important;
     overflow-wrap: break-word;
     word-wrap: break-word;
   

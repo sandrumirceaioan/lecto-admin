@@ -1,18 +1,28 @@
 import { Course, CourseCertification, CoursePrices } from "./course.model";
-import { Discount } from "./discount.model";
+import { Discount, DiscountFidelitate, DiscountInscriere, DiscountVolum } from "./discount.model";
+import { Location } from "./location.model";
 import { Teacher } from "./teacher.model";
 
 export type SessionType = "online" | "local";
 
 export interface SessionCourse {
-    course: Course;
+    data: Course
+    teachers: Teacher[];
+    discounts: {
+        volum: DiscountVolum[],
+        inscriere: DiscountInscriere[],
+        fidelitate: DiscountFidelitate[]
+    };
     options: {
-        discounts: Discount[];
-        teachers: Teacher[];
         certificare?: CourseCertification;
-        pret?: CoursePrices;
+        pret: CoursePrices;
     }
 };
+
+export class SessionLocation {
+    data: Location;
+    oferte: any[];
+}
 
 export interface Session {
     _id?: string;
@@ -31,7 +41,7 @@ export interface Session {
         end: Date;
     };
     cursuri?: SessionCourse[];
-    locatie?: Location;
+    locatie?: SessionLocation;
     createdBy?: any;
     createdAt?: Date;
 }

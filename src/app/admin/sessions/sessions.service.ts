@@ -79,7 +79,7 @@ export class SessionsService {
         return this.http.post(`${this.apiPath}/sessions/create`, session).pipe(
             map((result: any) => {
                 this.adminService.setLoading(false);
-                this.alertService.success('Sesiune salvats');
+                this.alertService.success('Sesiune salvata');
                 return result;
             }),
             catchError((error) => {

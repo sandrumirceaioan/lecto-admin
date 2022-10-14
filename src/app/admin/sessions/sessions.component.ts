@@ -55,8 +55,8 @@ export class SessionsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loading$ = this.adminService.loading$;
     this.sessionsSubjectSubcription = this.sessionsService.sessionsSubject.subscribe(data => {
-        this.initializeData(data.sessions);
-        this.sessionsTotal = data.total;
+      this.initializeData(data.sessions);
+      this.sessionsTotal = data.total;
     });
   }
 
@@ -95,6 +95,17 @@ export class SessionsComponent implements OnInit, OnDestroy {
     this.dataSource = new MatTableDataSource(sessions.length ? sessions : this.noData);
   }
 
+  getLocationBestOffer(oferte): number {
+    return (oferte.reduce((prev, curr) => {
+      return prev.valoare < curr.valoare ? prev : curr;
+    })).valoare;
+  }
+
+  getLocationWorstOffer(oferte): number {
+    return (oferte.reduce((prev, curr) => {
+      return prev.valoare > curr.valoare ? prev : curr;
+    })).valoare;
+  }
 
   public ngOnDestroy(): void {
     this.sessionsSubcription.unsubscribe();

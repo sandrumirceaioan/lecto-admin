@@ -100,33 +100,31 @@ export class SessionsCreateComponent implements OnInit, OnDestroy {
     this.sessionData = this.route.snapshot.data['data'] ? this.route.snapshot.data['data'] : null;
     this.mode = !this.session ? 'create' : 'edit';
 
-    console.log(this.sessionData);
-
     this.sessionGroup = this.fb.group({
-      titlu: new FormControl(null, [Validators.required]),
-      url: new FormControl(null, [Validators.required]),
-      type: new FormControl(null, [Validators.required]),
-      status: new FormControl(null, [Validators.required]),
-      descriere: new FormControl(null, [Validators.required]),
+      titlu: new FormControl(this.session && this.session.titlu ? this.session.titlu : null, [Validators.required]),
+      url: new FormControl(this.session && this.session.url ? this.session.url : null, [Validators.required]),
+      type: new FormControl(this.session && this.session.type ? this.session.type : null, [Validators.required]),
+      status: new FormControl(this.session && this.session.status ? this.session.status : (this.session && this.session.status === false ? false : null), [Validators.required]),
+      descriere: new FormControl(this.session && this.session.descriere ? this.session.descriere : null, [Validators.required]),
 
       inscriere: this.fb.group({
-        start: new FormControl(null),
-        end: new FormControl(null),
+        start: new FormControl(this.session && this.session.inscriere && this.session.inscriere.start ? this.session.inscriere.start : null, [Validators.required]),
+        end: new FormControl(this.session && this.session.inscriere && this.session.inscriere.end ? this.session.inscriere.end : null),
       }),
 
       perioada: this.fb.group({
-        start: new FormControl(null),
-        end: new FormControl(null),
+        start: new FormControl(this.session && this.session.perioada && this.session.perioada.start ? this.session.perioada.start : null),
+        end: new FormControl(this.session && this.session.perioada && this.session.perioada.end ? this.session.perioada.end : null),
       }),
 
       searchLocation: new FormControl(null),
       searchCourse: new FormControl(null),
 
-      cursuri: this.fb.array([], [Validators.required]),
+      cursuri: this.fb.array(this.session && this.session.cursuri && this.session.cursuri.length ? this.session.cursuri.map(item => this.createCourse(item)) : [], [Validators.required]),
 
       locatie: this.fb.group({
-        data: new FormControl(null),
-        oferte: this.fb.array([], [Validators.required])
+        data: new FormControl(this.session && this.session.locatie && this.session.locatie.data ? this.session.locatie.data : null),
+        oferte: this.fb.array(this.session && this.session.locatie && this.session.locatie.oferte && this.session.locatie.oferte.length ? this.session.locatie.oferte.map(item => this.createOffer(item)) : [])
       }),
     });
 
@@ -246,6 +244,36 @@ export class SessionsCreateComponent implements OnInit, OnDestroy {
 
 
   // COURSES GROUP
+  createCourse(course) {
+    return this.fb.group({
+      data: course.data,
+      options: this.fb.group({
+        certificare: this.fb.group({
+          anc: new FormControl(course && course.options && course.options.certificare && course.options.certificare.anc ? course.options.certificare.anc : null),
+          participare: new FormControl(course && course.options && course.options.certificare && course.options.certificare.participare ? course.options.certificare.participare : null)
+        }),
+        pret: this.fb.group({
+          anc: new FormControl(course && course.options && course.options.pret && course.options.pret.anc ? course.options.pret.anc : null),
+          participare: new FormControl(course && course.options && course.options.pret && course.options.pret.participare ? course.options.pret.participare : null)
+        })
+      }),
+
+      discounts: this.fb.group({
+        volum: this.fb.array(course.discounts && course.discounts.volum && course.discounts.volum.length ? course.discounts.volum.map(item => this.createVolum(item)) : []),
+        inscriere: this.fb.array(course.discounts && course.discounts.inscriere && course.discounts.inscriere.length ? course.discounts.inscriere.map(item => this.createInscriere(item)) : []),
+        fidelitate: this.fb.array(course.discounts && course.discounts.fidelitate && course.discounts.fidelitate.length ? course.discounts.fidelitate.map(item => this.createFidelitate(item)) : []),
+      }),
+
+      selectTeacher: new FormControl(''),
+      teachers: this.fb.array(course.teachers && course.teachers.length ? course.teachers.map(item => this.createTeacher(item)) : [], [Validators.required]),
+
+      toggleTeachers: false,
+      toggleOptions: false,
+      toggleDiscounts: false
+    });
+  }
+
+
   addCourse(value) {
     const coursesArray = this.sessionGroup.get('cursuri') as FormArray;
     let index = coursesArray.controls.findIndex((x) => x.value.data._id === value._id);
@@ -282,13 +310,11 @@ export class SessionsCreateComponent implements OnInit, OnDestroy {
     });
 
     coursesArray.push(group);
-    console.log(this.sessionGroup.value);
   }
 
   removeCourse(index) {
     let coursesArray = this.sessionGroup.get('cursuri') as FormArray;
     coursesArray.removeAt(index);
-    console.log(this.sessionGroup.value);
   }
 
   toggleCourse(course, type) {
@@ -316,6 +342,9 @@ export class SessionsCreateComponent implements OnInit, OnDestroy {
   }
 
   // TEACHERS
+  createTeacher(teacher) {
+    return this.fb.control(teacher);
+  }
 
   onTeacherSelect(event, course) {
     let teacher = event.value;
@@ -426,18 +455,15 @@ export class SessionsCreateComponent implements OnInit, OnDestroy {
   }
 
 
-
   // create/update session
   createSession() {
-    console.log(this.sessionGroup.value);
-
-    // let method = this.mode === 'create' ? 'createCourse' : 'updateCourseById';
-    // let params = this.mode === 'create' ? [this.courseForm.value] : [this.course._id, course];
+    let method = this.mode === 'create' ? 'createSession' : 'updateSessionById';
+    let params = this.mode === 'create' ? [this.sessionGroup.value] : [this.session._id, this.sessionGroup.value];
 
 
-    // this.saveSessionSubscription = this.sessionsService[method](...params).subscribe(() => {
-    //   if (this.mode === 'create') this.router.navigate(['/admin/cursuri']);
-    // });
+    this.saveSessionSubscription = this.sessionsService[method](...params).subscribe(() => {
+      if (this.mode === 'create') this.router.navigate(['/admin/cursuri']);
+    });
   }
 
   ngOnDestroy(): void {

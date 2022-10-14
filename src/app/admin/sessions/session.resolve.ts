@@ -14,7 +14,7 @@ export class SessionResolve implements Resolve<any> {
         const sessionId = route.params['id'];
 
         return forkJoin({
-            teacher: this.sessionsService.getSessionById(sessionId),
+            session: this.sessionsService.getSessionById(sessionId),
         }).pipe(
             map((result: any) => {
                 return result;

@@ -19,6 +19,7 @@ import { CoursesService } from '../../courses/courses.service';
 import { AlertService } from '@full-fledged/alerts';
 import { Teacher } from 'src/app/shared/models/teacher.model';
 import { Discount } from 'src/app/shared/models/discount.model';
+import { AuthService } from '../../../shared/services/auth.service';
 
 @Component({
   selector: 'app-courses-create',
@@ -69,6 +70,9 @@ export class SessionsCreateComponent implements OnInit, OnDestroy {
     imageDefaultMargin: 10,
     imageUpload: true,
     imageUploadMethod: 'POST',
+    requestHeaders: {
+      Authorization: `Bearer ${this.authService.getAccessToken()}`
+    },
     imageUploadURL: `${this.apiPath}/courses/content-image-upload`,
     paragraphFormat: {
       N: 'Normal',
@@ -87,6 +91,7 @@ export class SessionsCreateComponent implements OnInit, OnDestroy {
     private locationsService: LocationsService,
     private coursesService: CoursesService,
     private adminService: AdminService,
+    private authService: AuthService,
     private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,

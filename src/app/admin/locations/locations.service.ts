@@ -141,8 +141,6 @@ export class LocationsService {
     updateLocationById(id, location): Observable<Location> {
             this.adminService.setLoading(true);
             let formData = new FormData();
-
-            console.log(location);
     
             if (location.locatie) formData.append("locatie", location.locatie);
             if (location.url) formData.append("url", location.url);

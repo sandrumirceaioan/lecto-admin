@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "maxypress-admin": {
+    "lectoform-admin": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -84,10 +84,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "maxypress-admin:build:production"
+              "browserTarget": "lectoform-admin:build:production"
             },
             "development": {
-              "browserTarget": "maxypress-admin:build:development"
+              "browserTarget": "lectoform-admin:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -95,7 +95,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "maxypress-admin:build"
+            "browserTarget": "lectoform-admin:build"
           }
         },
         "test": {

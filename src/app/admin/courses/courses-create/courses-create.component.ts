@@ -13,6 +13,7 @@ import { CoursesService } from '../courses.service';
 import { Course } from '../../../shared/models/course.model';
 import { EditorModule } from '../../../shared/modules/editor.module';
 import { environment } from '../../../../environments/environment';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-courses-create',
@@ -62,6 +63,9 @@ export class CoursesCreateComponent implements OnInit, OnDestroy {
     imageDefaultMargin: 10,
     imageUpload: true,
     imageUploadMethod: 'POST',
+    requestHeaders: {
+      Authorization: `Bearer ${this.authService.getAccessToken()}`
+    },
     imageUploadURL: `${this.apiPath}/courses/content-image-upload`,
     paragraphFormat: {
       N: 'Normal',
@@ -78,6 +82,7 @@ export class CoursesCreateComponent implements OnInit, OnDestroy {
   constructor(
     private coursesService: CoursesService,
     private adminService: AdminService,
+    private authService: AuthService,
     private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,

@@ -19,8 +19,8 @@ export class AuthService {
     user$ = new Subject();
     currentUser: User;
 
-    private readonly maxy_at = "maxy_at";
-    private readonly maxy_rt = "maxy_rt";
+    private readonly lecto_at = "lecto_at";
+    private readonly lecto_rt = "lecto_rt";
 
     constructor(
         private http: HttpClient,
@@ -94,7 +94,6 @@ export class AuthService {
                 this.storeTokens(result.tokens);
             }),
             catchError((error) => {
-                console.log('Intra aici');
                 console.log(error.error.message);
                 this.logout();
                 return of(null);
@@ -106,11 +105,11 @@ export class AuthService {
     // helpers
 
     getAccessToken() {
-        return localStorage.getItem(this.maxy_at);
+        return localStorage.getItem(this.lecto_at);
     }
 
     private getRefreshToken() {
-        return localStorage.getItem(this.maxy_rt);
+        return localStorage.getItem(this.lecto_rt);
     }
 
     private doLoginUser(user?, tokens?) {
@@ -119,12 +118,12 @@ export class AuthService {
     }
 
     private storeTokens(tokens) {
-        localStorage.setItem(this.maxy_at, tokens.access_token);
-        localStorage.setItem(this.maxy_rt, tokens.refresh_token);
+        localStorage.setItem(this.lecto_at, tokens.access_token);
+        localStorage.setItem(this.lecto_rt, tokens.refresh_token);
     }
 
     private removeTokens() {
-        localStorage.removeItem(this.maxy_at);
-        localStorage.removeItem(this.maxy_rt);
+        localStorage.removeItem(this.lecto_at);
+        localStorage.removeItem(this.lecto_rt);
     }
 }

@@ -15,7 +15,7 @@ import { AlertModule, AlertService } from '@full-fledged/alerts';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'maxypress-admin';
+  title = 'lectoform-admin';
 
   constructor() { }
 

@@ -21,6 +21,7 @@ import { TeacherResolve } from './app/admin/teachers/teacher.resolve';
 import { CourseResolve } from './app/admin/courses/course.resolve';
 import { SessionResolve } from './app/admin/sessions/session.resolve';
 import { SessionDataResolve } from './app/admin/sessions/session-data.resolve';
+import { PageResolve } from './app/admin/pages/page.resolve';
 
 if (environment.production) {
   enableProdMode();
@@ -40,6 +41,7 @@ bootstrapApplication(AppComponent, {
     CourseResolve,
     SessionResolve,
     SessionDataResolve,
+    PageResolve,
     importProvidersFrom(
       BrowserModule,
       BrowserAnimationsModule,

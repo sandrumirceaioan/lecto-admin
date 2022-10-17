@@ -14,6 +14,7 @@ import { environment } from '../../../../environments/environment';
 import { MatDialog } from '@angular/material/dialog';
 import { ImageDialogComponent } from '../../../shared/components/dialogs/image-dialog/image-dialog.component';
 import { AdminService } from '../../admin.service';
+import { AuthService } from '../../../shared/services/auth.service';
 
 @Component({
   selector: 'app-locations-create',
@@ -68,6 +69,9 @@ export class LocationsCreateComponent implements OnInit, OnDestroy {
     imageDefaultMargin: 10,
     imageUpload: true,
     imageUploadMethod: 'POST',
+    requestHeaders: {
+      Authorization: `Bearer ${this.authService.getAccessToken()}`
+    },
     imageUploadURL: `${this.apiPath}/locations/content-image-upload`,
     paragraphFormat: {
       N: 'Normal',
@@ -84,6 +88,7 @@ export class LocationsCreateComponent implements OnInit, OnDestroy {
   constructor(
     private locationsService: LocationsService,
     private adminService: AdminService,
+    private authService: AuthService,
     private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,

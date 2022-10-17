@@ -1,75 +1,42 @@
 <div class="content" flexLayout="column">
 
-    <form [formGroup]="courseForm" fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="25px">
+    <form [formGroup]="pageForm" fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="25px">
         <mat-card fxFlex="50" fxFlex.lt-sm="100" fxFill="false">
             <section fxLayout="column">
 
-                <h2 class="text-accent">Informatii Generale Curs</h2>
+                <h2 class="text-accent">Informatii Generale Pagina</h2>
                 <mat-divider class="mb-20"></mat-divider>
 
-                <!-- titlu curs -->
+                <!-- titlu pagina -->
                 <mat-form-field appearance="fill" class="mb-5">
                     <mat-label>Titlu</mat-label>
-                    <input matInput formControlName="titlu" (change)="convertToUrl(courseForm.get('titlu').value)" />
-                    <mat-error *ngIf="courseForm.get('titlu').hasError('required')">Titlu curs necesar</mat-error>
+                    <input matInput formControlName="titlu" (change)="convertToUrl(pageForm.get('titlu').value)" />
+                    <mat-error *ngIf="pageForm.get('titlu').hasError('required')">Titlu pagina necesar</mat-error>
                 </mat-form-field>
 
-                <!-- URL curs -->
+                <!-- URL pagina -->
                 <mat-form-field appearance="fill" class="mb-5">
                     <mat-label>URL</mat-label>
                     <input matInput formControlName="url" />
-                    <mat-error *ngIf="courseForm.get('url').hasError('required')">URL curs necesara
+                    <mat-error *ngIf="pageForm.get('url').hasError('required')">URL pagina necesara
                     </mat-error>
                 </mat-form-field>
 
-                <!-- certificare curs -->
-                <div formGroupName="certificare" fxFlex fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px"
-                    class="mb-15">
-                    <div class="checkbox-container" fxLayoutAlign="center center" fxFlex>
-                        <mat-checkbox formControlName="anc">Certificat
-                            ANC
-                        </mat-checkbox>
-                    </div>
-
-                    <div class="checkbox-container" fxLayoutAlign="center center" fxFlex>
-                        <mat-checkbox formControlName="participare">
-                            Certificat Participare
-                        </mat-checkbox>
-                    </div>
-                </div>
-
-                <!-- pret curs -->
-                <div formGroupName="pret" fxFlex fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px"
-                    class="mb-15">
-                    <mat-form-field appearance="fill" class="mb-5" fxFlex>
-                        <mat-label>Pret Certificat ANC</mat-label>
-                        <input type="number" matInput formControlName="anc" />
-                        <mat-error *ngIf="courseForm.get('pret.anc').hasError('required')">Pret necesar
-                        </mat-error>
-                    </mat-form-field>
-                    <mat-form-field appearance="fill" class="mb-5" fxFlex>
-                        <mat-label>Pret Certificat Participare</mat-label>
-                        <input type="number" matInput formControlName="participare" />
-                        <mat-error *ngIf="courseForm.get('pret.participare').hasError('required')">Pret necesar
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-
-                <!-- location status -->
+                <!-- status pagina -->
                 <mat-form-field appearance="fill" class="mb-5">
                     <mat-label>Status</mat-label>
                     <mat-select formControlName="status">
                         <mat-option [value]="true">Activ</mat-option>
                         <mat-option [value]="false">Inactiv</mat-option>
                     </mat-select>
-                    <mat-error *ngIf="courseForm.get('status').hasError('required')">Statusul cursului este necesar
+                    <mat-error *ngIf="pageForm.get('status').hasError('required')">Status pagina necesar
                     </mat-error>
                 </mat-form-field>
 
-                <h2 class="text-accent">Imagine Curs</h2>
+                <h2 class="text-accent">Imagine/Banner Pagina</h2>
                 <mat-divider class="mb-20"></mat-divider>
 
-                <!-- imagine curs -->
+                <!-- imagine pagina -->
                 <div class="files-upload mb-20" fxLayout="column">
                     <label for="dzone" appDnd (fileDropped)="onDroppedFiles($event)">
                         <div class="files-selector" fxFlex fxLayoutAlign="center center">
@@ -112,21 +79,20 @@
 
         <mat-card fxFlex="50" fxFlex.lt-sm="100" fxFill="false">
             <section fxLayout="column">
-                <h2 class="text-accent">Descriere Curs <small *ngIf="courseForm.get('titlu').value"
-                        class="text-gray">({{courseForm.get('titlu').value}})</small></h2>
+                <h2 class="text-accent">Descriere Pagina <small *ngIf="pageForm.get('titlu').value"
+                        class="text-gray">({{pageForm.get('titlu').value}})</small></h2>
                 <mat-divider class="mb-20"></mat-divider>
 
-                <!-- location content -->
+                <!-- descriere pagina -->
                 <textarea [froalaEditor]="froalaOptions" formControlName="descriere"></textarea>
-                <mat-error *ngIf="courseForm.get('titlu').touched && courseForm.get('descriere').hasError('required')">
-                    <small>Descrierea cursului este
-                        necesara</small>
+                <mat-error *ngIf="pageForm.get('titlu').touched && pageForm.get('descriere').hasError('required')">
+                    <small>Descriere pagina necesara</small>
                 </mat-error>
             </section>
 
             <section fxLayout="row" fxLayoutAlign="end center" fxLayoutAlign.lt-sm="center center">
-                <button mat-flat-button color="accent" [disabled]="!courseForm.valid || (loading$ | async)"
-                    class="save-button create-contract-btn p-10" (click)="createCourse()" fxLayout="row"
+                <button mat-flat-button color="accent" [disabled]="!pageForm.valid || (loading$ | async)"
+                    class="save-button create-contract-btn p-10" (click)="createPage()" fxLayout="row"
                     fxLayoutAlign="center center" fxFill>
                     <mat-spinner *ngIf="loading$ | async" class="text-white" diameter="20"></mat-spinner>
                     <span *ngIf="!(loading$ | async)">Salveaza</span>

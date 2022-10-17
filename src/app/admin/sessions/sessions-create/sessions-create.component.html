@@ -185,7 +185,7 @@
 
                     <div formArrayName="cursuri" *ngFor="let curs of cursuri.controls; let i=index;" class="selected-course">
 
-                        <div [formGroupName]="i" *ngIf="curs.get('data').value" fxLayout="column" fxFlex>
+                        <div [formGroupName]="i" *ngIf="curs.get('data').value" fxLayout="column">
                             <div class="info" fxLayout="row">
                                 <div class="imagine">
                                     <img [src]="curs.get('data').value.imagine.small">
@@ -454,8 +454,7 @@
                                 <div class="options-container" fxLayout="column" fxLayout.lt-md="column" fxLayoutGap="15px" *ngIf="curs.get('toggleOptions').value">
 
                                     <!-- pret -->
-                                    <div class="options-form mb-0">
-                                        <div formGroupName="pret" fxFlex fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
+                                        <div formGroupName="pret" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
                                             <mat-form-field appearance="fill" class="mb-5" fxFlex>
                                                 <mat-label>Pret Certificat ANC</mat-label>
                                                 <input type="number" matInput formControlName="anc" />
@@ -473,7 +472,6 @@
                                                 </mat-error>
                                             </mat-form-field>
                                         </div>
-                                    </div>
                                     <p class="text-gray" *ngIf="!curs.get('options.pret.anc').value && curs.get('options.pret.participare')" fxFlex>* Nu ai adaugat preturi optionale - se aplica preturile cursului original
                                     </p>
                                 </div>

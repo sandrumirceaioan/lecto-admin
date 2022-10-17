@@ -15,25 +15,30 @@ export const AdminRoutes: Routes = [
                 loadChildren: () => import('./users/users.routes').then(m => m.UsersRoutes),
             },
             {
-                path: 'cursuri',
-                loadChildren: () => import('./courses/course.routes').then(m => m.CoursesRoutes),
+                path: 'profesori',
+                loadChildren: () => import('./teachers/teachers.routes').then(m => m.TeachersRoutes),
             },
             {
                 path: 'locatii',
                 loadChildren: () => import('./locations/locations.routes').then(m => m.LocationsRoutes),
             },
             {
+                path: 'cursuri',
+                loadChildren: () => import('./courses/course.routes').then(m => m.CoursesRoutes),
+            },
+            {
                 path: 'sesiuni',
                 loadChildren: () => import('./sessions/session.routes').then(m => m.SessionsRoutes),
             },
             {
-                path: 'profesori',
-                loadChildren: () => import('./teachers/teachers.routes').then(m => m.TeachersRoutes),
+                path: 'pagini',
+                loadChildren: () => import('./pages/pages.routes').then(m => m.PagesRoutes),
             },
-            {
-                path: 'discounturi',
-                loadChildren: () => import('./discounts/discounts.routes').then(m => m.DiscountsRoutes),
-            },
+
+            // {
+            //     path: 'discounturi',
+            //     loadChildren: () => import('./discounts/discounts.routes').then(m => m.DiscountsRoutes),
+            // },
             {
                 path: '**',
                 redirectTo: '/admin/utilizatori'

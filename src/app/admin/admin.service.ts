@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, delay } from 'rxjs';
 import { SideMenuItem, UserRoles } from '../shared/models/layout.model';
 
-
 @Injectable({
     providedIn: 'root'
 })
@@ -10,17 +9,13 @@ export class AdminService {
     public loading$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
     private sideMenuItems: SideMenuItem[] = [
-        // { path: 'sites', title: 'Sites', icon: 'language', allow: [UserRoles.admin, UserRoles.user] },
-        // { path: 'categories', title: 'Categories', icon: 'article', allow: [UserRoles.admin, UserRoles.user] },
-        // { path: 'articles', title: 'Articles', icon: 'wysiwyg', allow: [UserRoles.admin, UserRoles.user] },
-        // { path: 'widgets', title: 'Widgets', icon: 'widgets', allow: [UserRoles.admin, UserRoles.user] },
-        { path: 'utilizatori', title: 'Utilizatori', icon: 'people', allow: [UserRoles.admin] },
-        { path: 'profesori', title: 'Profesori', icon: 'school', allow: [UserRoles.admin] },
-        { path: 'locatii', title: 'Locatii', icon: 'place', allow: [UserRoles.admin] },
-        { path: 'cursuri', title: 'Cursuri', icon: 'folder_special', allow: [UserRoles.admin] },
-        { path: 'sesiuni', title: 'Sesiuni', icon: 'date_range', allow: [UserRoles.admin] },
-        { path: 'pagini', title: 'Pagini', icon: 'pages', allow: [UserRoles.admin] },
-        // { path: 'discounturi', title: 'Discounturi', icon: 'money_off', allow: [UserRoles.admin] },
+        { path: 'utilizatori', title: 'Utilizatori', icon: 'people', allow: [UserRoles.admin, UserRoles.user] },
+        { path: 'profesori', title: 'Profesori', icon: 'school', allow: [UserRoles.admin, UserRoles.user] },
+        { path: 'locatii', title: 'Locatii', icon: 'place', allow: [UserRoles.admin, UserRoles.user] },
+        { path: 'cursuri', title: 'Cursuri', icon: 'folder_special', allow: [UserRoles.admin, UserRoles.user] },
+        { path: 'sesiuni', title: 'Sesiuni', icon: 'date_range', allow: [UserRoles.admin, UserRoles.user] },
+        { path: 'pagini', title: 'Pagini', icon: 'pages', allow: [UserRoles.admin, UserRoles.user] },
+        // { path: 'setari', title: 'Setari', icon: 'settings', allow: [UserRoles.admin] },
     ];
 
     constructor() { }

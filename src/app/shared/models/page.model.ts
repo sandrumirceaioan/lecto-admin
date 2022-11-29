@@ -1,4 +1,4 @@
-export interface PageImage {
+export interface CourseImage {
     name: string;
     file: any;
     small?: string;
@@ -9,7 +9,7 @@ export interface Page {
     _id?: string;
     titlu: string;
     url: string;
-    imagine: PageImage;
+    imagine: CourseImage;
     descriere: string;
     status: boolean;
     createdBy?: any;

@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { MaterialModule } from '../../modules/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -13,8 +12,7 @@ import { RouterModule } from '@angular/router';
   imports: [
     CommonModule,
     MaterialModule,
-    FlexLayoutModule,
-    RouterModule
+    FlexLayoutModule
   ],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']

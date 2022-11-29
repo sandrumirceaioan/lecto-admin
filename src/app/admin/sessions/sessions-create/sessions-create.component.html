@@ -113,49 +113,53 @@
                         </mat-autocomplete>
                     </mat-form-field>
 
+                    <div formGroupName="locatie" fxLayout="column">
 
-                    <div formArrayName="locatii" *ngFor="let loc of locatii.controls; let i=index;" class="selected-course">
-                        <div [formGroupName]="i" *ngIf="loc.get('data').value" fxLayout="column">
+                        <div class="selected-location" *ngIf="locatie.get('data').value" fxLayout="column" fxFlex>
                             <div class="info" fxLayout="row">
                                 <div class="imagine">
-                                    <img [src]="loc.get('data').value.imagine.small">
+                                    <img [src]="locatie.get('data').value.imagine.small">
                                 </div>
                                 <div class="descriere">
-                                    <span class="name">{{loc.get('data').value.locatie}}</span><br />
-                                    <span class="city">{{loc.get('data').value.oras}},
-                                        {{loc.get('data').value.judet}}</span>
+                                    <span class="name">{{locatie.get('data').value.locatie}}</span><br />
+                                    <span class="city">{{locatie.get('data').value.oras}},
+                                        {{locatie.get('data').value.judet}}</span>
                                 </div>
                             </div>
 
-                            <!-- offers -->
                             <div class="offers" formArrayName="oferte">
-                                <p class="text-gray" *ngIf="!loc.get('oferte').value.length">Adauga oferta de cazare</p>
-                                <div *ngFor="let oferta of loc.get('oferte').value; let j=index">
-                                    <div [formGroupName]="j">
+                                <p class="text-gray" *ngIf="!oferte.controls.length">Adauga oferta de cazare</p>
+                                <div *ngFor="let oferta of oferte.controls; let i=index">
+                                    <div [formGroupName]="i">
                                         <section fxLayout="row" fxLayout.lt-md="column" fxLayoutGap.gt-sm="20px">
                                             <mat-form-field appearance="fill" fxFlex.gt-sm="60">
                                                 <mat-label>Descriere oferta cazare</mat-label>
                                                 <input matInput type="text" formControlName="nume" color="warn">
+                                                <mat-error *ngIf="oferta.get('nume').hasError('required')">Descriere
+                                                    oferta
+                                                    necesara </mat-error>
                                             </mat-form-field>
 
                                             <mat-form-field appearance="fill" hideRequiredMarker="true" fxFlex.gt-sm="20">
                                                 <mat-label>Pret oferta cazare</mat-label>
                                                 <input matInput type="number" formControlName="valoare" color="warn">
+                                                <mat-error *ngIf="oferta.get('valoare').hasError('required')">Pret
+                                                    oferta
+                                                    necesar </mat-error>
                                             </mat-form-field>
 
                                             <div fxFlex.gt-sm="20">
-                                                <button type="button" mat-icon-button (click)="removeOffer(loc,j)" color="warn">
+                                                <button type="button" mat-icon-button (click)="removeOffer(i)" color="warn">
                                                     <mat-icon>remove</mat-icon>
                                                 </button>
                                             </div>
                                         </section>
                                     </div>
                                 </div>
-                                <button type="button" mat-icon-button (click)="addOffer(loc)" color="accent">
+                                <button type="button" mat-icon-button (click)="addOffer()" color="accent">
                                     <mat-icon>add</mat-icon>
                                 </button>
                             </div>
-
                         </div>
                     </div>
                 </section>
@@ -450,24 +454,24 @@
                                 <div class="options-container" fxLayout="column" fxLayout.lt-md="column" fxLayoutGap="15px" *ngIf="curs.get('toggleOptions').value">
 
                                     <!-- pret -->
-                                    <div formGroupName="pret" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
-                                        <mat-form-field appearance="fill" class="mb-5" fxFlex>
-                                            <mat-label>Pret Certificat ANC</mat-label>
-                                            <input type="number" matInput formControlName="anc" />
-                                            <mat-error *ngIf="curs.get('options.pret.anc').hasError('required')">
-                                                Pret
-                                                necesar
-                                            </mat-error>
-                                        </mat-form-field>
-                                        <mat-form-field appearance="fill" class="mb-5" fxFlex>
-                                            <mat-label>Pret Certificat Participare</mat-label>
-                                            <input type="number" matInput formControlName="participare" />
-                                            <mat-error *ngIf="curs.get('options.pret.participare').hasError('required')">
-                                                Pret
-                                                necesar
-                                            </mat-error>
-                                        </mat-form-field>
-                                    </div>
+                                        <div formGroupName="pret" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
+                                            <mat-form-field appearance="fill" class="mb-5" fxFlex>
+                                                <mat-label>Pret Certificat ANC</mat-label>
+                                                <input type="number" matInput formControlName="anc" />
+                                                <mat-error *ngIf="curs.get('options.pret.anc').hasError('required')">
+                                                    Pret
+                                                    necesar
+                                                </mat-error>
+                                            </mat-form-field>
+                                            <mat-form-field appearance="fill" class="mb-5" fxFlex>
+                                                <mat-label>Pret Certificat Participare</mat-label>
+                                                <input type="number" matInput formControlName="participare" />
+                                                <mat-error *ngIf="curs.get('options.pret.participare').hasError('required')">
+                                                    Pret
+                                                    necesar
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
                                     <p class="text-gray" *ngIf="!curs.get('options.pret.anc').value && curs.get('options.pret.participare')" fxFlex>* Nu ai adaugat preturi optionale - se aplica preturile cursului original
                                     </p>
                                 </div>

@@ -1,8 +1,8 @@
-<div class="content" flexLayout="column">
+<div class="content fx-column">
 
   <form [formGroup]="userForm">
-    <mat-card fxFlex="50" fxFlex.lt-sm="100">
-      <section fxLayout="column">
+    <mat-card class="fx-column fx-50 fx-lt-sm-100" fxFlex.lt-sm="100">
+      <section class="fx-column">
         <mat-form-field appearance="fill" class="mt-10 mb-5">
           <mat-label>Nume</mat-label>
           <input matInput formControlName="lastName">
@@ -45,12 +45,13 @@
 
       <section fxLayout="row" fxLayoutAlign="end center" fxLayoutAlign.lt-sm="center center">
         <button mat-flat-button color="accent" [disabled]="!userForm.valid || (loading$ | async)"
-          class="save-button create-contract-btn p-10" (click)="updateCategory()" fxLayout="row"
-          fxLayoutAlign="center center" fxFill>
+                class="save-button create-contract-btn p-10" (click)="updateCategory()" fxLayout="row"
+                fxLayoutAlign="center center" fxFill>
           <mat-spinner *ngIf="loading$ | async" class="text-white" diameter="20"></mat-spinner>
           <span *ngIf="!(loading$ | async)">Salveaza</span>
         </button>
       </section>
     </mat-card>
+
   </form>
 </div>

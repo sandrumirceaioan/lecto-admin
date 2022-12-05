@@ -1,13 +1,13 @@
-<div class="auth-container" fxLayout="column" fxLayoutAlign="center center">
-    <mat-card class="auth-card mat-elevation-z5">
-        <mat-card-title fxLayout="column" fxLayoutAlign="center center">
-            <img src="./assets/images/lectoform-logo.webp" alt="lectoform">
+<div class="auth-container fx-column fx-layout-center-center">
+    <mat-card class="auth-card mat-elevation-z5 fx-column">
+        <mat-card-title class="fx-column fx-layout-center-center">
+            <img src="./assets/images/lectoform-logo-new.webp" alt="lectoform" class="mt-30 mb-30">
         </mat-card-title>
 
         <form [formGroup]="registerForm" (ngSubmit)="register()">
-            <mat-card-content fxLayout="column">
+            <mat-card-content class="fx-column">
 
-                <mat-form-field appearance="fill" class="mt-10 mb-5">
+                <mat-form-field appearance="fill" class="mb-5">
                     <mat-label>Nume</mat-label>
                     <input matInput formControlName="lastName">
                     <mat-icon color="primary" matPrefix class="mr-5">person</mat-icon>
@@ -42,7 +42,7 @@
                     </mat-error>
                 </mat-form-field>
 
-                <mat-form-field appearance="fill" class="mb-10">
+                <mat-form-field appearance="fill" class="mb-5">
                     <mat-label>Retype Password</mat-label>
                     <input matInput formControlName="passwordRepeat" [type]="showRPasswordText ? 'password' : 'text'"
                         required>
@@ -62,7 +62,7 @@
         </form>
 
     </mat-card>
-    <div class="auth-options" fxLayoutAlign="end center">
+    <div class="auth-options fx-row fx-layout-end-center">
         <a href="" class="text-dark" routerLink="/auth/login">Login</a>
     </div>
 

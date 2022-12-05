@@ -7,7 +7,6 @@ import { MaterialModule } from '../../../shared/modules/material.module';
 import { Observable, Subscription } from 'rxjs';
 import { UsersService } from '../users.service';
 import { User } from '../../../shared/models/user.model';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { AdminService } from '../../admin.service';
 
@@ -18,7 +17,6 @@ import { AdminService } from '../../admin.service';
     CommonModule,
     MaterialModule,
     FormsModule,
-    FlexLayoutModule,
     ReactiveFormsModule
   ],
   templateUrl: './users-edit.component.html',

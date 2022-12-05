@@ -1,0 +1,1968 @@
+/*
+    -------------------------------------------------------------------------------------------
+    # MAIN AXIS / CROSS AXIS
+    -------------------------------------------------------------------------------------------
+
+        * main axis is set by flex-diraction
+        * cros axis is always perpendicular to the main axis
+        * eg. flex-direction: row ---> MAIN Axis is Horizontally; CROSS Axis is Vertically;
+        * eg. flex-direction: column ---> MAIN Axis is Vertically; CROSS Axis is Horizontally;
+
+    -------------------------------------------------------------------------------------------
+    # FLEX CONTAINER PROPERTIES
+    -------------------------------------------------------------------------------------------
+
+        1. display: flex;
+            * defines a flex container
+            * any item inside flex container si a flex item
+
+        2. flex-direction: row / column / row-reverse / column-reverse; 
+            * default row
+
+        3. flex-wrap: nowrap / wrap / wrap-reverse; 
+            * default wrap
+
+        4. flex-flow: row wrap;
+            * combine "flex-direction" with "flex-wrap"
+
+        5. justify-content: flex-start / flex-end / center / space-between / space-around / space-evenly; 
+            * default flex-start
+            * defines how space is used along the MAIN Axis
+            * padding affects space-evenly, adding more space around than the space in between
+
+        6. align-items: flex-start / flex-end / center / stretch / baseline;
+            * default stretch
+            * defines how we space items along CROS Axis
+
+        7. align-content: flex-start / flex-end / center / space-around / space-between / stretch;
+            * defines how we space content (between and around) along CROS Axis
+            * controls space between flex lines on the CROSS Axis
+
+    -------------------------------------------------------------------------------------------
+    # FLEX ITEM PROPERTIES
+    -------------------------------------------------------------------------------------------
+
+        1. order: 0;
+            * default is 0
+            * defines items order
+            * lower numbers pushed at the start; higher numbers pushed at the end
+
+        2. flex-grow: 0;
+            * default 0
+            * tell items how to grow to use available space
+            * tell how much item it will use from the remaining space
+
+
+        3. flex-shrik: 1;
+            * tell items at what rate they should shrink
+            * default 1 (means all the items shrink at an even rate)
+            * if we have 4 flex items, 3 of them with shrink 1 and another one with shrink 2, the one with   shrink 2 will shring faster than the others.
+            * use 0 for no shrink
+
+        4. flex-basis: 0 / 100px / 100% / auto;
+            * think of it as the size of flex items
+            * if no flex-basis is specified, the size of items falls back to width, and if no width is specified falls back to the item's content
+            * flex-basis is limited/overwrited by min-width and max-width
+            * can be used when flex items overflowing container, together with flex-shrink
+
+        5. flex: [grow] [shrink] [basis];
+            * combines flex-grow, flex-shrink, flex-basis
+
+        6. align-self: flex-start / flex-end / center;
+            * specify position of a specific flex item along CROS Axis
+
+    -----------------------------------------------------------------------------------------
+    # Source: https://www.youtube.com/watch?v=-DNLYk5uzl8
+    ----------------------------------------------------------------------------------------- 
+*/
+/* FLEX CONTAINER CLASSES */
+/* display */
+.fx {
+    display: flex !important;
+  }
+  
+  /* flex-direction */
+  .fx-row {
+    display: flex !important;
+    flex-direction: row;
+  }
+  
+  .fx-column {
+    display: flex !important;
+    flex-direction: column;
+  }
+  
+  .fx-row-reverse {
+    display: flex !important;
+    flex-direction: row-reverse;
+  }
+  
+  .fx-column-reverse {
+    display: flex !important;
+    flex-direction: column-reverse;
+  }
+  
+  /* flex-wrap */
+  .fx-wrap {
+    flex-wrap: wrap;
+  }
+  
+  .fx-nowrap {
+    flex-wrap: nowrap;
+  }
+  
+  .fx-wrap-reverse {
+    flex-wrap: wrap-reverse;
+  }
+  
+  /* justify-content */
+  .fx-justify-flex-start {
+    justify-content: flex-start;
+  }
+  
+  .fx-justify-flex-end {
+    justify-content: flex-end;
+  }
+  
+  .fx-justify-center {
+    justify-content: center;
+  }
+  
+  .fx-justify-space-between {
+    justify-content: space-between;
+  }
+  
+  .fx-justify-space-around {
+    justify-content: space-around;
+  }
+  
+  .fx-justify-space-evenly {
+    justify-content: space-evenly;
+  }
+  
+  /* align-items */
+  .fx-align-flex-start {
+    align-items: flex-start;
+  }
+  
+  .fx-align-flex-end {
+    align-items: flex-end;
+  }
+  
+  .fx-align-center {
+    align-items: center;
+  }
+  
+  .fx-align-baseline {
+    align-items: baseline;
+  }
+  
+  .fx-align-stretch {
+    align-items: stretch;
+  }
+  
+  /* align-content */
+  .fx-content-flex-start {
+    align-content: flex-start;
+  }
+  
+  .fx-content-flex-end {
+    align-content: flex-end;
+  }
+  
+  .fx-content-center {
+    align-content: center;
+  }
+  
+  .fx-content-space-between {
+    align-content: space-between;
+  }
+  
+  .fx-content-space-around {
+    align-content: space-around;
+  }
+  
+  .fx-content-space-evenly {
+    align-content: space-evenly;
+  }
+  
+  .fx-content-stretch {
+    align-content: stretch;
+  }
+  
+  /* justify-content and align-items */
+  .fx-layout-start-start {
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+  
+  .fx-layout-start-end {
+    justify-content: flex-start;
+    align-items: flex-end;
+  }
+  
+  .fx-layout-start-center {
+    justify-content: flex-start;
+    align-items: center;
+  }
+  
+  .fx-layout-start-baseline {
+    justify-content: flex-start;
+    align-items: baseline;
+  }
+  
+  .fx-layout-start-stretch {
+    justify-content: flex-start;
+    align-items: stretch;
+  }
+  
+  .fx-layout-end-start {
+    justify-content: flex-end;
+    align-items: flex-start;
+  }
+  
+  .fx-layout-end-end {
+    justify-content: flex-end;
+    align-items: flex-end;
+  }
+  
+  .fx-layout-end-center {
+    justify-content: flex-end;
+    align-items: center;
+  }
+  
+  .fx-layout-end-baseline {
+    justify-content: flex-end;
+    align-items: baseline;
+  }
+  
+  .fx-layout-end-stretch {
+    justify-content: flex-end;
+    align-items: stretch;
+  }
+  
+  .fx-layout-center-start {
+    justify-content: center;
+    align-items: flex-start;
+  }
+  
+  .fx-layout-center-end {
+    justify-content: center;
+    align-items: flex-end;
+  }
+  
+  .fx-layout-center-center {
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .fx-layout-center-baseline {
+    justify-content: center;
+    align-items: baseline;
+  }
+  
+  .fx-layout-center-stretch {
+    justify-content: center;
+    align-items: stretch;
+  }
+  
+  .fx-layout-between-start {
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  
+  .fx-layout-between-end {
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  
+  .fx-layout-between-center {
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .fx-layout-between-baseline {
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  
+  .fx-layout-between-stretch {
+    justify-content: space-between;
+    align-items: stretch;
+  }
+  
+  .fx-layout-around-start {
+    justify-content: space-around;
+    align-items: flex-start;
+  }
+  
+  .fx-layout-around-end {
+    justify-content: space-around;
+    align-items: flex-end;
+  }
+  
+  .fx-layout-around-center {
+    justify-content: space-around;
+    align-items: center;
+  }
+  
+  .fx-layout-around-baseline {
+    justify-content: space-around;
+    align-items: baseline;
+  }
+  
+  .fx-layout-around-stretch {
+    justify-content: space-around;
+    align-items: stretch;
+  }
+  
+  .fx-layout-evenly-start {
+    justify-content: space-evenly;
+    align-items: flex-start;
+  }
+  
+  .fx-layout-evenly-end {
+    justify-content: space-evenly;
+    align-items: flex-end;
+  }
+  
+  .fx-layout-evenly-center {
+    justify-content: space-evenly;
+    align-items: center;
+  }
+  
+  .fx-layout-evenly-baseline {
+    justify-content: space-evenly;
+    align-items: baseline;
+  }
+  
+  .fx-layout-evenly-stretch {
+    justify-content: space-evenly;
+    align-items: stretch;
+  }
+  
+  /* FLEX ITEM CLASSES */
+  /* order */
+  .fx-order-0 {
+    order: 0;
+  }
+  
+  .fx-order-1 {
+    order: 1;
+  }
+  
+  .fx-order-2 {
+    order: 2;
+  }
+  
+  .fx-order-3 {
+    order: 3;
+  }
+  
+  .fx-order-4 {
+    order: 4;
+  }
+  
+  .fx-order-5 {
+    order: 5;
+  }
+  
+  .fx-order-6 {
+    order: 6;
+  }
+  
+  .fx-order-7 {
+    order: 7;
+  }
+  
+  .fx-order-8 {
+    order: 8;
+  }
+  
+  .fx-order-9 {
+    order: 9;
+  }
+  
+  .fx-order-10 {
+    order: 10;
+  }
+  
+  /* flex-grow */
+  .fx-grow-0 {
+    flex-grow: 0;
+  }
+  
+  .fx-grow-1 {
+    flex-grow: 1;
+  }
+  
+  .fx-grow-2 {
+    flex-grow: 2;
+  }
+  
+  .fx-grow-3 {
+    flex-grow: 3;
+  }
+  
+  .fx-grow-4 {
+    flex-grow: 4;
+  }
+  
+  .fx-grow-5 {
+    flex-grow: 5;
+  }
+  
+  .fx-grow-6 {
+    flex-grow: 6;
+  }
+  
+  .fx-grow-7 {
+    flex-grow: 7;
+  }
+  
+  .fx-grow-8 {
+    flex-grow: 8;
+  }
+  
+  .fx-grow-9 {
+    flex-grow: 9;
+  }
+  
+  .fx-grow-10 {
+    flex-grow: 10;
+  }
+  
+  /* flex-shrink */
+  .fx-shrink-0 {
+    flex-grow: 0;
+  }
+  
+  .fx-shrink-1 {
+    flex-grow: 1;
+  }
+  
+  .fx-shrink-2 {
+    flex-grow: 2;
+  }
+  
+  .fx-shrink-3 {
+    flex-grow: 3;
+  }
+  
+  .fx-shrink-4 {
+    flex-grow: 4;
+  }
+  
+  .fx-shrink-5 {
+    flex-grow: 5;
+  }
+  
+  .fx-shrink-6 {
+    flex-grow: 6;
+  }
+  
+  .fx-shrink-7 {
+    flex-grow: 7;
+  }
+  
+  .fx-shrink-8 {
+    flex-grow: 8;
+  }
+  
+  .fx-shrink-9 {
+    flex-grow: 9;
+  }
+  
+  .fx-shrink-10 {
+    flex-grow: 10;
+  }
+  
+  /* flex */
+  .fx-flex-0-0-auto {
+    flex: 0 0 auto;
+  }
+  
+  .fx-flex-0-0-5p {
+    flex: 0 0 5%;
+  }
+  
+  .fx-flex-0-0-50px {
+    flex: 0 0 50px;
+  }
+  
+  .fx-flex-0-0-10p {
+    flex: 0 0 10%;
+  }
+  
+  .fx-flex-0-0-100px {
+    flex: 0 0 100px;
+  }
+  
+  .fx-flex-0-0-15p {
+    flex: 0 0 15%;
+  }
+  
+  .fx-flex-0-0-150px {
+    flex: 0 0 150px;
+  }
+  
+  .fx-flex-0-0-20p {
+    flex: 0 0 20%;
+  }
+  
+  .fx-flex-0-0-200px {
+    flex: 0 0 200px;
+  }
+  
+  .fx-flex-0-0-25p {
+    flex: 0 0 25%;
+  }
+  
+  .fx-flex-0-0-250px {
+    flex: 0 0 250px;
+  }
+  
+  .fx-flex-0-0-30p {
+    flex: 0 0 30%;
+  }
+  
+  .fx-flex-0-0-300px {
+    flex: 0 0 300px;
+  }
+  
+  .fx-flex-0-0-35p {
+    flex: 0 0 35%;
+  }
+  
+  .fx-flex-0-0-350px {
+    flex: 0 0 350px;
+  }
+  
+  .fx-flex-0-0-40p {
+    flex: 0 0 40%;
+  }
+  
+  .fx-flex-0-0-400px {
+    flex: 0 0 400px;
+  }
+  
+  .fx-flex-0-0-45p {
+    flex: 0 0 45%;
+  }
+  
+  .fx-flex-0-0-450px {
+    flex: 0 0 450px;
+  }
+  
+  .fx-flex-0-0-50p {
+    flex: 0 0 50%;
+  }
+  
+  .fx-flex-0-0-500px {
+    flex: 0 0 500px;
+  }
+  
+  .fx-flex-0-0-55p {
+    flex: 0 0 55%;
+  }
+  
+  .fx-flex-0-0-550px {
+    flex: 0 0 550px;
+  }
+  
+  .fx-flex-0-0-60p {
+    flex: 0 0 60%;
+  }
+  
+  .fx-flex-0-0-600px {
+    flex: 0 0 600px;
+  }
+  
+  .fx-flex-0-0-65p {
+    flex: 0 0 65%;
+  }
+  
+  .fx-flex-0-0-650px {
+    flex: 0 0 650px;
+  }
+  
+  .fx-flex-0-0-70p {
+    flex: 0 0 70%;
+  }
+  
+  .fx-flex-0-0-700px {
+    flex: 0 0 700px;
+  }
+  
+  .fx-flex-0-0-75p {
+    flex: 0 0 75%;
+  }
+  
+  .fx-flex-0-0-750px {
+    flex: 0 0 750px;
+  }
+  
+  .fx-flex-0-0-80p {
+    flex: 0 0 80%;
+  }
+  
+  .fx-flex-0-0-800px {
+    flex: 0 0 800px;
+  }
+  
+  .fx-flex-0-0-85p {
+    flex: 0 0 85%;
+  }
+  
+  .fx-flex-0-0-850px {
+    flex: 0 0 850px;
+  }
+  
+  .fx-flex-0-0-90p {
+    flex: 0 0 90%;
+  }
+  
+  .fx-flex-0-0-900px {
+    flex: 0 0 900px;
+  }
+  
+  .fx-flex-0-0-95p {
+    flex: 0 0 95%;
+  }
+  
+  .fx-flex-0-0-950px {
+    flex: 0 0 950px;
+  }
+  
+  .fx-flex-0-0-100p {
+    flex: 0 0 100%;
+  }
+  
+  .fx-flex-0-0-1000px {
+    flex: 0 0 1000px;
+  }
+  
+  .fx-flex-0-1-auto {
+    flex: 0 1 auto;
+  }
+  
+  .fx-flex-0-1-5p {
+    flex: 0 1 5%;
+  }
+  
+  .fx-flex-0-1-50px {
+    flex: 0 1 50px;
+  }
+  
+  .fx-flex-0-1-10p {
+    flex: 0 1 10%;
+  }
+  
+  .fx-flex-0-1-100px {
+    flex: 0 1 100px;
+  }
+  
+  .fx-flex-0-1-15p {
+    flex: 0 1 15%;
+  }
+  
+  .fx-flex-0-1-150px {
+    flex: 0 1 150px;
+  }
+  
+  .fx-flex-0-1-20p {
+    flex: 0 1 20%;
+  }
+  
+  .fx-flex-0-1-200px {
+    flex: 0 1 200px;
+  }
+  
+  .fx-flex-0-1-25p {
+    flex: 0 1 25%;
+  }
+  
+  .fx-flex-0-1-250px {
+    flex: 0 1 250px;
+  }
+  
+  .fx-flex-0-1-30p {
+    flex: 0 1 30%;
+  }
+  
+  .fx-flex-0-1-300px {
+    flex: 0 1 300px;
+  }
+  
+  .fx-flex-0-1-35p {
+    flex: 0 1 35%;
+  }
+  
+  .fx-flex-0-1-350px {
+    flex: 0 1 350px;
+  }
+  
+  .fx-flex-0-1-40p {
+    flex: 0 1 40%;
+  }
+  
+  .fx-flex-0-1-400px {
+    flex: 0 1 400px;
+  }
+  
+  .fx-flex-0-1-45p {
+    flex: 0 1 45%;
+  }
+  
+  .fx-flex-0-1-450px {
+    flex: 0 1 450px;
+  }
+  
+  .fx-flex-0-1-50p {
+    flex: 0 1 50%;
+  }
+  
+  .fx-flex-0-1-500px {
+    flex: 0 1 500px;
+  }
+  
+  .fx-flex-0-1-55p {
+    flex: 0 1 55%;
+  }
+  
+  .fx-flex-0-1-550px {
+    flex: 0 1 550px;
+  }
+  
+  .fx-flex-0-1-60p {
+    flex: 0 1 60%;
+  }
+  
+  .fx-flex-0-1-600px {
+    flex: 0 1 600px;
+  }
+  
+  .fx-flex-0-1-65p {
+    flex: 0 1 65%;
+  }
+  
+  .fx-flex-0-1-650px {
+    flex: 0 1 650px;
+  }
+  
+  .fx-flex-0-1-70p {
+    flex: 0 1 70%;
+  }
+  
+  .fx-flex-0-1-700px {
+    flex: 0 1 700px;
+  }
+  
+  .fx-flex-0-1-75p {
+    flex: 0 1 75%;
+  }
+  
+  .fx-flex-0-1-750px {
+    flex: 0 1 750px;
+  }
+  
+  .fx-flex-0-1-80p {
+    flex: 0 1 80%;
+  }
+  
+  .fx-flex-0-1-800px {
+    flex: 0 1 800px;
+  }
+  
+  .fx-flex-0-1-85p {
+    flex: 0 1 85%;
+  }
+  
+  .fx-flex-0-1-850px {
+    flex: 0 1 850px;
+  }
+  
+  .fx-flex-0-1-90p {
+    flex: 0 1 90%;
+  }
+  
+  .fx-flex-0-1-900px {
+    flex: 0 1 900px;
+  }
+  
+  .fx-flex-0-1-95p {
+    flex: 0 1 95%;
+  }
+  
+  .fx-flex-0-1-950px {
+    flex: 0 1 950px;
+  }
+  
+  .fx-flex-0-1-100p {
+    flex: 0 1 100%;
+  }
+  
+  .fx-flex-0-1-1000px {
+    flex: 0 1 1000px;
+  }
+  
+  .fx-flex-0-2-auto {
+    flex: 0 2 auto;
+  }
+  
+  .fx-flex-0-2-5p {
+    flex: 0 2 5%;
+  }
+  
+  .fx-flex-0-2-50px {
+    flex: 0 2 50px;
+  }
+  
+  .fx-flex-0-2-10p {
+    flex: 0 2 10%;
+  }
+  
+  .fx-flex-0-2-100px {
+    flex: 0 2 100px;
+  }
+  
+  .fx-flex-0-2-15p {
+    flex: 0 2 15%;
+  }
+  
+  .fx-flex-0-2-150px {
+    flex: 0 2 150px;
+  }
+  
+  .fx-flex-0-2-20p {
+    flex: 0 2 20%;
+  }
+  
+  .fx-flex-0-2-200px {
+    flex: 0 2 200px;
+  }
+  
+  .fx-flex-0-2-25p {
+    flex: 0 2 25%;
+  }
+  
+  .fx-flex-0-2-250px {
+    flex: 0 2 250px;
+  }
+  
+  .fx-flex-0-2-30p {
+    flex: 0 2 30%;
+  }
+  
+  .fx-flex-0-2-300px {
+    flex: 0 2 300px;
+  }
+  
+  .fx-flex-0-2-35p {
+    flex: 0 2 35%;
+  }
+  
+  .fx-flex-0-2-350px {
+    flex: 0 2 350px;
+  }
+  
+  .fx-flex-0-2-40p {
+    flex: 0 2 40%;
+  }
+  
+  .fx-flex-0-2-400px {
+    flex: 0 2 400px;
+  }
+  
+  .fx-flex-0-2-45p {
+    flex: 0 2 45%;
+  }
+  
+  .fx-flex-0-2-450px {
+    flex: 0 2 450px;
+  }
+  
+  .fx-flex-0-2-50p {
+    flex: 0 2 50%;
+  }
+  
+  .fx-flex-0-2-500px {
+    flex: 0 2 500px;
+  }
+  
+  .fx-flex-0-2-55p {
+    flex: 0 2 55%;
+  }
+  
+  .fx-flex-0-2-550px {
+    flex: 0 2 550px;
+  }
+  
+  .fx-flex-0-2-60p {
+    flex: 0 2 60%;
+  }
+  
+  .fx-flex-0-2-600px {
+    flex: 0 2 600px;
+  }
+  
+  .fx-flex-0-2-65p {
+    flex: 0 2 65%;
+  }
+  
+  .fx-flex-0-2-650px {
+    flex: 0 2 650px;
+  }
+  
+  .fx-flex-0-2-70p {
+    flex: 0 2 70%;
+  }
+  
+  .fx-flex-0-2-700px {
+    flex: 0 2 700px;
+  }
+  
+  .fx-flex-0-2-75p {
+    flex: 0 2 75%;
+  }
+  
+  .fx-flex-0-2-750px {
+    flex: 0 2 750px;
+  }
+  
+  .fx-flex-0-2-80p {
+    flex: 0 2 80%;
+  }
+  
+  .fx-flex-0-2-800px {
+    flex: 0 2 800px;
+  }
+  
+  .fx-flex-0-2-85p {
+    flex: 0 2 85%;
+  }
+  
+  .fx-flex-0-2-850px {
+    flex: 0 2 850px;
+  }
+  
+  .fx-flex-0-2-90p {
+    flex: 0 2 90%;
+  }
+  
+  .fx-flex-0-2-900px {
+    flex: 0 2 900px;
+  }
+  
+  .fx-flex-0-2-95p {
+    flex: 0 2 95%;
+  }
+  
+  .fx-flex-0-2-950px {
+    flex: 0 2 950px;
+  }
+  
+  .fx-flex-0-2-100p {
+    flex: 0 2 100%;
+  }
+  
+  .fx-flex-0-2-1000px {
+    flex: 0 2 1000px;
+  }
+  
+  .fx-flex-1-0-auto {
+    flex: 1 0 auto;
+  }
+  
+  .fx-flex-1-0-5p {
+    flex: 1 0 5%;
+  }
+  
+  .fx-flex-1-0-50px {
+    flex: 1 0 50px;
+  }
+  
+  .fx-flex-1-0-10p {
+    flex: 1 0 10%;
+  }
+  
+  .fx-flex-1-0-100px {
+    flex: 1 0 100px;
+  }
+  
+  .fx-flex-1-0-15p {
+    flex: 1 0 15%;
+  }
+  
+  .fx-flex-1-0-150px {
+    flex: 1 0 150px;
+  }
+  
+  .fx-flex-1-0-20p {
+    flex: 1 0 20%;
+  }
+  
+  .fx-flex-1-0-200px {
+    flex: 1 0 200px;
+  }
+  
+  .fx-flex-1-0-25p {
+    flex: 1 0 25%;
+  }
+  
+  .fx-flex-1-0-250px {
+    flex: 1 0 250px;
+  }
+  
+  .fx-flex-1-0-30p {
+    flex: 1 0 30%;
+  }
+  
+  .fx-flex-1-0-300px {
+    flex: 1 0 300px;
+  }
+  
+  .fx-flex-1-0-35p {
+    flex: 1 0 35%;
+  }
+  
+  .fx-flex-1-0-350px {
+    flex: 1 0 350px;
+  }
+  
+  .fx-flex-1-0-40p {
+    flex: 1 0 40%;
+  }
+  
+  .fx-flex-1-0-400px {
+    flex: 1 0 400px;
+  }
+  
+  .fx-flex-1-0-45p {
+    flex: 1 0 45%;
+  }
+  
+  .fx-flex-1-0-450px {
+    flex: 1 0 450px;
+  }
+  
+  .fx-flex-1-0-50p {
+    flex: 1 0 50%;
+  }
+  
+  .fx-flex-1-0-500px {
+    flex: 1 0 500px;
+  }
+  
+  .fx-flex-1-0-55p {
+    flex: 1 0 55%;
+  }
+  
+  .fx-flex-1-0-550px {
+    flex: 1 0 550px;
+  }
+  
+  .fx-flex-1-0-60p {
+    flex: 1 0 60%;
+  }
+  
+  .fx-flex-1-0-600px {
+    flex: 1 0 600px;
+  }
+  
+  .fx-flex-1-0-65p {
+    flex: 1 0 65%;
+  }
+  
+  .fx-flex-1-0-650px {
+    flex: 1 0 650px;
+  }
+  
+  .fx-flex-1-0-70p {
+    flex: 1 0 70%;
+  }
+  
+  .fx-flex-1-0-700px {
+    flex: 1 0 700px;
+  }
+  
+  .fx-flex-1-0-75p {
+    flex: 1 0 75%;
+  }
+  
+  .fx-flex-1-0-750px {
+    flex: 1 0 750px;
+  }
+  
+  .fx-flex-1-0-80p {
+    flex: 1 0 80%;
+  }
+  
+  .fx-flex-1-0-800px {
+    flex: 1 0 800px;
+  }
+  
+  .fx-flex-1-0-85p {
+    flex: 1 0 85%;
+  }
+  
+  .fx-flex-1-0-850px {
+    flex: 1 0 850px;
+  }
+  
+  .fx-flex-1-0-90p {
+    flex: 1 0 90%;
+  }
+  
+  .fx-flex-1-0-900px {
+    flex: 1 0 900px;
+  }
+  
+  .fx-flex-1-0-95p {
+    flex: 1 0 95%;
+  }
+  
+  .fx-flex-1-0-950px {
+    flex: 1 0 950px;
+  }
+  
+  .fx-flex-1-0-100p {
+    flex: 1 0 100%;
+  }
+  
+  .fx-flex-1-0-1000px {
+    flex: 1 0 1000px;
+  }
+  
+  .fx-flex-1-1-auto {
+    flex: 1 1 auto;
+  }
+  
+  .fx-flex-1-1-5p {
+    flex: 1 1 5%;
+  }
+  
+  .fx-flex-1-1-50px {
+    flex: 1 1 50px;
+  }
+  
+  .fx-flex-1-1-10p {
+    flex: 1 1 10%;
+  }
+  
+  .fx-flex-1-1-100px {
+    flex: 1 1 100px;
+  }
+  
+  .fx-flex-1-1-15p {
+    flex: 1 1 15%;
+  }
+  
+  .fx-flex-1-1-150px {
+    flex: 1 1 150px;
+  }
+  
+  .fx-flex-1-1-20p {
+    flex: 1 1 20%;
+  }
+  
+  .fx-flex-1-1-200px {
+    flex: 1 1 200px;
+  }
+  
+  .fx-flex-1-1-25p {
+    flex: 1 1 25%;
+  }
+  
+  .fx-flex-1-1-250px {
+    flex: 1 1 250px;
+  }
+  
+  .fx-flex-1-1-30p {
+    flex: 1 1 30%;
+  }
+  
+  .fx-flex-1-1-300px {
+    flex: 1 1 300px;
+  }
+  
+  .fx-flex-1-1-35p {
+    flex: 1 1 35%;
+  }
+  
+  .fx-flex-1-1-350px {
+    flex: 1 1 350px;
+  }
+  
+  .fx-flex-1-1-40p {
+    flex: 1 1 40%;
+  }
+  
+  .fx-flex-1-1-400px {
+    flex: 1 1 400px;
+  }
+  
+  .fx-flex-1-1-45p {
+    flex: 1 1 45%;
+  }
+  
+  .fx-flex-1-1-450px {
+    flex: 1 1 450px;
+  }
+  
+  .fx-flex-1-1-50p {
+    flex: 1 1 50%;
+  }
+  
+  .fx-flex-1-1-500px {
+    flex: 1 1 500px;
+  }
+  
+  .fx-flex-1-1-55p {
+    flex: 1 1 55%;
+  }
+  
+  .fx-flex-1-1-550px {
+    flex: 1 1 550px;
+  }
+  
+  .fx-flex-1-1-60p {
+    flex: 1 1 60%;
+  }
+  
+  .fx-flex-1-1-600px {
+    flex: 1 1 600px;
+  }
+  
+  .fx-flex-1-1-65p {
+    flex: 1 1 65%;
+  }
+  
+  .fx-flex-1-1-650px {
+    flex: 1 1 650px;
+  }
+  
+  .fx-flex-1-1-70p {
+    flex: 1 1 70%;
+  }
+  
+  .fx-flex-1-1-700px {
+    flex: 1 1 700px;
+  }
+  
+  .fx-flex-1-1-75p {
+    flex: 1 1 75%;
+  }
+  
+  .fx-flex-1-1-750px {
+    flex: 1 1 750px;
+  }
+  
+  .fx-flex-1-1-80p {
+    flex: 1 1 80%;
+  }
+  
+  .fx-flex-1-1-800px {
+    flex: 1 1 800px;
+  }
+  
+  .fx-flex-1-1-85p {
+    flex: 1 1 85%;
+  }
+  
+  .fx-flex-1-1-850px {
+    flex: 1 1 850px;
+  }
+  
+  .fx-flex-1-1-90p {
+    flex: 1 1 90%;
+  }
+  
+  .fx-flex-1-1-900px {
+    flex: 1 1 900px;
+  }
+  
+  .fx-flex-1-1-95p {
+    flex: 1 1 95%;
+  }
+  
+  .fx-flex-1-1-950px {
+    flex: 1 1 950px;
+  }
+  
+  .fx-flex-1-1-100p {
+    flex: 1 1 100%;
+  }
+  
+  .fx-flex-1-1-1000px {
+    flex: 1 1 1000px;
+  }
+  
+  .fx-flex-1-2-auto {
+    flex: 1 2 auto;
+  }
+  
+  .fx-flex-1-2-5p {
+    flex: 1 2 5%;
+  }
+  
+  .fx-flex-1-2-50px {
+    flex: 1 2 50px;
+  }
+  
+  .fx-flex-1-2-10p {
+    flex: 1 2 10%;
+  }
+  
+  .fx-flex-1-2-100px {
+    flex: 1 2 100px;
+  }
+  
+  .fx-flex-1-2-15p {
+    flex: 1 2 15%;
+  }
+  
+  .fx-flex-1-2-150px {
+    flex: 1 2 150px;
+  }
+  
+  .fx-flex-1-2-20p {
+    flex: 1 2 20%;
+  }
+  
+  .fx-flex-1-2-200px {
+    flex: 1 2 200px;
+  }
+  
+  .fx-flex-1-2-25p {
+    flex: 1 2 25%;
+  }
+  
+  .fx-flex-1-2-250px {
+    flex: 1 2 250px;
+  }
+  
+  .fx-flex-1-2-30p {
+    flex: 1 2 30%;
+  }
+  
+  .fx-flex-1-2-300px {
+    flex: 1 2 300px;
+  }
+  
+  .fx-flex-1-2-35p {
+    flex: 1 2 35%;
+  }
+  
+  .fx-flex-1-2-350px {
+    flex: 1 2 350px;
+  }
+  
+  .fx-flex-1-2-40p {
+    flex: 1 2 40%;
+  }
+  
+  .fx-flex-1-2-400px {
+    flex: 1 2 400px;
+  }
+  
+  .fx-flex-1-2-45p {
+    flex: 1 2 45%;
+  }
+  
+  .fx-flex-1-2-450px {
+    flex: 1 2 450px;
+  }
+  
+  .fx-flex-1-2-50p {
+    flex: 1 2 50%;
+  }
+  
+  .fx-flex-1-2-500px {
+    flex: 1 2 500px;
+  }
+  
+  .fx-flex-1-2-55p {
+    flex: 1 2 55%;
+  }
+  
+  .fx-flex-1-2-550px {
+    flex: 1 2 550px;
+  }
+  
+  .fx-flex-1-2-60p {
+    flex: 1 2 60%;
+  }
+  
+  .fx-flex-1-2-600px {
+    flex: 1 2 600px;
+  }
+  
+  .fx-flex-1-2-65p {
+    flex: 1 2 65%;
+  }
+  
+  .fx-flex-1-2-650px {
+    flex: 1 2 650px;
+  }
+  
+  .fx-flex-1-2-70p {
+    flex: 1 2 70%;
+  }
+  
+  .fx-flex-1-2-700px {
+    flex: 1 2 700px;
+  }
+  
+  .fx-flex-1-2-75p {
+    flex: 1 2 75%;
+  }
+  
+  .fx-flex-1-2-750px {
+    flex: 1 2 750px;
+  }
+  
+  .fx-flex-1-2-80p {
+    flex: 1 2 80%;
+  }
+  
+  .fx-flex-1-2-800px {
+    flex: 1 2 800px;
+  }
+  
+  .fx-flex-1-2-85p {
+    flex: 1 2 85%;
+  }
+  
+  .fx-flex-1-2-850px {
+    flex: 1 2 850px;
+  }
+  
+  .fx-flex-1-2-90p {
+    flex: 1 2 90%;
+  }
+  
+  .fx-flex-1-2-900px {
+    flex: 1 2 900px;
+  }
+  
+  .fx-flex-1-2-95p {
+    flex: 1 2 95%;
+  }
+  
+  .fx-flex-1-2-950px {
+    flex: 1 2 950px;
+  }
+  
+  .fx-flex-1-2-100p {
+    flex: 1 2 100%;
+  }
+  
+  .fx-flex-1-2-1000px {
+    flex: 1 2 1000px;
+  }
+  
+  .fx-flex-2-0-auto {
+    flex: 2 0 auto;
+  }
+  
+  .fx-flex-2-0-5p {
+    flex: 2 0 5%;
+  }
+  
+  .fx-flex-2-0-50px {
+    flex: 2 0 50px;
+  }
+  
+  .fx-flex-2-0-10p {
+    flex: 2 0 10%;
+  }
+  
+  .fx-flex-2-0-100px {
+    flex: 2 0 100px;
+  }
+  
+  .fx-flex-2-0-15p {
+    flex: 2 0 15%;
+  }
+  
+  .fx-flex-2-0-150px {
+    flex: 2 0 150px;
+  }
+  
+  .fx-flex-2-0-20p {
+    flex: 2 0 20%;
+  }
+  
+  .fx-flex-2-0-200px {
+    flex: 2 0 200px;
+  }
+  
+  .fx-flex-2-0-25p {
+    flex: 2 0 25%;
+  }
+  
+  .fx-flex-2-0-250px {
+    flex: 2 0 250px;
+  }
+  
+  .fx-flex-2-0-30p {
+    flex: 2 0 30%;
+  }
+  
+  .fx-flex-2-0-300px {
+    flex: 2 0 300px;
+  }
+  
+  .fx-flex-2-0-35p {
+    flex: 2 0 35%;
+  }
+  
+  .fx-flex-2-0-350px {
+    flex: 2 0 350px;
+  }
+  
+  .fx-flex-2-0-40p {
+    flex: 2 0 40%;
+  }
+  
+  .fx-flex-2-0-400px {
+    flex: 2 0 400px;
+  }
+  
+  .fx-flex-2-0-45p {
+    flex: 2 0 45%;
+  }
+  
+  .fx-flex-2-0-450px {
+    flex: 2 0 450px;
+  }
+  
+  .fx-flex-2-0-50p {
+    flex: 2 0 50%;
+  }
+  
+  .fx-flex-2-0-500px {
+    flex: 2 0 500px;
+  }
+  
+  .fx-flex-2-0-55p {
+    flex: 2 0 55%;
+  }
+  
+  .fx-flex-2-0-550px {
+    flex: 2 0 550px;
+  }
+  
+  .fx-flex-2-0-60p {
+    flex: 2 0 60%;
+  }
+  
+  .fx-flex-2-0-600px {
+    flex: 2 0 600px;
+  }
+  
+  .fx-flex-2-0-65p {
+    flex: 2 0 65%;
+  }
+  
+  .fx-flex-2-0-650px {
+    flex: 2 0 650px;
+  }
+  
+  .fx-flex-2-0-70p {
+    flex: 2 0 70%;
+  }
+  
+  .fx-flex-2-0-700px {
+    flex: 2 0 700px;
+  }
+  
+  .fx-flex-2-0-75p {
+    flex: 2 0 75%;
+  }
+  
+  .fx-flex-2-0-750px {
+    flex: 2 0 750px;
+  }
+  
+  .fx-flex-2-0-80p {
+    flex: 2 0 80%;
+  }
+  
+  .fx-flex-2-0-800px {
+    flex: 2 0 800px;
+  }
+  
+  .fx-flex-2-0-85p {
+    flex: 2 0 85%;
+  }
+  
+  .fx-flex-2-0-850px {
+    flex: 2 0 850px;
+  }
+  
+  .fx-flex-2-0-90p {
+    flex: 2 0 90%;
+  }
+  
+  .fx-flex-2-0-900px {
+    flex: 2 0 900px;
+  }
+  
+  .fx-flex-2-0-95p {
+    flex: 2 0 95%;
+  }
+  
+  .fx-flex-2-0-950px {
+    flex: 2 0 950px;
+  }
+  
+  .fx-flex-2-0-100p {
+    flex: 2 0 100%;
+  }
+  
+  .fx-flex-2-0-1000px {
+    flex: 2 0 1000px;
+  }
+  
+  .fx-flex-2-1-auto {
+    flex: 2 1 auto;
+  }
+  
+  .fx-flex-2-1-5p {
+    flex: 2 1 5%;
+  }
+  
+  .fx-flex-2-1-50px {
+    flex: 2 1 50px;
+  }
+  
+  .fx-flex-2-1-10p {
+    flex: 2 1 10%;
+  }
+  
+  .fx-flex-2-1-100px {
+    flex: 2 1 100px;
+  }
+  
+  .fx-flex-2-1-15p {
+    flex: 2 1 15%;
+  }
+  
+  .fx-flex-2-1-150px {
+    flex: 2 1 150px;
+  }
+  
+  .fx-flex-2-1-20p {
+    flex: 2 1 20%;
+  }
+  
+  .fx-flex-2-1-200px {
+    flex: 2 1 200px;
+  }
+  
+  .fx-flex-2-1-25p {
+    flex: 2 1 25%;
+  }
+  
+  .fx-flex-2-1-250px {
+    flex: 2 1 250px;
+  }
+  
+  .fx-flex-2-1-30p {
+    flex: 2 1 30%;
+  }
+  
+  .fx-flex-2-1-300px {
+    flex: 2 1 300px;
+  }
+  
+  .fx-flex-2-1-35p {
+    flex: 2 1 35%;
+  }
+  
+  .fx-flex-2-1-350px {
+    flex: 2 1 350px;
+  }
+  
+  .fx-flex-2-1-40p {
+    flex: 2 1 40%;
+  }
+  
+  .fx-flex-2-1-400px {
+    flex: 2 1 400px;
+  }
+  
+  .fx-flex-2-1-45p {
+    flex: 2 1 45%;
+  }
+  
+  .fx-flex-2-1-450px {
+    flex: 2 1 450px;
+  }
+  
+  .fx-flex-2-1-50p {
+    flex: 2 1 50%;
+  }
+  
+  .fx-flex-2-1-500px {
+    flex: 2 1 500px;
+  }
+  
+  .fx-flex-2-1-55p {
+    flex: 2 1 55%;
+  }
+  
+  .fx-flex-2-1-550px {
+    flex: 2 1 550px;
+  }
+  
+  .fx-flex-2-1-60p {
+    flex: 2 1 60%;
+  }
+  
+  .fx-flex-2-1-600px {
+    flex: 2 1 600px;
+  }
+  
+  .fx-flex-2-1-65p {
+    flex: 2 1 65%;
+  }
+  
+  .fx-flex-2-1-650px {
+    flex: 2 1 650px;
+  }
+  
+  .fx-flex-2-1-70p {
+    flex: 2 1 70%;
+  }
+  
+  .fx-flex-2-1-700px {
+    flex: 2 1 700px;
+  }
+  
+  .fx-flex-2-1-75p {
+    flex: 2 1 75%;
+  }
+  
+  .fx-flex-2-1-750px {
+    flex: 2 1 750px;
+  }
+  
+  .fx-flex-2-1-80p {
+    flex: 2 1 80%;
+  }
+  
+  .fx-flex-2-1-800px {
+    flex: 2 1 800px;
+  }
+  
+  .fx-flex-2-1-85p {
+    flex: 2 1 85%;
+  }
+  
+  .fx-flex-2-1-850px {
+    flex: 2 1 850px;
+  }
+  
+  .fx-flex-2-1-90p {
+    flex: 2 1 90%;
+  }
+  
+  .fx-flex-2-1-900px {
+    flex: 2 1 900px;
+  }
+  
+  .fx-flex-2-1-95p {
+    flex: 2 1 95%;
+  }
+  
+  .fx-flex-2-1-950px {
+    flex: 2 1 950px;
+  }
+  
+  .fx-flex-2-1-100p {
+    flex: 2 1 100%;
+  }
+  
+  .fx-flex-2-1-1000px {
+    flex: 2 1 1000px;
+  }
+  
+  .fx-flex-2-2-auto {
+    flex: 2 2 auto;
+  }
+  
+  .fx-flex-2-2-5p {
+    flex: 2 2 5%;
+  }
+  
+  .fx-flex-2-2-50px {
+    flex: 2 2 50px;
+  }
+  
+  .fx-flex-2-2-10p {
+    flex: 2 2 10%;
+  }
+  
+  .fx-flex-2-2-100px {
+    flex: 2 2 100px;
+  }
+  
+  .fx-flex-2-2-15p {
+    flex: 2 2 15%;
+  }
+  
+  .fx-flex-2-2-150px {
+    flex: 2 2 150px;
+  }
+  
+  .fx-flex-2-2-20p {
+    flex: 2 2 20%;
+  }
+  
+  .fx-flex-2-2-200px {
+    flex: 2 2 200px;
+  }
+  
+  .fx-flex-2-2-25p {
+    flex: 2 2 25%;
+  }
+  
+  .fx-flex-2-2-250px {
+    flex: 2 2 250px;
+  }
+  
+  .fx-flex-2-2-30p {
+    flex: 2 2 30%;
+  }
+  
+  .fx-flex-2-2-300px {
+    flex: 2 2 300px;
+  }
+  
+  .fx-flex-2-2-35p {
+    flex: 2 2 35%;
+  }
+  
+  .fx-flex-2-2-350px {
+    flex: 2 2 350px;
+  }
+  
+  .fx-flex-2-2-40p {
+    flex: 2 2 40%;
+  }
+  
+  .fx-flex-2-2-400px {
+    flex: 2 2 400px;
+  }
+  
+  .fx-flex-2-2-45p {
+    flex: 2 2 45%;
+  }
+  
+  .fx-flex-2-2-450px {
+    flex: 2 2 450px;
+  }
+  
+  .fx-flex-2-2-50p {
+    flex: 2 2 50%;
+  }
+  
+  .fx-flex-2-2-500px {
+    flex: 2 2 500px;
+  }
+  
+  .fx-flex-2-2-55p {
+    flex: 2 2 55%;
+  }
+  
+  .fx-flex-2-2-550px {
+    flex: 2 2 550px;
+  }
+  
+  .fx-flex-2-2-60p {
+    flex: 2 2 60%;
+  }
+  
+  .fx-flex-2-2-600px {
+    flex: 2 2 600px;
+  }
+  
+  .fx-flex-2-2-65p {
+    flex: 2 2 65%;
+  }
+  
+  .fx-flex-2-2-650px {
+    flex: 2 2 650px;
+  }
+  
+  .fx-flex-2-2-70p {
+    flex: 2 2 70%;
+  }
+  
+  .fx-flex-2-2-700px {
+    flex: 2 2 700px;
+  }
+  
+  .fx-flex-2-2-75p {
+    flex: 2 2 75%;
+  }
+  
+  .fx-flex-2-2-750px {
+    flex: 2 2 750px;
+  }
+  
+  .fx-flex-2-2-80p {
+    flex: 2 2 80%;
+  }
+  
+  .fx-flex-2-2-800px {
+    flex: 2 2 800px;
+  }
+  
+  .fx-flex-2-2-85p {
+    flex: 2 2 85%;
+  }
+  
+  .fx-flex-2-2-850px {
+    flex: 2 2 850px;
+  }
+  
+  .fx-flex-2-2-90p {
+    flex: 2 2 90%;
+  }
+  
+  .fx-flex-2-2-900px {
+    flex: 2 2 900px;
+  }
+  
+  .fx-flex-2-2-95p {
+    flex: 2 2 95%;
+  }
+  
+  .fx-flex-2-2-950px {
+    flex: 2 2 950px;
+  }
+  
+  .fx-flex-2-2-100p {
+    flex: 2 2 100%;
+  }
+  
+  .fx-flex-2-2-1000px {
+    flex: 2 2 1000px;
+  }
+  
+  /* align-self */
+  .fx-self-start {
+    align-self: flex-start;
+  }
+  
+  .fx-self-end {
+    align-self: flex-end;
+  }
+  
+  .fx-self-center {
+    align-self: center;
+  }

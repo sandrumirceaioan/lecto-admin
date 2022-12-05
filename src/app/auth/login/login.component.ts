@@ -6,7 +6,6 @@ import { AuthService } from '../../shared/services/auth.service';
 import { Router, RouterModule } from '@angular/router';
 import { User } from 'src/app/shared/models/user.model';
 import { MaterialModule } from 'src/app/shared/modules/material.module';
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 @Component({
   selector: 'app-login',
@@ -15,8 +14,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
-    MaterialModule,
-    FlexLayoutModule,
+    MaterialModule
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']

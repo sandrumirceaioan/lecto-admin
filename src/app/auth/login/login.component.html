@@ -1,35 +1,35 @@
-<div class="auth-container" fxLayout="column" fxLayoutAlign="center center">
-    <mat-card class="auth-card mat-elevation-z5" fxLayout="column">
-        <mat-card-title fxLayout="column" fxLayoutAlign="center center">
-            <img src="./assets/images/lectoform-logo.webp" alt="lectoform">
-        </mat-card-title>
-
-        <form [formGroup]="loginForm" (ngSubmit)="login()" autocomplete="on">
-            <mat-card-content fxLayout="column">
-                <mat-form-field appearance="fill" class="mt-10 mb-5">
-                    <mat-label>Email</mat-label>
-                    <input matInput formControlName="email" color="warn">
-                    <mat-icon color="primary" matPrefix class="mr-5">mail_outline</mat-icon>
-                    <mat-error *ngIf="loginForm.get('email').hasError('required')">Email-ul este necesar</mat-error>
-                </mat-form-field>
-
-                <mat-form-field appearance="fill" class="mb-10">
-                    <mat-label>Parola</mat-label>
-                    <input matInput formControlName="password" [type]="showPasswordText ? 'password' : 'text'" required>
-                    <mat-icon color="primary" matPrefix class="mr-5">lock_open</mat-icon>
-                    <button type="button" mat-icon-button matSuffix (click)="showPasswordText = !showPasswordText">
-                        <mat-icon>{{showPasswordText ? 'visibility_off' : 'visibility'}}</mat-icon>
-                    </button>
-                    <mat-error *ngIf="loginForm.get('password').hasError('required')">Parola este necesara
-                    </mat-error>
-                </mat-form-field>
-
-                <button type="submit" class="auth-btn" mat-flat-button color="accent"
-                    [disabled]="!loginForm.valid">Login</button>
-            </mat-card-content>
-        </form>
-    </mat-card>
-    <div class="auth-options" fxLayoutAlign="end center">
-        <a href="" class="text-dark" routerLink="/auth/register">Register</a>
+<div class="auth-container fx-column fx-layout-center-center">
+        <mat-card class="auth-card mat-elevation-z5 fx-column">
+            <mat-card-title class="fx-column fx-layout-center-center">
+                <img src="./assets/images/lectoform-logo-new.webp" alt="lectoform" class="mt-30 mb-30">
+            </mat-card-title>
+    
+            <form [formGroup]="loginForm" (ngSubmit)="login()" autocomplete="on">
+                <mat-card-content class="fx-column">
+                    <mat-form-field appearance="fill" class="mb-5">
+                        <mat-label>Email</mat-label>
+                        <input matInput formControlName="email" color="warn">
+                        <mat-icon color="primary" matPrefix class="mr-5">mail_outline</mat-icon>
+                        <mat-error *ngIf="loginForm.get('email').hasError('required')">Email-ul este necesar</mat-error>
+                    </mat-form-field>
+    
+                    <mat-form-field appearance="fill" class="mb-5">
+                        <mat-label>Parola</mat-label>
+                        <input matInput formControlName="password" [type]="showPasswordText ? 'password' : 'text'" required>
+                        <mat-icon color="primary" matPrefix class="mr-5">lock_open</mat-icon>
+                        <button type="button" mat-icon-button matSuffix (click)="showPasswordText = !showPasswordText">
+                            <mat-icon>{{showPasswordText ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                        <mat-error *ngIf="loginForm.get('password').hasError('required')">Parola este necesara
+                        </mat-error>
+                    </mat-form-field>
+    
+                    <button type="submit" class="auth-btn" mat-flat-button color="accent"
+                        [disabled]="!loginForm.valid">Login</button>
+                </mat-card-content>
+            </form>
+        </mat-card>
+        <div class="auth-options fx-row fx-layout-end-center">
+            <a href="" class="text-dark" routerLink="/auth/register">Register</a>
+        </div>
     </div>
-</div>

@@ -90,7 +90,7 @@ export class CoursesService {
         return this.http.post(`${this.apiPath}/courses/create`, formData).pipe(
             map((result: any) => {
                 this.adminService.setLoading(false);
-                this.alertService.success('Profesor salvat');
+                this.alertService.success('Curs salvat');
                 return result;
             }),
             catchError((error) => {
@@ -124,7 +124,7 @@ export class CoursesService {
         return this.http.put(`${this.apiPath}/courses/${id}`, formData).pipe(
             map((result: any) => {
                 this.adminService.setLoading(false);
-                this.alertService.success('Profesor salvat');
+                this.alertService.success('Curs salvat');
                 return result;
             }),
             catchError((error) => {

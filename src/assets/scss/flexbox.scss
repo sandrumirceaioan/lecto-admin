@@ -1,0 +1,442 @@
+/*
+    -------------------------------------------------------------------------------------------
+    # MAIN AXIS / CROSS AXIS
+    -------------------------------------------------------------------------------------------
+
+        * main axis is set by flex-diraction
+        * cros axis is always perpendicular to the main axis
+        * eg. flex-direction: row ---> MAIN Axis is Horizontally; CROSS Axis is Vertically;
+        * eg. flex-direction: column ---> MAIN Axis is Vertically; CROSS Axis is Horizontally;
+
+    -------------------------------------------------------------------------------------------
+    # FLEX CONTAINER PROPERTIES
+    -------------------------------------------------------------------------------------------
+
+        1. display: flex;
+            * defines a flex container
+            * any item inside flex container si a flex item
+
+        2. flex-direction: row / column / row-reverse / column-reverse; 
+            * default row
+
+        3. flex-wrap: nowrap / wrap / wrap-reverse; 
+            * default wrap
+
+        4. flex-flow: row wrap;
+            * combine "flex-direction" with "flex-wrap"
+
+        5. justify-content: flex-start / flex-end / center / space-between / space-around / space-evenly; 
+            * default flex-start
+            * defines how space is used along the MAIN Axis
+            * padding affects space-evenly, adding more space around than the space in between
+
+        6. align-items: flex-start / flex-end / center / stretch / baseline;
+            * default stretch
+            * defines how we space items along CROS Axis
+
+        7. align-content: flex-start / flex-end / center / space-around / space-between / stretch;
+            * defines how we space content (between and around) along CROS Axis
+            * controls space between flex lines on the CROSS Axis
+
+    -------------------------------------------------------------------------------------------
+    # FLEX ITEM PROPERTIES
+    -------------------------------------------------------------------------------------------
+
+        1. order: 0;
+            * default is 0
+            * defines items order
+            * lower numbers pushed at the start; higher numbers pushed at the end
+
+        2. flex-grow: 0;
+            * default 0
+            * tell items how to grow to use available space
+            * tell how much item it will use from the remaining space
+
+
+        3. flex-shrik: 1;
+            * tell items at what rate they should shrink
+            * default 1 (means all the items shrink at an even rate)
+            * if we have 4 flex items, 3 of them with shrink 1 and another one with shrink 2, the one with   shrink 2 will shring faster than the others.
+            * use 0 for no shrink
+
+        4. flex-basis: 0 / 100px / 100% / auto;
+            * think of it as the size of flex items
+            * if no flex-basis is specified, the size of items falls back to width, and if no width is specified falls back to the item's content
+            * flex-basis is limited/overwrited by min-width and max-width
+            * can be used when flex items overflowing container, together with flex-shrink
+
+        5. flex: [grow] [shrink] [basis];
+            * combines flex-grow, flex-shrink, flex-basis
+    
+        6. align-self: flex-start / flex-end / center;
+            * specify position of a specific flex item along CROS Axis
+
+    -----------------------------------------------------------------------------------------
+    # Source: https://www.youtube.com/watch?v=-DNLYk5uzl8
+    ----------------------------------------------------------------------------------------- 
+*/
+
+/* FLEX CONTAINER CLASSES */
+
+$direction: (row, column, row-reverse, column-reverse);
+$wrap: (wrap, nowrap, wrap-reverse);
+$justify: (flex-start, flex-end, center, space-between, space-around, space-evenly);
+$align: (flex-start, flex-end, center, baseline, stretch);
+$content: (flex-start, flex-end, center, space-between, space-around, space-evenly, stretch);
+
+/* display */
+
+.fx {
+    display: flex !important;
+}
+
+@for $i from 0 through 100 {
+    .fx-#{$i} {
+        flex: 1 1 100%;
+        max-width: #{$i + "%"} !important;
+    }
+}
+
+/* flex-direction */
+
+@each $d in $direction {
+    .fx-#{$d} {
+        display: flex !important;
+        flex-direction: #{$d};
+        box-sizing: border-box;
+    }
+}
+
+/* flex-wrap */
+
+@each $w in $wrap {
+    .fx-#{$w} {
+        flex-wrap: #{$w};
+    }
+}
+
+/* justify-content */
+@each $j in $justify {
+    .fx-justify-#{$j} {
+        justify-content: #{$j};
+    }
+}
+
+/* align-items */
+@each $a in $align {
+    .fx-align-#{$a} {
+        align-items: #{$a};
+    }
+}
+
+/* align-content */
+@each $c in $content {
+    .fx-content-#{$c} {
+        align-content: #{$c};
+    }
+}
+
+/* justify-content and align-items */
+
+@function str-replace($string, $search, $replace: "") {
+    $index: str-index($string, $search);
+
+    @if $index {
+        @return str-slice($string, 1, $index - 1) + $replace +
+            str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+    }
+
+    @return $string;
+}
+
+@each $j in $justify {
+    @each $a in $align {
+        $raw: $j + "-" + $a;
+        $raw: str-replace($raw, "flex-", "");
+        $raw: str-replace($raw, "space-", "");
+
+        .fx-layout-#{$raw} {
+            justify-content: #{$j};
+            align-items: #{$a};
+        }
+    }
+}
+
+/* FLEX ITEM CLASSES */
+
+/* order */
+
+@for $i from 0 through 10 {
+    .fx-order-#{$i} {
+        order: #{$i};
+    }
+}
+
+/* flex-grow */
+
+@for $i from 0 through 10 {
+    .fx-grow-#{$i} {
+        flex-grow: #{$i};
+    }
+}
+
+/* flex-shrink */
+
+@for $i from 0 through 10 {
+    .fx-shrink-#{$i} {
+        flex-grow: #{$i};
+    }
+}
+
+/* flex */
+
+@for $i from 0 through 2 {
+    @for $j from 0 through 2 {
+        .fx-flex-#{$i}-#{$j}-auto {
+            flex: #{$i} #{$j} auto !important;
+        }
+
+        @for $k from 1 through 20 {
+            $perc: 5 * $k;
+
+            .fx-flex-#{$i}-#{$j}-#{$perc} {
+                flex: #{$i} #{$j} #{$perc + "%"} !important;
+                max-width: #{$perc + "%"};
+            }
+        }
+    }
+}
+
+/* align-self */
+
+.fx-self-start {
+    align-self: flex-start;
+}
+
+.fx-self-end {
+    align-self: flex-end;
+}
+
+.fx-self-center {
+    align-self: center;
+}
+
+/* RESPONSIVE */
+
+// xs	'screen and (max-width: 599px)'
+// sm	'screen and (min-width: 600px) and (max-width: 959px)'
+// md	'screen and (min-width: 960px) and (max-width: 1279px)'
+// lg	'screen and (min-width: 1280px) and (max-width: 1919px)'
+// xl	'screen and (min-width: 1920px) and (max-width: 5000px)'
+// lt-sm	'screen and (max-width: 599px)'
+// lt-md	'screen and (max-width: 959px)'
+// lt-lg	'screen and (max-width: 1279px)'
+// lt-xl	'screen and (max-width: 1919px)'
+// gt-xs	'screen and (min-width: 600px)'
+// gt-sm	'screen and (min-width: 960px)'
+// gt-md	'screen and (min-width: 1280px)'
+// gt-lg	'screen and (min-width: 1920px)'
+
+/* xs, sm, md, lg, xl - specific */
+
+@media only screen and (max-width: 599px) {
+    @for $i from 1 through 10 {
+        $size: 10 * $i;
+        .fx-xs-#{$size} {
+            flex: 1 1 100%;
+            max-width: #{$size + "%"} !important;
+        }
+    }
+
+    @each $d in $direction {
+        .fx-xs-#{$d} {
+            display: flex !important;
+            flex-direction: #{$d};
+            box-sizing: border-box;
+        }
+    }
+}
+
+@media only screen and (min-width: 600px) and (max-width: 959px) {
+    @for $i from 1 through 10 {
+        $size: 10 * $i;
+        .fx-sm-#{$size} {
+            flex: 1 1 100%;
+            max-width: #{$size + "%"} !important;
+        }
+    }
+
+    @each $d in $direction {
+        .fx-sm-#{$d} {
+            display: flex !important;
+            flex-direction: #{$d};
+            box-sizing: border-box;
+        }
+    }
+}
+
+@media only screen and (min-width: 960px) and (max-width: 1279px) {
+    @for $i from 1 through 10 {
+        $size: 10 * $i;
+        .fx-md-#{$size} {
+            flex: 1 1 100%;
+            max-width: #{$size + "%"} !important;
+        }
+    }
+
+    @each $d in $direction {
+        .fx-md-#{$d} {
+            display: flex !important;
+            flex-direction: #{$d};
+            box-sizing: border-box;
+        }
+    }
+}
+
+@media only screen and (min-width: 1280px) and (max-width: 1919px) {
+    @for $i from 1 through 10 {
+        $size: 10 * $i;
+        .fx-lg-#{$size} {
+            flex: 1 1 100%;
+            max-width: #{$size + "%"} !important;
+        }
+    }
+
+    @each $d in $direction {
+        .fx-lg-#{$d} {
+            display: flex !important;
+            flex-direction: #{$d};
+            box-sizing: border-box;
+        }
+    }
+}
+
+@media only screen and (min-width: 1920px) and (max-width: 5000px) {
+    @for $i from 1 through 10 {
+        $size: 10 * $i;
+        .fx-xl-#{$size} {
+            flex: 1 1 100%;
+            max-width: #{$size + "%"} !important;
+        }
+    }
+
+    @each $d in $direction {
+        .fx-xl-#{$d} {
+            display: flex !important;
+            flex-direction: #{$d};
+            box-sizing: border-box;
+        }
+    }
+}
+
+/* lt - lower than */
+
+@media only screen and (max-width: 599px) {
+    @for $i from 1 through 10 {
+        $size: 10 * $i;
+        .fx-lt-sm-#{$size} {
+            flex: 1 1 100%;
+            max-width: #{$size + "%"} !important;
+        }
+    }
+
+    @each $d in $direction {
+        .fx-lt-sm-#{$d} {
+            display: flex !important;
+            flex-direction: #{$d};
+            box-sizing: border-box;
+        }
+    }
+}
+
+@media only screen and (max-width: 959px) {
+    @for $i from 1 through 10 {
+        $size: 10 * $i;
+        .fx-lt-md-#{$size} {
+            flex: 1 1 100%;
+            max-width: #{$size + "%"} !important;
+        }
+    }
+
+    @each $d in $direction {
+        .fx-lt-md-#{$d} {
+            display: flex !important;
+            flex-direction: #{$d};
+            box-sizing: border-box;
+        }
+    }
+}
+
+@media only screen and (max-width: 1919px) {
+    @for $i from 1 through 10 {
+        $size: 10 * $i;
+        .fx-lt-lg-#{$size} {
+            flex: 1 1 100%;
+            max-width: #{$size + "%"} !important;
+        }
+    }
+
+    @each $d in $direction {
+        .fx-lt-lg-#{$d} {
+            display: flex !important;
+            flex-direction: #{$d};
+            box-sizing: border-box;
+        }
+    }
+}
+
+/* gt - greater than */
+
+@media only screen and (min-width: 600px) {
+    @for $i from 1 through 10 {
+        $size: 10 * $i;
+        .fx-gt-sm-#{$size} {
+            flex: 1 1 100%;
+            max-width: #{$size + "%"} !important;
+        }
+    }
+
+    @each $d in $direction {
+        .fx-gt-sm-#{$d} {
+            display: flex !important;
+            flex-direction: #{$d};
+            box-sizing: border-box;
+        }
+    }
+}
+
+@media only screen and (min-width: 960px) {
+    @for $i from 1 through 10 {
+        $size: 10 * $i;
+        .fx-gt-md-#{$size} {
+            flex: 1 1 100%;
+            max-width: #{$size + "%"} !important;
+        }
+    }
+
+    @each $d in $direction {
+        .fx-gt-md-#{$d} {
+            display: flex !important;
+            flex-direction: #{$d};
+            box-sizing: border-box;
+        }
+    }
+}
+
+@media only screen and (min-width: 1280px) {
+    @for $i from 1 through 10 {
+        $size: 10 * $i;
+        .fx-gt-lg-#{$size} {
+            flex: 1 1 100%;
+            max-width: #{$size + "%"} !important;
+        }
+    }
+
+    @each $d in $direction {
+        .fx-gt-lg-#{$d} {
+            display: flex !important;
+            flex-direction: #{$d};
+            box-sizing: border-box;
+        }
+    }
+}

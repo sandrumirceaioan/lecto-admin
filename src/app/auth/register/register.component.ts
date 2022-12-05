@@ -5,7 +5,6 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { RegisterForm } from '../../shared/models/forms.model';
 import { AuthService } from '../../shared/services/auth.service';
 import { MaterialModule } from 'src/app/shared/modules/material.module';
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 @Component({
   selector: 'app-register',
@@ -15,7 +14,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MaterialModule,
     RouterModule,
     ReactiveFormsModule,
-    FlexLayoutModule
   ],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']

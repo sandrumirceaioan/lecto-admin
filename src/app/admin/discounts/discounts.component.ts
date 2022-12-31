@@ -9,7 +9,6 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { DiscountsService } from './discounts.service';
 import { Discount } from '../../shared/models/discount.model';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { AdminService } from '../admin.service';
 
 @Component({
@@ -19,8 +18,7 @@ import { AdminService } from '../admin.service';
     CommonModule,
     MaterialModule,
     FormsModule,
-    RouterModule,
-    FlexLayoutModule
+    RouterModule
   ],
   templateUrl: './discounts.component.html',
   styleUrls: ['./discounts.component.scss']

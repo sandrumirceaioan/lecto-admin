@@ -1,7 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from 'src/app/shared/modules/material.module';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 export interface ImageData {
@@ -14,8 +13,7 @@ export interface ImageData {
   standalone: true,
   imports: [
     CommonModule,
-    MaterialModule,
-    FlexLayoutModule
+    MaterialModule
   ],
   templateUrl: './image-dialog.component.html',
   styleUrls: ['./image-dialog.component.scss']

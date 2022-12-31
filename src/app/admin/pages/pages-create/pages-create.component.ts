@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from 'src/app/shared/modules/material.module';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { Observable, Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -22,7 +21,6 @@ import { AuthService } from '../../../shared/services/auth.service';
     CommonModule,
     MaterialModule,
     FormsModule,
-    FlexLayoutModule,
     ReactiveFormsModule,
     DndDirective,
     EditorModule,

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../../shared/modules/material.module';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { Observable, Subscription } from 'rxjs';
 import { Discount } from '../../../shared/models/discount.model';
 import { DiscountsService } from '../discounts.service';
@@ -16,7 +15,6 @@ import { AdminService } from '../../admin.service';
     CommonModule,
     MaterialModule,
     FormsModule,
-    FlexLayoutModule,
     ReactiveFormsModule
   ],
   templateUrl: './discounts-create.component.html',

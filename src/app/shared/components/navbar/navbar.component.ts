@@ -1,18 +1,16 @@
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
-import { last, map, Observable, Subscription, take } from 'rxjs';
+import { Component, OnInit, Input } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { User } from '../../models/user.model';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { MaterialModule } from '../../modules/material.module';
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
   imports: [
     CommonModule,
-    MaterialModule,
-    FlexLayoutModule
+    MaterialModule
   ],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']

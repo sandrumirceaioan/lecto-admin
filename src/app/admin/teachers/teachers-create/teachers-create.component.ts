@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from 'src/app/shared/modules/material.module';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { Teacher } from '../../../shared/models/teacher.model';
 import { Observable, Subscription } from 'rxjs';
 import { TeachersService } from '../teachers.service';
@@ -19,7 +18,6 @@ import { AdminService } from '../../admin.service';
     CommonModule,
     MaterialModule,
     FormsModule,
-    FlexLayoutModule,
     ReactiveFormsModule,
     DndDirective,
   ],

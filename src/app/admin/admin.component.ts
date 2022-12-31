@@ -4,7 +4,6 @@ import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/ro
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminService } from './admin.service';
 import { MaterialModule } from '../shared/modules/material.module';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { SideMenuItem } from '../shared/models/layout.model';
 import { PerfectScrollbarConfigInterface, PerfectScrollbarModule, PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
@@ -24,7 +23,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-    FlexLayoutModule,
     PerfectScrollbarModule,
     NavbarComponent
   ],

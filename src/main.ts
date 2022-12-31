@@ -11,7 +11,6 @@ import { RequestInterceptor } from './app/shared/interceptors/request.intercepto
 import { AuthGuard } from './app/shared/guards/auth.guard';
 import { RoleGuard } from './app/shared/guards/role.guard';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from './app/shared/modules/material.module';
 import { AlertModule } from '@full-fledged/alerts';
 import { UserResolve } from './app/admin/users/user.resolve';
@@ -47,7 +46,6 @@ bootstrapApplication(AppComponent, {
       BrowserAnimationsModule,
       RouterModule.forRoot(APP_ROUTES),
       HttpClientModule,
-      FlexLayoutModule,
       MaterialModule,
       AlertModule.forRoot({ maxMessages: 1, timeout: 5000, positionX: 'right', positionY: 'bottom' }),
     ),

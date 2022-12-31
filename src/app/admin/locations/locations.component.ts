@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from 'src/app/shared/modules/material.module';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { Location } from '../../shared/models/location.model';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
@@ -21,8 +20,7 @@ import { AdminService } from '../admin.service';
     CommonModule,
     MaterialModule,
     FormsModule,
-    RouterModule,
-    FlexLayoutModule
+    RouterModule
   ],
   templateUrl: './locations.component.html',
   styleUrls: ['./locations.component.scss']

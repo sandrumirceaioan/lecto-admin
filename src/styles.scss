@@ -3,13 +3,16 @@
 @import "./assets/scss/flexbox.scss";
 @import "./assets/scss/lecto.scss";
 
-html,
-body {
-    height: 100%;
+html, body { height: 100%; }
+body { margin: 0; font-family: "Roboto", "Helvetica Neue", sans-serif; }
+
+.mat-drawer-container {
+    width: 100% !important;
 }
-body {
-    margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+
+.content {
+    background: none;
+    padding: 25px;
 }
 
 .ps-content {
@@ -65,10 +68,6 @@ body {
 
 .mat-flat-button.mat-button-disabled.mat-button-disabled {
     color: #000000;
-}
-
-.content {
-    padding: 25px;
 }
 
 .app-alerts .app-alert.success {
@@ -143,6 +142,6 @@ gallery-thumb {
     }
 }
 
-// div.fr-wrapper > div:first-child {
-//     display: none !important;
-// }
+h4, h5 {
+    font-weight: normal !important;
+}

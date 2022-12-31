@@ -5,7 +5,7 @@
     .files-selector {
         border: 2px dashed #bebebe;
         border-radius: 10px;
-        min-height: 200px;
+        min-height: 100px;
 
         .input-selector {
             display: none;
@@ -50,8 +50,7 @@
                     line-height: 20px;
 
                     .file-name {
-                        font-weight: bold;
-                        color: #6DC1C0;
+                        text-decoration: underline;
                     }
 
                     .file-size {

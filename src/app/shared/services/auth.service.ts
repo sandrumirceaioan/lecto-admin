@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { throwError, Observable, of, firstValueFrom, EmptyError, lastValueFrom, Subject } from 'rxjs';
+import { throwError, Observable, of, Subject } from 'rxjs';
 import { map, catchError, tap, first } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Credentials, LoginResponse, RegisterParams, User } from '../models/user.model';
@@ -16,7 +16,6 @@ const httpOptions = {
 })
 export class AuthService {
     apiPath: string = environment.BACKEND_URL;
-    user$ = new Subject();
     currentUser: User;
 
     private readonly lecto_at = "lecto_at";
@@ -46,7 +45,6 @@ export class AuthService {
             tap((response: any) => this.doLoginUser(response.user, response.tokens)),
             map((result: LoginResponse) => {
                 this.alertService.success(`Welcome ${result.user.email}`);
-                this.user$.next(result.user);
                 this.currentUser = result.user;
                 return result.user;
             }),
@@ -58,9 +56,9 @@ export class AuthService {
     }
 
     verify(): Observable<any> {
+        if (this.currentUser) return of(this.currentUser);
         return this.http.post(`${this.apiPath}/auth/local/verify`, {}, httpOptions).pipe(
             tap((result: User) => {
-                this.user$.next(result);
                 this.currentUser = result;
                 return result;
             }),
@@ -74,8 +72,9 @@ export class AuthService {
     logout() {
         this.http.post(`${this.apiPath}/auth/local/logout`, {}, httpOptions).pipe(
             map(() => {
-                this.user$.next(null);
                 this.removeTokens();
+                localStorage.removeItem('mpress_site');
+                localStorage.removeItem('mpress_pref');
                 this.router.navigate(['/auth/login']);
                 console.log('LOGGED OUT');
                 return;
@@ -95,7 +94,10 @@ export class AuthService {
             }),
             catchError((error) => {
                 console.log(error.error.message);
-                this.logout();
+                this.removeTokens();
+                this.router.navigate(['/auth/login']);
+                localStorage.removeItem('mpress_site');
+                localStorage.removeItem('mpress_pref');
                 return of(null);
             })
         );
@@ -113,7 +115,6 @@ export class AuthService {
     }
 
     private doLoginUser(user?, tokens?) {
-        this.user$.next(user);
         this.storeTokens(tokens);
     }
 
@@ -127,3 +128,4 @@ export class AuthService {
         localStorage.removeItem(this.lecto_rt);
     }
 }
+

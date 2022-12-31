@@ -197,40 +197,53 @@ $lecto-palette-dark: (
 );
 
 $custom-typography: mat.define-typography-config(
-  $font-family: "Archivo regular, sans-serif",
-  $display-4: mat.define-typography-level(112px, 112px, 300, $letter-spacing: -0.05em),
-  $display-3: mat.define-typography-level(56px, 56px, 300, $letter-spacing: -0.02em),
-  $display-2: mat.define-typography-level(45px, 48px, 300, $letter-spacing: -0.005em),
-  $display-1: mat.define-typography-level(34px, 40px, 300),
-  $headline: mat.define-typography-level(16px, 16px, 100),
-  $title: mat.define-typography-level(18px, 18px, 100),
-  $subheading-2: mat.define-typography-level(16px, 20px, 400),
-  $subheading-1: mat.define-typography-level(16px, 20px, 400),
-  $body-2: mat.define-typography-level(14px, 24px, 400),
-  $body-1: mat.define-typography-level(14px, 20px, 400),
-  $caption: mat.define-typography-level(14px, 20px, 300),
-  $button: mat.define-typography-level(18px, 18px, 500),
-  $input: mat.define-typography-level(inherit, 1.125, 400),
+  $headline-1: mat.define-typography-level(112px, 112px, 300, $letter-spacing: -0.05em),
+  $headline-2: mat.define-typography-level(56px, 56px, 400, $letter-spacing: -0.02em),
+  $headline-3: mat.define-typography-level(45px, 48px, 400, $letter-spacing: -0.005em),
+  $headline-4: mat.define-typography-level(34px, 40px, 400),
+  $headline-5: mat.define-typography-level(24px, 32px, 400),
+  $headline-6: mat.define-typography-level(20px, 22px, 400),
+  $subtitle-1: mat.define-typography-level(17px, 20px, 400),
+  $subtitle-2: mat.define-typography-level(14px, 20px, 400, $letter-spacing: -0.005em),
+  $body-1: mat.define-typography-level(14px, 20px, 400, $letter-spacing: -0.005em),
+  $body-2: mat.define-typography-level(14px, 20px, 400, $letter-spacing: -0.005em),
+  $caption: mat.define-typography-level(12px, 15px, 400, $letter-spacing: -0.005em),
+  $button: mat.define-typography-level(14px, 15px, 400, $letter-spacing: -0.005em),
 );
 
-@include mat.all-component-typographies($custom-typography);
-
 //Define your application's light theme.
-$primary: mat.define-palette($lecto-palette-primary);
-$accent: mat.define-palette($lecto-palette-accent);
-$success: mat.define-palette($lecto-palette-success);
-$warn: mat.define-palette($lecto-palette-warn);
-$white: mat.define-palette($lecto-palette-white);
-$dark: mat.define-palette($lecto-palette-dark);
+$primary: mat.define-palette($maxy-palette-primary);
+$accent: mat.define-palette($maxy-palette-accent);
+$warn: mat.define-palette($maxy-palette-warn);
+$success: mat.define-palette($maxy-palette-success);
+$dark: mat.define-palette($maxy-palette-dark);
+$white: mat.define-palette($maxy-palette-white);
 
 // create the theme object (a Sass map containing all of the palettes)
-$lecto-theme: mat.define-light-theme(
+$maxy-theme: mat.define-light-theme(
   (
     color: (
       primary: $primary,
       accent: $accent,
-      warn: $warn,
-      success: $success,
+      warn: $warn
     ),
+    typography: $custom-typography,
+  )
+);
+
+//Define your application's dark theme.
+$primary-dark: mat.define-palette($maxy-palette-dark-primary);
+$accent-dark: mat.define-palette($maxy-palette-dark-accent);
+$warn-dark: mat.define-palette($maxy-palette-warn);
+$success-dark: mat.define-palette($maxy-palette-success);
+
+$maxy-dark-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: $primary-dark,
+      accent: $accent-dark,
+      warn: $warn-dark,
+    ),
+    typography: $custom-typography,
   )
 );

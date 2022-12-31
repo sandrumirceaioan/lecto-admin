@@ -1,16 +1,16 @@
-<div class="admin-container" [class.example-is-mobile]="mobileQuery.matches" fxLayout="column">
+<div class="admin-container fx-column" [class.example-is-mobile]="mobileQuery.matches">
     <app-navbar class="navbar mat-elevation-z3" [sidenav]="snav" [mobile]="mobileQuery.matches"></app-navbar>
 
-    <mat-sidenav-container fxFlex>
+    <mat-sidenav-container class="fx-flex">
         <mat-sidenav class="sidenav text-white" #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
-            [fixedInViewport]="mobileQuery.matches" fixedTopGap="60" [opened]="!mobileQuery.matches">
+                     [fixedInViewport]="mobileQuery.matches" fixedTopGap="60" [opened]="!mobileQuery.matches">
             <perfect-scrollbar>
-                <mat-nav-list class="nav-list" fxLayout="column" fxLayoutAlign="start">
-                    <a mat-flat-button class="nav-button background-dark" *ngFor="let menuItem of menuItems" matLine
-                        routerLinkActive="active" [routerLink]="[menuItem.path]"
-                        (click)="mobileQuery.matches && snav.toggle()" fxLayout="row">
-                        <mat-icon class="text-white mr-10" fxFlex>{{menuItem.icon}}</mat-icon>
-                        <div class="nav-text" fxFlex>{{ menuItem.title }}</div>
+                <mat-nav-list class="nav-list fx-column">
+                    <a mat-flat-button color="dark" class="nav-button fx-row fx-layout-start-center"
+                       *ngFor="let menuItem of menuItems" matLine routerLinkActive="active"
+                       [routerLink]="[menuItem.path]" (click)="mobileQuery.matches && snav.toggle()">
+                        <mat-icon class="nav-icon text-white">{{menuItem.icon}}</mat-icon>
+                        <div class="nav-text">{{ menuItem.title }}</div>
                     </a>
                 </mat-nav-list>
             </perfect-scrollbar>
@@ -28,7 +28,6 @@
             </mat-toolbar>
 
             <router-outlet></router-outlet>
-            
         </mat-sidenav-content>
 
     </mat-sidenav-container>

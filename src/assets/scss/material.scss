@@ -71,41 +71,22 @@
 
 /* Here you can add other styles */
 
-.mat-list-single-selected-option,
-.mat-list-single-selected-option:hover,
-.mat-list-single-selected-option:focus {
-    background: mat.get-color-from-palette($primary) !important;
-    color: mat.get-color-from-palette($primary, A700-contrast) !important;
+.mat-form-field {
+    width: 100%;
+    display: block;
 }
 
-.mat-sidenav-container,
-.mat-sidenav-content {
-    transform: none !important;
+.accent-tooltip {
+    background: mat.get-color-from-palette($accent);
 }
 
-.mat-button-toggle-checked {
-    background-color: mat.get-color-from-palette($accent);
-    color: mat.get-color-from-palette($accent, default-contrast) !important;
+.primary-tooltip {
+    background: mat.get-color-from-palette($primary);
 }
 
-.mat-drawer {
-    background-color: mat.get-color-from-palette($primary);
-}
-.mat-header-cell,
-.mat-sort-header-arrow {
-    color: mat.get-color-from-palette($dark, 200) !important;
-    font-weight: 500;
-    font-size: 14px;
-}
-
-.mat-tab-label-content {
-    color: mat.get-color-from-palette($dark, 300) !important;
-    font-weight: 400;
-    font-size: 16px;
-}
-
-.mat-cell {
-    color: mat.get-color-from-palette($dark, 300) !important;
+.transparent-tooltip {
+    background: none !important;
+    color: mat.get-color-from-palette($primary) !important;
 }
 
 .mat-step-header {
@@ -113,8 +94,42 @@
     background-color: #e0e0e0 !important;
 }
 
-.mat-typography h1 {
-    font: 600 25px / 10px Archivo bold, sans-serif !important;
-    letter-spacing: normal !important;
-    margin: 0 0 20px !important;
+
+/* starting with Angular 15 */
+
+.mat-mdc-form-field-error-wrapper, .mat-mdc-form-field-hint-wrapper {
+    padding: 0px !important;
+    color: #bebebe;
+}
+
+.mat-mdc-form-field-required-marker {
+    display: none !important;
+}
+
+.mat-mdc-cell {
+    color: mat.get-color-from-palette($dark);
+}
+
+.mat-mdc-header-cell {
+    color: mat.get-color-from-palette($primary);
+    font-weight: 500;
+}
+
+.mat-sort-header-arrow {
+    color: mat.get-color-from-palette($primary);
+}
+
+.mdc-text-field {
+    overflow: inherit !important;
+    will-change: unset !important;
+}
+
+.mat-vertical-content-container {
+    margin: 20px 0px 0px 0px !important;
+    border: 0;
+    position: relative;
+}
+
+.mat-stepper-vertical-line::before {
+    display: none !important;
 }

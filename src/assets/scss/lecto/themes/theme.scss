@@ -212,37 +212,20 @@ $custom-typography: mat.define-typography-config(
 );
 
 //Define your application's light theme.
-$primary: mat.define-palette($maxy-palette-primary);
-$accent: mat.define-palette($maxy-palette-accent);
-$warn: mat.define-palette($maxy-palette-warn);
-$success: mat.define-palette($maxy-palette-success);
-$dark: mat.define-palette($maxy-palette-dark);
-$white: mat.define-palette($maxy-palette-white);
+$primary: mat.define-palette($lecto-palette-primary);
+$accent: mat.define-palette($lecto-palette-accent);
+$warn: mat.define-palette($lecto-palette-warn);
+$success: mat.define-palette($lecto-palette-success);
+$dark: mat.define-palette($lecto-palette-dark);
+$white: mat.define-palette($lecto-palette-white);
 
 // create the theme object (a Sass map containing all of the palettes)
-$maxy-theme: mat.define-light-theme(
+$lecto-theme: mat.define-light-theme(
   (
     color: (
       primary: $primary,
       accent: $accent,
       warn: $warn
-    ),
-    typography: $custom-typography,
-  )
-);
-
-//Define your application's dark theme.
-$primary-dark: mat.define-palette($maxy-palette-dark-primary);
-$accent-dark: mat.define-palette($maxy-palette-dark-accent);
-$warn-dark: mat.define-palette($maxy-palette-warn);
-$success-dark: mat.define-palette($maxy-palette-success);
-
-$maxy-dark-theme: mat.define-dark-theme(
-  (
-    color: (
-      primary: $primary-dark,
-      accent: $accent-dark,
-      warn: $warn-dark,
     ),
     typography: $custom-typography,
   )

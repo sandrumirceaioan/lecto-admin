@@ -1,19 +1,18 @@
-<mat-toolbar>
-  <img src="./assets/images/lectoform-logo-new-small.webp" alt="LectoForm Admin">
+<mat-toolbar class="fx-row fx-layout-between-center">
+  <div class="logo fx-row fx-layout-center-center">
+    <img src="./assets/images/lectoform-logo-new-small.webp" alt="LectoForm Admin">
 
-  <button mat-icon-button *ngIf="mobile" (click)="sidenav.toggle()" class="ml-10">
-    <mat-icon color="accent">menu</mat-icon>
-  </button>
+    <button mat-icon-button *ngIf="mobile" (click)="sidenav.toggle()" class="ml-10">
+      <mat-icon color="accent">menu</mat-icon>
+    </button>
+  </div>
 
-  <span fxFlex></span>
-  <button color="default" mat-button *ngIf="user">
-    <mat-icon color="primary" class="mr-5">person</mat-icon>
-    <span class="text-dark">{{user.firstName}}</span>
-  </button>
-
-  <button mat-icon-button [matMenuTriggerFor]="menu">
-    <mat-icon>more_vert</mat-icon>
-  </button>
+  <div class="actions fx-row fx-layout-center-center">
+    <button color="default" mat-button *ngIf="user" [matMenuTriggerFor]="menu">
+      <mat-icon color="primary" class="mr-5">person</mat-icon>
+      <span class="text-dark">{{user.firstName}}</span>
+    </button>
+  </div>
 
   <mat-menu #menu="matMenu">
     <button mat-menu-item (click)="logout()">

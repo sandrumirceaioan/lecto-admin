@@ -112,12 +112,12 @@
 }
 
 .mat-mdc-header-cell {
-    color: mat.get-color-from-palette($primary);
+    color: mat.get-color-from-palette($accent);
     font-weight: 500;
 }
 
 .mat-sort-header-arrow {
-    color: mat.get-color-from-palette($primary);
+    color: mat.get-color-from-palette($accent);
 }
 
 .mdc-text-field {

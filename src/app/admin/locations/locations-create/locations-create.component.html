@@ -1,9 +1,9 @@
-<div class="content" flexLayout="column">
+<div class="content">
 
-    <form [formGroup]="locationsForm" fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="25px">
-        <mat-card fxFlex="50" fxFlex.lt-sm="100" fxFill="false">
-            <section fxLayout="column">
-                <h2 class="text-accent">Informatii Generale Locatie</h2>
+    <form [formGroup]="locationsForm" class="fx-row fx-lt-md-column fx-gap-25">
+        <mat-card class="fx-column fx-50 fx-lt-sm-100 p-20">
+            <section class="fx-column fx-flex">
+                <h4 class="text-accent">Informatii Generale Locatie</h4>
                 <mat-divider class="mb-20"></mat-divider>
 
                 <!-- location name -->
@@ -48,14 +48,14 @@
                     </mat-error>
                 </mat-form-field>
 
-                <h2 class="text-accent">Galerie Foto Locatie <small *ngIf="locationsForm.get('locatie').value"
-                        class="text-gray">({{locationsForm.get('locatie').value}})</small></h2>
+                <h4 class="text-accent">Galerie Foto Locatie <small *ngIf="locationsForm.get('locatie').value"
+                        class="text-gray">({{locationsForm.get('locatie').value}})</small></h4>
                         <mat-divider class="mb-20"></mat-divider>
 
                 <!-- location images -->
-                <div class="files-upload" fxLayout="column">
+                <div class="files-upload fx-column mb-20">
                     <label for="dzone" appDnd (fileDropped)="onDroppedFiles($event)">
-                        <div class="files-selector" fxFlex fxLayoutAlign="center center">
+                        <div class="files-selector fx-row fx-layout-center-center">
                             <input id="dzone" class="input-selector" type="file" class="file-input"
                                 (change)="onFileSelected($event)" #fileUpload multiple style="display: none;"
                                 onclick="value = null">
@@ -66,40 +66,42 @@
                         </div>
                     </label>
 
-                    <div class="files-preview" fxFlex>
-                        <span *ngIf="!selectedFiles.length" class="text-gray">Nu ai selectat nici o
-                            imagine...</span>
-
-                        <ul fxLayout="column">
-                            <li *ngFor="let selected of selectedFiles; let i = index" fxLayout="row">
-                                <div class="preview">
-                                    <img [src]="selected.preview" [alt]="selected.name" (click)="openDialog(selected)">
-                                </div>
-                                <div class="details" fxFlex>
-                                    <span class="file-name">{{selected.name}}</span><br />
-                                    <span class="file-size"><small>{{formatBytes(selected.file.size)}}</small></span>
-
-                                </div>
-                                <div class="actions" fxFlex fxLayoutAlign="end center">
-                                    <button mat-icon-button class="mr-10"
+                    <div class="files-preview">
+                        <span *ngIf="!selectedFiles.length" class="text-gray"><small>No thumbnail selected...</small></span>
+                
+                        <ul class="fx-column">
+                          <li *ngFor="let selected of selectedFiles; let i = index" class="fx-row">
+                            <div class="preview">
+                              <img [src]="selected.preview" [alt]="selected.name" (click)="openDialog(selected)">
+                            </div>
+                            <div class="details fx-flex fx-row fx-layout-start-center">
+                              <button mat-flat-button (click)="openDialog(selected)">
+                                <span class="file-name">{{selected.name}}</span><br />
+                                <span class="file-size"><small>{{formatBytes(selected.file.size)}}</small></span>
+                              </button>
+                            </div>
+                            <div class="actions fx-flex fx-row fx-layout-end-center">
+                                <button mat-icon-button class="mr-10"
                                         [ngClass]="selected.main ? 'text-accent' : 'text-gray'" (click)="onFileMain(i)">
                                         <mat-icon>favorite</mat-icon>
                                     </button>
                                     <button mat-icon-button color="default" (click)="onFileRemoved(i)">
                                         <mat-icon>close</mat-icon>
                                     </button>
-                                </div>
-                            </li>
+                            </div>
+                          </li>
                         </ul>
-                    </div>
+                
+                      </div>
                 </div>
+
             </section>
         </mat-card>
 
-        <mat-card fxFlex="50" fxFlex.lt-sm="100" fxFill="false">
-            <section fxLayout="column">
-                <h2 class="text-accent">Descriere Locatie <small *ngIf="locationsForm.get('locatie').value"
-                        class="text-gray">({{locationsForm.get('locatie').value}})</small></h2>
+        <mat-card class="fx-50 fx-lt-md-100 p-20">
+            <section class="fx-column fx-flex">
+                <h4 class="text-accent">Descriere Locatie <small *ngIf="locationsForm.get('locatie').value"
+                        class="text-gray">({{locationsForm.get('locatie').value}})</small></h4>
                         <mat-divider class="mb-20"></mat-divider>
 
                 <!-- location content -->
@@ -111,12 +113,13 @@
                 </mat-error>
             </section>
 
-            <section fxLayout="row" fxLayoutAlign="end center" fxLayoutAlign.lt-sm="center center">
+            <section class="fx-row fx-layout-center-center">
                 <button mat-flat-button color="accent" [disabled]="!locationsForm.valid || (loading$ | async)"
-                    class="save-button create-contract-btn p-10" (click)="createLocation()" fxLayout="row"
-                    fxLayoutAlign="center center" fxFill>
+                        class="save-button fx-fill p-10" (click)="createLocation()">
                     <mat-spinner *ngIf="loading$ | async" class="text-white" diameter="20"></mat-spinner>
-                    <span *ngIf="!(loading$ | async)">Salveaza</span>
+                    <span *ngIf="!(loading$ | async)">
+                        Salveaza
+                    </span>
                 </button>
             </section>
         </mat-card>

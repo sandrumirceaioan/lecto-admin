@@ -1,9 +1,9 @@
-<div class="content" flexLayout="column">
+<div class="content">
 
-    <form [formGroup]="teacherForm" fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="25px">
-        <mat-card fxFlex="50" fxFlex.lt-sm="100" fxFill="false">
-            <section fxLayout="column">
-                <h2 class="text-accent">Informatii Generale Profesor</h2>
+    <form [formGroup]="teacherForm" class="fx-row fx-lt-md-column fx-gap-25">
+        <mat-card class="fx-column fx-50 fx-lt-sm-100 p-20">
+            <section class="fx-column fx-flex">
+                <h4 class="text-accent">Informatii Generale Profesor</h4>
                 <mat-divider class="mb-20"></mat-divider>
 
                 <!-- nume profesor -->
@@ -30,51 +30,49 @@
                 </mat-form-field>
 
                 <!-- contact profesor -->
-                <div fxFlex fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
-                    <mat-form-field appearance="fill" class="mb-5" fxFlex="50" fxFlex.lt-sm="100">
+                <div class="fx-row fx-lt-md-column fx-gap-20">
+                    <mat-form-field appearance="fill" class="fx-50 fx-lt-md-100 mb-5">
                         <mat-label>Email</mat-label>
                         <input matInput formControlName="email" />
                         <mat-error *ngIf="teacherForm.get('nume').hasError('required')">Email profesor necesar
                         </mat-error>
                     </mat-form-field>
 
-                    <mat-form-field appearance="fill" class="mb-5" fxFlex="50" fxFlex.lt-sm="100">
+                    <mat-form-field appearance="fill" class="fx-50 fx-lt-md-100 mb-5">
                         <mat-label>Telefon</mat-label>
                         <input matInput formControlName="telefon" />
                     </mat-form-field>
                 </div>
 
-                <h2 class="text-accent">Imagine Profesor</h2>
+                <h4 class="text-accent">Imagine Profesor</h4>
                 <mat-divider class="mb-20"></mat-divider>
 
                 <!-- imagine profesor -->
-                <div class="files-upload mb-20" fxLayout="column">
+                <div class="files-upload fx-column mb-20">
                     <label for="dzone" appDnd (fileDropped)="onDroppedFiles($event)">
-                        <div class="files-selector" fxFlex fxLayoutAlign="center center">
+                        <div class="files-selector fx-row fx-layout-center-center">
                             <input id="dzone" class="input-selector" type="file" class="file-input"
-                                (change)="onFileSelected($event)" #fileUpload style="display: none;"
-                                onclick="value = null">
+                                   (change)="onFileSelected($event)" #fileUpload style="display: none;"
+                                   onclick="value = null">
                             <button mat-raised-button color="accent" (click)="fileUpload.click();" type="button">
                                 <mat-icon>cloud_upload</mat-icon>
                                 &nbsp;&nbsp;Adauga imagine
                             </button>
                         </div>
                     </label>
-                    <div class="files-preview" fxFlex>
+                    <div class="files-preview">
                         <span *ngIf="!selectedFiles.length" class="text-gray">Nu ai selectat nici o
                             imagine...</span>
 
-                        <ul fxLayout="column">
-                            <li *ngFor="let selected of selectedFiles; let i = index" fxLayout="row">
+                        <ul class="fx-column">
+                            <li *ngFor="let selected of selectedFiles; let i = index" class="fx-row">
                                 <div class="preview">
                                     <img [src]="selected.preview" [alt]="selected.name" (click)="openDialog(selected)">
                                 </div>
-                                <div class="details" fxFlex>
-                                    <span class="file-name">{{selected.name}}</span><br />
-                                    <span class="file-size"><small>{{formatBytes(selected.file.size)}}</small></span>
-
+                                <div class="details fx-flex fx-row fx-layout-start-center">
+                                    <button mat-flat-button (click)="openDialog(selected)"><span class="file-name text-dark">{{selected.name}}</span></button>
                                 </div>
-                                <div class="actions" fxFlex fxLayoutAlign="end center">
+                                <div class="actions fx-flex fx-row fx-layout-end-center">
                                     <button mat-icon-button color="default" (click)="onFileRemoved()">
                                         <mat-icon>close</mat-icon>
                                     </button>
@@ -87,21 +85,23 @@
 
             </section>
 
-            <section fxLayout="row" fxLayoutAlign="end center" fxLayoutAlign.lt-sm="center center">
-                <button mat-flat-button color="accent" [disabled]="!teacherForm.valid || (loading$ | async)" class="save-button create-contract-btn p-10"
-                    (click)="createTeacher()" fxLayout="row" fxLayoutAlign="center center" fxFill>
+            <section class="fx-row fx-layout-center-center">
+                <button mat-flat-button color="accent" [disabled]="!teacherForm.valid || (loading$ | async)"
+                        class="save-button fx-fill p-10" (click)="createTeacher()">
                     <mat-spinner *ngIf="loading$ | async" class="text-white" diameter="20"></mat-spinner>
-                    <span *ngIf="!(loading$ | async)">Salveaza</span>
+                    <span *ngIf="!(loading$ | async)">
+                        Salveaza
+                    </span>
                 </button>
             </section>
         </mat-card>
 
-        <div fxFlex="50" fxFlex.lt-sm="100" *ngIf="this.teacherForm.get('nume').value">
-            <div class="preview-container" fxLayout="column" fxLayoutAlign="center center">
+        <div class="fx-50 fx-lt-sm-100" *ngIf="this.teacherForm.get('nume').value">
+            <div class="preview-container fx-column fx-layout-center-center">
                 <mat-card class="preview-card mat-elevation-z3">
                     <div class="preview-header">
                         <img [src]="selectedFiles.length && selectedFiles[0] ? selectedFiles[0].preview : './assets/images/placeholder.png'"
-                            alt="profile-image">
+                             alt="profile-image">
                     </div>
                     <mat-card-header class="preview-title">
                         <mat-card-title class="text-success">{{teacherForm.get('nume').value}}</mat-card-title>
@@ -110,7 +110,7 @@
                     <mat-card-content class="preview-content">
                         <p>{{teacherForm.get('descriere').value}}</p>
                     </mat-card-content>
-                    <mat-card-footer class="preview-footer text-success" fxLayout="column" fxLayoutAlign="center start">
+                    <mat-card-footer class="preview-footer text-success fx-column fx-layout-center-start">
                         <span class="text-success">{{teacherForm.get('email').value}}</span>
                         <span class="text-dark">{{teacherForm.get('telefon').value}}</span>
                     </mat-card-footer>

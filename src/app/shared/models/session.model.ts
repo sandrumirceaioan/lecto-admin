@@ -41,7 +41,7 @@ export interface Session {
         end: Date;
     };
     cursuri?: SessionCourse[];
-    locatie?: SessionLocation;
+    locatii?: SessionLocation[];
     createdBy?: any;
     createdAt?: Date;
 }

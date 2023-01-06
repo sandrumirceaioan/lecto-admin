@@ -39,7 +39,7 @@
       <ng-container matColumnDef="locatie">
         <th mat-header-cell class="dc-label" *matHeaderCellDef mat-sort-header>Locatie</th>
         <td mat-cell class="dc-content" *matCellDef="let element">
-          <a mat-button [routerLink]="'/admin/locatii/' + element._id">
+          <a mat-button [routerLink]="'/admin/locatii/' + element._id" class="fx-row fx-layout-start-center">
           {{element.locatie}}
           </a>
         </td>
@@ -78,7 +78,7 @@
         <th mat-header-cell class="dc-actions" *matHeaderCellDef>Actiuni</th>
         <td mat-cell class="dc-content" *matCellDef="let element">
           <button mat-icon-button [routerLink]="'/admin/locatii/' + element._id">
-            <mat-icon color="accent">edit</mat-icon>
+            <mat-icon color="primary">edit</mat-icon>
           </button>
         </td>
       </ng-container>

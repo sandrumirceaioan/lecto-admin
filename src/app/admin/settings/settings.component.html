@@ -1,0 +1,263 @@
+<div class="content">
+
+    <form [formGroup]="settingsForm" class="fx-row fx-lt-md-column fx-gap-25">
+        <mat-card class="fx-column fx-50 fx-lt-sm-100 p-20">
+
+            <mat-stepper orientation="vertical" [linear]="false" #stepper color="primary">
+
+                <!-- GENERAL -->
+                <mat-step [stepControl]="settingsForm">
+                    <ng-template matStepLabel>GENERAL</ng-template>
+
+                    <section class="fx-column">
+                        <div class="fx-row fx-lt-md-column fx-gap-20">
+                            <mat-form-field appearance="fill" class="mb-5 fx-flex">
+                                <mat-label>Titlu</mat-label>
+                                <input matInput formControlName="title" />
+                                <mat-error *ngIf="settingsForm.get('title').hasError('required')">Titlu website necesar</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="fill" class="mb-5 fx-flex">
+                                <mat-label>Slogan</mat-label>
+                                <input matInput formControlName="summary" />
+                                <mat-error *ngIf="settingsForm.get('summary').hasError('required')">Slogan website necesara</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="fx-row fx-lt-md-column fx-gap-20">
+                            <mat-form-field appearance="fill" class="mb-5 fx-flex">
+                                <mat-label>Descriere</mat-label>
+                                <input matInput formControlName="description" />
+                                <mat-error *ngIf="settingsForm.get('description').hasError('required')">Descriere website necesara</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="fill" class="mb-5 fx-flex">
+                                <mat-label>Moneda</mat-label>
+                                <mat-select formControlName="currency">
+                                    <mat-option value="RON">RON</mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="settingsForm.get('currency').hasError('required')">Moneda website necesara</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </section>
+
+                </mat-step>
+
+                <!-- META -->
+                <mat-step [stepControl]="settingsForm">
+                    <ng-template matStepLabel>META</ng-template>
+
+                    <section class="fx-column" formGroupName="meta">
+                        <div class="fx-row fx-lt-md-column fx-gap-20">
+                            <mat-form-field appearance="fill" class="mb-5 fx-flex">
+                                <mat-label>Meta Title</mat-label>
+                                <input matInput formControlName="title" />
+                                <mat-error *ngIf="settingsForm.get('meta.title').hasError('required')">Meta titlu website necesar</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="fx-row fx-lt-md-column fx-gap-20">
+                            <mat-form-field appearance="fill" class="mb-5 fx-flex">
+                                <mat-label>Meta Description</mat-label>
+                                <input matInput formControlName="description" />
+                                <mat-error *ngIf="settingsForm.get('meta.description').hasError('required')">Meta descriere website necesara</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="fx-row fx-lt-md-column fx-gap-20">
+                            <mat-form-field appearance="fill" class="mb-5 fx-flex">
+                                <mat-label>Keywords</mat-label>
+                                <input matInput formControlName="keywords" />
+                                <mat-error *ngIf="settingsForm.get('meta.keywords').hasError('required')">Meta keywords website necesare</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="fx-row fx-lt-md-column fx-gap-20">
+                            <mat-form-field appearance="fill" class="mb-5 fx-flex">
+                                <mat-label>Meta Author</mat-label>
+                                <input matInput formControlName="author" />
+                                <mat-error *ngIf="settingsForm.get('meta.author').hasError('required')">Meta author website necesar</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="fill" class="mb-5 fx-flex">
+                                <mat-label>Meta Robots</mat-label>
+                                <mat-select formControlName="robots">
+                                    <mat-option [value]="'noindex, nofollow'">NOINDEX / NOFOlLOW</mat-option>
+                                    <mat-option [value]="'index, follow'">INDEX / FOLLOW</mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="settingsForm.get('meta.robots').hasError('required')">Meta Robots website necesar</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </section>
+
+                </mat-step>
+
+                <!-- SOCIAL -->
+                <mat-step [stepControl]="settingsForm">
+                    <ng-template matStepLabel>SOCIAL</ng-template>
+
+                    <section class="fx-column" formGroupName="social">
+                        <div class="fx-row fx-lt-md-column fx-gap-20">
+                            <mat-form-field appearance="fill" class="mb-5 fx-flex">
+                                <mat-label>Facebook</mat-label>
+                                <input matInput formControlName="facebook" />
+                                <mat-error *ngIf="settingsForm.get('social.facebook').hasError('required')">Pagina Facebook necesara</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="fill" class="mb-5 fx-flex">
+                                <mat-label>Twitter</mat-label>
+                                <input matInput formControlName="twitter" />
+                                <mat-error *ngIf="settingsForm.get('social.twitter').hasError('required')">Pagina Twitter necesara</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="fx-row fx-lt-md-column fx-gap-20">
+                            <mat-form-field appearance="fill" class="mb-5 fx-flex">
+                                <mat-label>Instagram</mat-label>
+                                <input matInput formControlName="instagram" />
+                                <mat-error *ngIf="settingsForm.get('social.instagram').hasError('required')">Pagina Instagram necesara</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="fill" class="mb-5 fx-flex">
+                                <mat-label>Linkedin</mat-label>
+                                <input matInput formControlName="linkedin" />
+                                <mat-error *ngIf="settingsForm.get('social.linkedin').hasError('required')">Pagina Linkedin necesara</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="fx-row fx-lt-md-column fx-gap-20">
+                            <mat-form-field appearance="fill" class="mb-5 fx-flex">
+                                <mat-label>YouTube</mat-label>
+                                <input matInput formControlName="youtube" />
+                                <mat-error *ngIf="settingsForm.get('social.youtube').hasError('required')">Pagina Youtube necesara</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </section>
+
+                </mat-step>
+
+                <!-- CONTACT -->
+                <mat-step [stepControl]="settingsForm">
+                    <ng-template matStepLabel>CONTACT</ng-template>
+
+                    <section class="fx-column" formGroupName="contact">
+                        <div class="fx-row fx-lt-md-column">
+                            <mat-form-field appearance="fill" class="mb-5 fx-flex">
+                                <mat-label>Adresa</mat-label>
+                                <input matInput formControlName="address" />
+                                <mat-error *ngIf="settingsForm.get('contact.address').hasError('required')">Adresa companie necesar</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="fx-row fx-lt-md-column fx-gap-20">
+                            <mat-form-field appearance="fill" class="mb-5 fx-flex">
+                                <mat-label>Email</mat-label>
+                                <input matInput formControlName="email" />
+                                <mat-error *ngIf="settingsForm.get('contact.email').hasError('required')">Email necesar</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="fill" class="mb-5 fx-flex">
+                                <mat-label>Web</mat-label>
+                                <input matInput formControlName="web" />
+                                <mat-error *ngIf="settingsForm.get('contact.web').hasError('required')">Adresa WEB necesara</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="fx-row fx-lt-md-column">
+                            <div formArrayName="phones" class="fx-flex">
+                                <p *ngIf="!phones.controls.length">Adauga persoana de contact</p>
+                                <div *ngFor="let phone of phones.controls; let i=index" fxLayout="row">
+                                    <div class="fx-flex fx-row fx-lt-md-column fx-gap-20" [formGroupName]="i">
+
+                                        <mat-form-field appearance="fill" class="mb-5 fx-gt-sm-20">
+                                            <mat-label>Tip Telefon</mat-label>
+                                            <mat-select formControlName="type">
+                                                <mat-option value="fix">Fix</mat-option>
+                                                <mat-option value="mobil">Mobil</mat-option>
+                                            </mat-select>
+                                            <mat-error *ngIf="phone.get('type').hasError('required')">Tip telefon necesar</mat-error>
+                                        </mat-form-field>
+
+                                        <mat-form-field appearance="fill" class="fx-gt-sm-30">
+                                            <mat-label>Numar Telefon</mat-label>
+                                            <input matInput type="text" formControlName="number" color="warn">
+                                            <mat-error *ngIf="phone.get('number').hasError('required')">Numar telefon necesar</mat-error>
+                                        </mat-form-field>
+
+
+                                        <mat-form-field appearance="fill" class="fx-gt-sm-30">
+                                            <mat-label>Persoana Contact</mat-label>
+                                            <input matInput type="text" formControlName="person" color="warn">
+                                            <mat-error *ngIf="phone.get('person').hasError('required')">Persoana de contact necesara</mat-error>
+                                        </mat-form-field>
+
+                                        <div class="fx-gt-sm-20">
+                                            <button type="button" mat-icon-button (click)="removePhone(i)"
+                                                    color="primary">
+                                                <mat-icon>remove</mat-icon>
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <button type="button" mat-icon-button (click)="addPhone()" color="primary">
+                                    <mat-icon>add</mat-icon>
+                                </button>
+                            </div>
+
+                        </div>
+                    </section>
+
+                </mat-step>
+
+
+                <!-- COMPANY -->
+                <mat-step [stepControl]="settingsForm">
+                    <ng-template matStepLabel>COMPANIE</ng-template>
+
+                    <section class="fx-column" formGroupName="company">
+                        <div class="fx-row fx-lt-md-column fx-gap-20">
+                            <mat-form-field appearance="fill" class="mb-5 fx-flex">
+                                <mat-label>Nume</mat-label>
+                                <input matInput formControlName="name" placeholder="Lectoform Consulting SRL" />
+                                <mat-error *ngIf="settingsForm.get('company.name').hasError('required')">Nume companie necesar</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="fill" class="mb-5 fx-flex">
+                                <mat-label>Descriere</mat-label>
+                                <input matInput formControlName="description" />
+                                <mat-error *ngIf="settingsForm.get('company.description').hasError('required')">Descriere companie necesara</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="fx-row fx-lt-md-column fx-gap-20">
+                            <mat-form-field appearance="fill" class="mb-5 fx-flex">
+                                <mat-label>CUI</mat-label>
+                                <input matInput formControlName="cui" />
+                                <mat-error *ngIf="settingsForm.get('company.cui').hasError('required')">CUI companie necesar</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="fill" class="mb-5 fx-flex">
+                                <mat-label>J</mat-label>
+                                <input matInput formControlName="j" />
+                                <mat-error *ngIf="settingsForm.get('company.j').hasError('required')">J companie necesar</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </section>
+
+                </mat-step>
+            </mat-stepper>
+
+            <section class="fx-row fx-layout-center-center">
+                <button mat-flat-button color="primary" [disabled]="!settingsForm.valid || (loading$ | async)"
+                        class="save-button fx-fill p-10" (click)="saveSettings()">
+                    <mat-spinner *ngIf="loading$ | async" class="text-white" diameter="20"></mat-spinner>
+                    <span *ngIf="!(loading$ | async)">
+                        Salveaza
+                    </span>
+                </button>
+            </section>
+        </mat-card>
+
+    </form>
+</div>

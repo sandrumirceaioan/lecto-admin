@@ -59,7 +59,7 @@
                             <input id="dzone" class="input-selector" type="file" class="file-input"
                                 (change)="onFileSelected($event)" #fileUpload multiple style="display: none;"
                                 onclick="value = null">
-                            <button mat-raised-button color="accent" (click)="fileUpload.click()" type="button">
+                            <button mat-raised-button color="primary" (click)="fileUpload.click()" type="button">
                                 <mat-icon>cloud_upload</mat-icon>
                                 &nbsp;&nbsp;Adauga imagini
                             </button>
@@ -74,15 +74,15 @@
                             <div class="preview">
                               <img [src]="selected.preview" [alt]="selected.name" (click)="openDialog(selected)">
                             </div>
-                            <div class="details fx-flex fx-row fx-layout-start-center">
-                              <button mat-flat-button (click)="openDialog(selected)">
+                            <div class="details fx-flex fx-column fx-layout-center-start">
+                              <button mat-button (click)="openDialog(selected)">
                                 <span class="file-name">{{selected.name}}</span><br />
-                                <span class="file-size"><small>{{formatBytes(selected.file.size)}}</small></span>
                               </button>
+                              <span class="file-size"><small>{{formatBytes(selected.file.size)}}</small></span>
                             </div>
                             <div class="actions fx-flex fx-row fx-layout-end-center">
                                 <button mat-icon-button class="mr-10"
-                                        [ngClass]="selected.main ? 'text-accent' : 'text-gray'" (click)="onFileMain(i)">
+                                        [color]="selected.main ? 'accent' : 'gray'" (click)="onFileMain(i)">
                                         <mat-icon>favorite</mat-icon>
                                     </button>
                                     <button mat-icon-button color="default" (click)="onFileRemoved(i)">
@@ -114,7 +114,7 @@
             </section>
 
             <section class="fx-row fx-layout-center-center">
-                <button mat-flat-button color="accent" [disabled]="!locationsForm.valid || (loading$ | async)"
+                <button mat-flat-button color="primary" [disabled]="!locationsForm.valid || (loading$ | async)"
                         class="save-button fx-fill p-10" (click)="createLocation()">
                     <mat-spinner *ngIf="loading$ | async" class="text-white" diameter="20"></mat-spinner>
                     <span *ngIf="!(loading$ | async)">

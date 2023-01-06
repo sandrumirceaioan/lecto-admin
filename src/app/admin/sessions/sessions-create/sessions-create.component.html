@@ -1,10 +1,10 @@
-<div class="content" flexLayout="column">
+<div class="content">
 
-    <form [formGroup]="sessionGroup" fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="25px">
-        <mat-card fxFlex="50" fxFlex.lt-sm="100" fxFill="false" fxLayoutGap="25px">
+    <form [formGroup]="sessionGroup" class="fx-row fx-lt-md-column fx-gap-25">
+        <mat-card class="fx-column fx-45 fx-lt-sm-100 p-20">
 
-            <section class="session-settings" fxLayout="column">
-                <h2 class="text-accent">Informatii Generale</h2>
+            <section class="session-settings fx-column">
+                <h4 class="text-accent">Informatii Generale</h4>
                 <mat-divider class="mb-20"></mat-divider>
 
                 <!-- session title -->
@@ -36,8 +36,8 @@
                 </mat-form-field>
 
                 <!-- signup -->
-                <div formGroupName="inscriere" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="25px">
-                    <mat-form-field appearance="fill" class="mb-5" fxFlex>
+                <div formGroupName="inscriere" class="fx-row fx-lt-md-column fx-gap-25">
+                    <mat-form-field appearance="fill" class="mb-5 fx-flex">
                         <mat-label>Inscriere de la</mat-label>
                         <input matInput [matDatepicker]="picker1" formControlName="start">
                         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
@@ -45,7 +45,7 @@
                         <mat-error *ngIf="inscriere.get('start').hasError('required')">Inscriere incepand de la </mat-error>
                     </mat-form-field>
 
-                    <mat-form-field appearance="fill" class="mb-5" fxFlex>
+                    <mat-form-field appearance="fill" class="mb-5 fx-flex">
                         <mat-label>Inscriere pana la</mat-label>
                         <input matInput [matDatepicker]="picker2" formControlName="end">
                         <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
@@ -55,8 +55,8 @@
                 </div>
 
                 <!-- duration -->
-                <div formGroupName="perioada" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="25px">
-                    <mat-form-field appearance="fill" class="mb-5" fxFlex>
+                <div formGroupName="perioada" class="fx-row fx-lt-md-column fx-gap-25">
+                    <mat-form-field appearance="fill" class="mb-5 fx-flex">
                         <mat-label>Desfasurare de la</mat-label>
                         <input matInput [matDatepicker]="picker3" formControlName="start">
                         <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
@@ -64,7 +64,7 @@
                         <mat-error *ngIf="perioada.get('start').hasError('required')">Desfasurare incepand de la </mat-error>
                     </mat-form-field>
 
-                    <mat-form-field appearance="fill" class="mb-5" fxFlex>
+                    <mat-form-field appearance="fill" class="mb-5 fx-flex">
                         <mat-label>Desfasurare pana la</mat-label>
                         <input matInput [matDatepicker]="picker5" formControlName="end">
                         <mat-datepicker-toggle matSuffix [for]="picker5"></mat-datepicker-toggle>
@@ -85,7 +85,7 @@
                 </mat-form-field>
 
                 <!-- session description -->
-                <h2 class="text-accent">Descriere Sesiune</h2>
+                <h4 class="text-accent">Descriere Sesiune</h4>
                 <mat-divider class="mb-20"></mat-divider>
 
                 <textarea [froalaEditor]="froalaOptions" formControlName="descriere"></textarea>
@@ -94,13 +94,13 @@
 
         </mat-card>
 
-        <div fxFlex="50" fxFlex.lt-sm="100" fxFill="false" fxLayout="column" fxLayoutGap="25">
+        <div class="fx-column fx-55 fx-lt-sm-100">
 
             <!-- session location -->
-            <mat-card *ngIf="sessionGroup.get('type').value === 'local'">
-                <section fxLayout="column">
+            <mat-card *ngIf="sessionGroup.get('type').value === 'local'" class="p-20 mb-20">
+                <section class="fx-column">
 
-                    <h2 class="text-accent">Locatie Sesiune</h2>
+                    <h4 class="text-accent">Locatii Sesiune</h4>
                     <mat-divider class="mb-20"></mat-divider>
 
                     <mat-form-field appearance="fill">
@@ -113,64 +113,63 @@
                         </mat-autocomplete>
                     </mat-form-field>
 
-                    <div formGroupName="locatie" fxLayout="column">
 
-                        <div class="selected-location" *ngIf="locatie.get('data').value" fxLayout="column" fxFlex>
-                            <div class="info" fxLayout="row">
+                    <div formArrayName="locatii" *ngFor="let loc of locatii.controls; let i=index;" class="selected-course">
+                        <div [formGroupName]="i" *ngIf="loc.get('data').value" class="fx-column">
+
+                            <div class="info fx-row">
                                 <div class="imagine">
-                                    <img [src]="locatie.get('data').value.imagine.small">
+                                    <img [src]="loc.get('data').value.imagine.small">
                                 </div>
                                 <div class="descriere">
-                                    <span class="name">{{locatie.get('data').value.locatie}}</span><br />
-                                    <span class="city">{{locatie.get('data').value.oras}},
-                                        {{locatie.get('data').value.judet}}</span>
+                                    <span class="name">{{loc.get('data').value.locatie}}</span><br />
+                                    <span class="city">{{loc.get('data').value.oras}},
+                                        {{loc.get('data').value.judet}}</span>
                                 </div>
                             </div>
 
+                            <!-- offers -->
                             <div class="offers" formArrayName="oferte">
-                                <p class="text-gray" *ngIf="!oferte.controls.length">Adauga oferta de cazare</p>
-                                <div *ngFor="let oferta of oferte.controls; let i=index">
-                                    <div [formGroupName]="i">
-                                        <section fxLayout="row" fxLayout.lt-md="column" fxLayoutGap.gt-sm="20px">
-                                            <mat-form-field appearance="fill" fxFlex.gt-sm="60">
+                                <small class="text-gray fx-flex" *ngIf="!loc.get('oferte').value.length">Adauga oferta de cazare</small>
+                                <div *ngFor="let oferta of loc.get('oferte').value; let j=index; trackBy: trackByFn">
+
+                                    <div [formGroupName]="j">
+                                        <section class="fx-row fx-lt-md-column fx-gap-20">
+                                            <mat-form-field appearance="fill" class="fx-gt-sm-60">
                                                 <mat-label>Descriere oferta cazare</mat-label>
-                                                <input matInput type="text" formControlName="nume" color="warn">
-                                                <mat-error *ngIf="oferta.get('nume').hasError('required')">Descriere
-                                                    oferta
-                                                    necesara </mat-error>
+                                                <input matInput type="text" formControlName="nume">
                                             </mat-form-field>
 
-                                            <mat-form-field appearance="fill" hideRequiredMarker="true" fxFlex.gt-sm="20">
+                                            <mat-form-field appearance="fill" hideRequiredMarker="true" class="fx-gt-sm-20">
                                                 <mat-label>Pret oferta cazare</mat-label>
-                                                <input matInput type="number" formControlName="valoare" color="warn">
-                                                <mat-error *ngIf="oferta.get('valoare').hasError('required')">Pret
-                                                    oferta
-                                                    necesar </mat-error>
+                                                <input matInput type="number" formControlName="valoare">
                                             </mat-form-field>
 
-                                            <div fxFlex.gt-sm="20">
-                                                <button type="button" mat-icon-button (click)="removeOffer(i)" color="warn">
+                                            <div class="fx-gt-sm-20">
+                                                <button type="button" mat-icon-button (click)="removeOffer(loc,j)" color="warn">
                                                     <mat-icon>remove</mat-icon>
                                                 </button>
                                             </div>
                                         </section>
                                     </div>
                                 </div>
-                                <button type="button" mat-icon-button (click)="addOffer()" color="accent">
+                                <button type="button" mat-icon-button (click)="addOffer(loc)" color="accent">
                                     <mat-icon>add</mat-icon>
                                 </button>
                             </div>
+
                         </div>
                     </div>
+                    
                 </section>
             </mat-card>
 
             <!-- session courses -->
-            <mat-card *ngIf="sessionGroup.get('type').value">
-                <section fxLayout="column">
+            <mat-card *ngIf="sessionGroup.get('type').value" class="p-20">
+                <section class="fx-column">
 
-                    <h2 class="text-accent">Cursuri Sesiune <small class="text-gray" *ngIf="cursuri.controls.length">({{
-                            cursuri.controls.length }})</small></h2>
+                    <h4 class="text-accent">Cursuri Sesiune <small class="text-gray" *ngIf="cursuri.controls.length">({{
+                            cursuri.controls.length }})</small></h4>
                     <mat-divider class="mb-20"></mat-divider>
 
                     <mat-form-field appearance="fill">
@@ -185,12 +184,12 @@
 
                     <div formArrayName="cursuri" *ngFor="let curs of cursuri.controls; let i=index;" class="selected-course">
 
-                        <div [formGroupName]="i" *ngIf="curs.get('data').value" fxLayout="column">
-                            <div class="info" fxLayout="row">
+                        <div [formGroupName]="i" *ngIf="curs.get('data').value" class="fx-column">
+                            <div class="info fx-row">
                                 <div class="imagine">
                                     <img [src]="curs.get('data').value.imagine.small">
                                 </div>
-                                <div class="descriere" fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+                                <div class="descriere fx-flex fx-row fx-layout-between-center">
                                     <div class="price">
                                         <span class="course-name">{{curs.get('data').value.titlu}}</span><br />
                                         <small><span class="course-certification" *ngIf="curs.get('data').value.certificare.anc">Certificat ANC:
@@ -207,7 +206,7 @@
 
                             <!-- teachers -->
                             <div class="teachers">
-                                <div class="teachers-header" fxLayout="row" fxLayoutAlign="space-between center" (click)="toggleCourse(curs, 'Teachers')" [class.active]="curs.get('toggleTeachers').value">
+                                <div class="teachers-header fx-row fx-layout-between-center" (click)="toggleCourse(curs, 'Teachers')" [class.active]="curs.get('toggleTeachers').value">
                                     <span>Formatori</span>
                                     <button mat-icon-button type="button" color="dark">
                                         <mat-icon *ngIf="curs.get('toggleTeachers').value">keyboard_arrow_up</mat-icon>
@@ -216,21 +215,21 @@
                                     </button>
                                 </div>
 
-                                <div class="teachers-container" fxLayout="column" fxLayoutGap="15px" *ngIf="curs.get('toggleTeachers').value">
+                                <div class="teachers-container fx-column fx-gap-15" *ngIf="curs.get('toggleTeachers').value">
 
-                                    <mat-form-field appearance="fill" fxFlex class="mb-0">
+                                    <mat-form-field appearance="fill" class="fx-flex mb-0">
                                         <mat-label>Adauga Formatori</mat-label>
                                         <mat-select formControlName="selectTeacher" (selectionChange)="onTeacherSelect($event, curs)">
                                             <mat-option *ngFor="let teacher of this.sessionData.teachers" [value]="teacher">{{teacher.nume}}</mat-option>
                                         </mat-select>
                                     </mat-form-field>
 
-                                    <p class="text-gray" *ngIf="!curs.get('teachers').value.length" fxFlex>* Nu ai
-                                        adaugat
-                                        nici un profesor formator</p>
-                                    <div class="selected-teachers" formArrayName="teachers" *ngFor="let teacher of curs.get('teachers').value; let j=index" fxLayout="row" fxLayoutAlign="space-between center">
+                                    <p><small class="text-gray" *ngIf="!curs.get('teachers').value.length">* Nu ai
+                                            adaugat
+                                            nici un profesor formator</small></p>
+                                    <div formArrayName="teachers" class="selected-teachers fx-row fx-layout-between-center" *ngFor="let teacher of curs.get('teachers').value; let j=index">
 
-                                        <div class="teacher-info" fxLayout="row">
+                                        <div class="teacher-info fx-row">
                                             <div class="imagine">
                                                 <img [src]="teacher.imagine && teacher.imagine.small ? teacher.imagine.small : './assets/images/placeholder.png'">
                                             </div>
@@ -252,7 +251,7 @@
 
                             <!-- discounts -->
                             <div class="discounts">
-                                <div class="discounts-header" fxLayout="row" fxLayoutAlign="space-between center" (click)="toggleCourse(curs, 'Discounts')" [class.active]="curs.get('toggleDiscounts').value">
+                                <div class="discounts-header fx-row fx-layout-between-center" (click)="toggleCourse(curs, 'Discounts')" [class.active]="curs.get('toggleDiscounts').value">
                                     <span>Discount</span>
                                     <button mat-icon-button type="button" color="dark">
                                         <mat-icon *ngIf="curs.get('toggleDiscounts').value">keyboard_arrow_up</mat-icon>
@@ -261,11 +260,11 @@
                                     </button>
                                 </div>
 
-                                <div class="discounts-container" formGroupName="discounts" fxLayout="column" fxLayoutGap="15px" *ngIf="curs.get('toggleDiscounts').value">
+                                <div formGroupName="discounts" class="discounts-container fx-column fx-gap-15" *ngIf="curs.get('toggleDiscounts').value">
 
                                     <!--volum -->
                                     <div class="volum-group">
-                                        <div class="group-header" fxLayout="row" fxLayoutAlign="start center">
+                                        <div class="group-header fx-row fx-layout-start-center">
                                             <span class="text-dark">Volum</span>
                                             <button type="button" mat-icon-button (click)="addVolum(curs)" color="accent">
                                                 <mat-icon>add</mat-icon>
@@ -273,12 +272,12 @@
                                         </div>
                                         <mat-divider class="mb-10"></mat-divider>
                                         <div formArrayName="volum">
-                                            <p *ngIf="!curs.get('discounts.volum')['controls'].length" class="text-gray">Adauga conditie de discount</p>
+                                            <small *ngIf="!curs.get('discounts.volum')['controls'].length" class="text-gray">Adauga conditie de discount</small>
                                             <div *ngFor="let vol of curs.get('discounts.volum')['controls']; let v=index">
                                                 <div [formGroupName]="v">
-                                                    <section fxLayout="row" fxLayout.lt-md="column" fxLayoutGap.gt-sm="20px">
+                                                    <section class="fx-row fx-lt-md-column fx-gap-20">
 
-                                                        <mat-form-field appearance="fill" fxFlex.gt-sm="20">
+                                                        <mat-form-field appearance="fill" class="fx-gt-sm-20">
                                                             <mat-label>Numar minim de cursanti</mat-label>
                                                             <input matInput type="number" formControlName="min_cursanti" color="warn">
                                                             <mat-error *ngIf="vol.get('min_cursanti').hasError('required')">Numar minim
@@ -286,12 +285,12 @@
                                                             </mat-error>
                                                         </mat-form-field>
 
-                                                        <mat-form-field appearance="fill" hideRequiredMarker="true" fxFlex.gt-sm="20">
+                                                        <mat-form-field appearance="fill" hideRequiredMarker="true" class="fx-gt-sm-20">
                                                             <mat-label>Numar maxim de cursanti</mat-label>
                                                             <input matInput type="number" formControlName="max_cursanti" color="warn">
                                                         </mat-form-field>
 
-                                                        <mat-form-field appearance="fill" class="mb-5" fxFlex.gt-sm="20">
+                                                        <mat-form-field appearance="fill" class="mb-5" class="fx-gt-sm-20">
                                                             <mat-label>Tip Discount Volum</mat-label>
                                                             <mat-select formControlName="type">
                                                                 <mat-option value="fix">Fix</mat-option>
@@ -302,14 +301,14 @@
                                                             </mat-error>
                                                         </mat-form-field>
 
-                                                        <mat-form-field appearance="fill" fxFlex.gt-sm="20">
+                                                        <mat-form-field appearance="fill" class="fx-gt-sm-20">
                                                             <mat-label>Valoare Discount</mat-label>
                                                             <input matInput type="number" formControlName="value" color="warn">
                                                             <mat-error *ngIf="vol.get('value').hasError('required')">Valoare discount
                                                                 necesara </mat-error>
                                                         </mat-form-field>
 
-                                                        <div fxFlex.gt-sm="20">
+                                                        <div class="fx-gt-sm-20">
                                                             <button type="button" mat-icon-button (click)="removeVolum(curs, v)" color="warn">
                                                                 <mat-icon>remove</mat-icon>
                                                             </button>
@@ -324,7 +323,7 @@
 
                                     <!-- inscriere -->
                                     <div class="inscriere-group">
-                                        <div class="group-header" fxLayout="row" fxLayoutAlign="start center">
+                                        <div class="group-header fx-row fx-layout-start-center">
                                             <span class="text-dark">Inscriere</span>
                                             <button type="button" mat-icon-button (click)="addInscriere(curs)" color="accent">
                                                 <mat-icon>add</mat-icon>
@@ -332,12 +331,12 @@
                                         </div>
                                         <mat-divider class="mb-10"></mat-divider>
                                         <div formArrayName="inscriere">
-                                            <p *ngIf="!curs.get('discounts.inscriere')['controls'].length" class="text-gray">Adauga conditie de discount</p>
+                                            <small *ngIf="!curs.get('discounts.inscriere')['controls'].length" class="text-gray">Adauga conditie de discount</small>
                                             <div *ngFor="let signup of curs.get('discounts.inscriere')['controls']; let s=index">
                                                 <div [formGroupName]="s">
-                                                    <section fxLayout="row" fxLayout.lt-md="column" fxLayoutGap.gt-sm="20px">
+                                                    <section class="fx-row fx-lt-md-column fx-gap-20">
 
-                                                        <mat-form-field appearance="fill" class="mb-5" fxFlex.gt-sm="40">
+                                                        <mat-form-field appearance="fill" class="mb-5 fx-gt-sm-40">
                                                             <mat-label>Data Maxima de Inscriere Timpurie</mat-label>
                                                             <input matInput [matDatepicker]="picker" formControlName="max_inscriere">
                                                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -347,7 +346,7 @@
                                                             </mat-error>
                                                         </mat-form-field>
 
-                                                        <mat-form-field appearance="fill" class="mb-5" fxFlex.gt-sm="20">
+                                                        <mat-form-field appearance="fill" class="mb-5 fx-gt-sm-20">
                                                             <mat-label>Tip Discount Volum</mat-label>
                                                             <mat-select formControlName="type">
                                                                 <mat-option value="fix">Fix</mat-option>
@@ -358,16 +357,16 @@
                                                             </mat-error>
                                                         </mat-form-field>
 
-                                                        <mat-form-field appearance="fill" fxFlex.gt-sm="20">
+                                                        <mat-form-field appearance="fill" class="fx-gt-sm-20">
                                                             <mat-label>Valoare Discount</mat-label>
                                                             <input matInput type="number" formControlName="value" color="warn">
                                                             <mat-error *ngIf="signup.get('value').hasError('required')">Valoare discount
                                                                 necesara </mat-error>
                                                         </mat-form-field>
 
-                                                        <div fxFlex.gt-sm="20">
+                                                        <div class="fx-gt-sm-20">
                                                             <button type="button" mat-icon-button (click)="removeInscriere(curs, s)"
-                                                                    color="warn" fxFlex.gt-sm="20">
+                                                                    color="warn" class="fx-gt-sm-20">
                                                                 <mat-icon>remove</mat-icon>
                                                             </button>
                                                         </div>
@@ -380,8 +379,8 @@
                                     </div>
 
                                     <!-- fidelitate -->
-                                    <div class="fidelitate-group">
-                                        <div class="group-header" fxLayout="row" fxLayoutAlign="start center">
+                                    <div class="fidelitate-group mb-20">
+                                        <div class="group-header fx-row fx-layout-start-center">
                                             <span class="text-dark">Fidelitate</span>
                                             <button type="button" mat-icon-button (click)="addFidelitate(curs)" color="accent">
                                                 <mat-icon>add</mat-icon>
@@ -389,24 +388,24 @@
                                         </div>
                                         <mat-divider class="mb-10"></mat-divider>
                                         <div formArrayName="fidelitate">
-                                            <p *ngIf="!curs.get('discounts.fidelitate')['controls'].length" class="text-gray">Adauga conditie de discount</p>
+                                            <small *ngIf="!curs.get('discounts.fidelitate')['controls'].length" class="text-gray">Adauga conditie de discount</small>
                                             <div *ngFor="let fidel of curs.get('discounts.fidelitate')['controls']; let f=index">
                                                 <div [formGroupName]="f">
-                                                    <section fxLayout="row" fxLayout.lt-md="column" fxLayoutGap.gt-sm="20px">
+                                                    <section class="fx-row fx-lt-md-column fx-gap-20">
 
-                                                        <mat-form-field appearance="fill" fxFlex.gt-sm="20">
+                                                        <mat-form-field appearance="fill" class="fx-gt-sm-20">
                                                             <mat-label>Numar de Participari</mat-label>
                                                             <input matInput type="number" formControlName="participare" color="warn">
                                                             <mat-error *ngIf="fidel.get('participare').hasError('required')">Numar de
                                                                 participari necesar</mat-error>
                                                         </mat-form-field>
 
-                                                        <div class="checkbox-container" fxLayoutAlign="center center" fxFlex.gt-sm="40">
+                                                        <div class="checkbox-container fx-row fx-layout-center-center fx-gt-sm-20">
                                                             <mat-checkbox formControlName="consecutiva">Consecutive
                                                             </mat-checkbox>
                                                         </div>
 
-                                                        <mat-form-field appearance="fill" class="mb-5" fxFlex.gt-sm="20">
+                                                        <mat-form-field appearance="fill" class="mb-5 fx-gt-sm-20">
                                                             <mat-label>Tip Discount Volum</mat-label>
                                                             <mat-select formControlName="type">
                                                                 <mat-option value="fix">Fix</mat-option>
@@ -417,16 +416,16 @@
                                                             </mat-error>
                                                         </mat-form-field>
 
-                                                        <mat-form-field appearance="fill" fxFlex.gt-sm="20">
+                                                        <mat-form-field appearance="fill" class="fx-gt-sm-20">
                                                             <mat-label>Valoare Discount</mat-label>
                                                             <input matInput type="number" formControlName="value" color="warn">
                                                             <mat-error *ngIf="fidel.get('value').hasError('required')">Valoare discount
                                                                 necesara </mat-error>
                                                         </mat-form-field>
 
-                                                        <div fxFlex.gt-sm="20">
+                                                        <div class="fx-gt-sm-20">
                                                             <button type="button" mat-icon-button (click)="removeFidelitate(curs, i)"
-                                                                    color="warn" fxFlex.gt-sm="20">
+                                                                    color="warn" class="fx-gt-sm-20">
                                                                 <mat-icon>remove</mat-icon>
                                                             </button>
                                                         </div>
@@ -442,8 +441,8 @@
                             </div>
 
                             <!-- options -->
-                            <div class="options" formGroupName="options" fxLayout="column">
-                                <div class="options-header" fxLayout="row" fxLayoutAlign="space-between center" (click)="toggleCourse(curs, 'Options')" [class.active]="curs.get('toggleOptions').value">
+                            <div formGroupName="options" class="options fx-column">
+                                <div class="options-header fx-row fx-layout-between-center" (click)="toggleCourse(curs, 'Options')" [class.active]="curs.get('toggleOptions').value">
                                     <span>Optiuni</span>
                                     <button mat-icon-button type="button" color="dark">
                                         <mat-icon *ngIf="curs.get('toggleOptions').value">keyboard_arrow_up</mat-icon>
@@ -451,29 +450,29 @@
                                     </button>
                                 </div>
 
-                                <div class="options-container" fxLayout="column" fxLayout.lt-md="column" fxLayoutGap="15px" *ngIf="curs.get('toggleOptions').value">
+                                <div class="options-container fx-column fx-gap-15" *ngIf="curs.get('toggleOptions').value">
 
                                     <!-- pret -->
-                                        <div formGroupName="pret" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
-                                            <mat-form-field appearance="fill" class="mb-5" fxFlex>
-                                                <mat-label>Pret Certificat ANC</mat-label>
-                                                <input type="number" matInput formControlName="anc" />
-                                                <mat-error *ngIf="curs.get('options.pret.anc').hasError('required')">
-                                                    Pret
-                                                    necesar
-                                                </mat-error>
-                                            </mat-form-field>
-                                            <mat-form-field appearance="fill" class="mb-5" fxFlex>
-                                                <mat-label>Pret Certificat Participare</mat-label>
-                                                <input type="number" matInput formControlName="participare" />
-                                                <mat-error *ngIf="curs.get('options.pret.participare').hasError('required')">
-                                                    Pret
-                                                    necesar
-                                                </mat-error>
-                                            </mat-form-field>
-                                        </div>
-                                    <p class="text-gray" *ngIf="!curs.get('options.pret.anc').value && curs.get('options.pret.participare')" fxFlex>* Nu ai adaugat preturi optionale - se aplica preturile cursului original
-                                    </p>
+                                    <div formGroupName="pret" class="fx-row fx-lt-md-column fx-gap-20">
+                                        <mat-form-field appearance="fill" class="mb-5 fx-flex">
+                                            <mat-label>Pret Certificat ANC</mat-label>
+                                            <input type="number" matInput formControlName="anc" />
+                                            <mat-error *ngIf="curs.get('options.pret.anc').hasError('required')">
+                                                Pret
+                                                necesar
+                                            </mat-error>
+                                        </mat-form-field>
+                                        <mat-form-field appearance="fill" class="mb-5 fx-flex">
+                                            <mat-label>Pret Certificat Participare</mat-label>
+                                            <input type="number" matInput formControlName="participare" />
+                                            <mat-error *ngIf="curs.get('options.pret.participare').hasError('required')">
+                                                Pret
+                                                necesar
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <p><small class="text-gray fx-flex" *ngIf="!curs.get('options.pret.anc').value && curs.get('options.pret.participare')">* Nu ai adaugat preturi optionale - se aplica preturile cursului original
+                                        </small></p>
                                 </div>
                             </div>
 
@@ -484,10 +483,13 @@
                     </div>
                 </section>
 
-                <section fxLayout="row" fxLayoutAlign="end center" fxLayoutAlign.lt-sm="center center">
-                    <button mat-flat-button color="accent" [disabled]="!sessionGroup.valid || (loading$ | async)" class="save-button create-contract-btn p-10" (click)="createSession()" fxLayout="row" fxLayoutAlign="center center" fxFill>
+                <section class="fx-row fx-layout-center-center">
+                    <button mat-flat-button color="primary" [disabled]="!sessionGroup.valid || (loading$ | async)"
+                            class="save-button fx-fill p-10" (click)="createSession()">
                         <mat-spinner *ngIf="loading$ | async" class="text-white" diameter="20"></mat-spinner>
-                        <span *ngIf="!(loading$ | async)">Salveaza</span>
+                        <span *ngIf="!(loading$ | async)">
+                            Salveaza
+                        </span>
                     </button>
                 </section>
             </mat-card>

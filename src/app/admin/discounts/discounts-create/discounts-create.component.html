@@ -34,7 +34,7 @@
             </section>
 
             <section fxLayout="row" fxLayoutAlign="end center" fxLayoutAlign.lt-sm="center center">
-                <button mat-flat-button color="accent" [disabled]="!discountForm.valid || (loading$ | async)"
+                <button mat-flat-button color="primary" [disabled]="!discountForm.valid || (loading$ | async)"
                     class="save-button create-contract-btn p-10" (click)="createDiscount()" fxLayout="row"
                     fxLayoutAlign="center center" fxFill>
                     <mat-spinner *ngIf="loading$ | async" class="text-white" diameter="20"></mat-spinner>
@@ -88,7 +88,7 @@
                                     </mat-form-field>
 
                                     <div fxFlex.gt-sm="20">
-                                        <button type="button" mat-icon-button (click)="removeVolum(i)" color="accent">
+                                        <button type="button" mat-icon-button (click)="removeVolum(i)" color="primary">
                                             <mat-icon>remove</mat-icon>
                                         </button>
                                     </div>
@@ -97,7 +97,7 @@
 
                             </div>
                         </div>
-                        <button type="button" mat-icon-button (click)="addVolum()" color="accent">
+                        <button type="button" mat-icon-button (click)="addVolum()" color="primary">
                             <mat-icon>add</mat-icon>
                         </button>
                     </div>
@@ -143,7 +143,7 @@
 
                                     <div fxFlex.gt-sm="20">
                                         <button type="button" mat-icon-button (click)="removeInscriere(i)"
-                                            color="accent" fxFlex.gt-sm="20">
+                                            color="primary" fxFlex.gt-sm="20">
                                             <mat-icon>remove</mat-icon>
                                         </button>
                                     </div>
@@ -152,7 +152,7 @@
 
                             </div>
                         </div>
-                        <button type="button" mat-icon-button (click)="addInscriere()" color="accent">
+                        <button type="button" mat-icon-button (click)="addInscriere()" color="primary">
                             <mat-icon>add</mat-icon>
                         </button>
                     </div>
@@ -175,7 +175,7 @@
                                             participari necesar</mat-error>
                                     </mat-form-field>
 
-                                    <div class="checkbox-container" fxLayoutAlign="center center" fxFlex.gt-sm="40">
+                                    <div class="lecto-checkbox-container" fxLayoutAlign="center center" fxFlex.gt-sm="40">
                                         <mat-checkbox formControlName="consecutiva">Participari Consecutive
                                         </mat-checkbox>
                                     </div>
@@ -200,7 +200,7 @@
 
                                     <div fxFlex.gt-sm="20">
                                         <button type="button" mat-icon-button (click)="removeFidelitate(i)"
-                                            color="accent" fxFlex.gt-sm="20">
+                                            color="primary" fxFlex.gt-sm="20">
                                             <mat-icon>remove</mat-icon>
                                         </button>
                                     </div>
@@ -209,7 +209,7 @@
 
                             </div>
                         </div>
-                        <button type="button" mat-icon-button (click)="addFidelitate()" color="accent">
+                        <button type="button" mat-icon-button (click)="addFidelitate()" color="primary">
                             <mat-icon>add</mat-icon>
                         </button>
                     </div>

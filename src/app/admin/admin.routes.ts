@@ -1,4 +1,5 @@
 import { Routes } from "@angular/router";
+import { SettingsResolve } from "./settings/settings.resolve";
 
 export const AdminRoutes: Routes = [
     {
@@ -34,11 +35,15 @@ export const AdminRoutes: Routes = [
                 path: 'pagini',
                 loadChildren: () => import('./pages/pages.routes').then(m => m.PagesRoutes),
             },
-
-            // {
-            //     path: 'discounturi',
-            //     loadChildren: () => import('./discounts/discounts.routes').then(m => m.DiscountsRoutes),
-            // },
+            {
+                data: { title: 'Setari', roles: ['admin'] },
+                path: 'setari',
+                loadComponent: () => import('./settings/settings.component').then((x) => x.SettingsComponent),
+                resolve: {
+                    data: SettingsResolve
+                },
+                title: 'Lectoform - Setari'
+            },
             {
                 path: '**',
                 redirectTo: '/admin/utilizatori'

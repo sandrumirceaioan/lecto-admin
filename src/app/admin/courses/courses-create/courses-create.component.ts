@@ -70,8 +70,21 @@ export class CoursesCreateComponent implements OnInit, OnDestroy {
       H1: 'Heading 1',
       H2: 'Heading 2'
     },
-    toolbarButtons: ['paragraphFormat', 'fontSize', 'fontFamily', 'textColor', 'backgroundColor', 'bold', 'italic', 'underline', 'undo', 'redo', 'align', 'indent', 'outdent', 'formatUL', 'lineHeight', 'insertLink', 'insertImage', 'html', 'fullscreen'],
-    pluginsEnabled: ['paragraphFormat', 'fontSize', 'fontFamily', 'align', 'codeBeautifier', 'codeView', 'draggable', 'image', 'imageManager', 'inlineClass', 'lineBreaker', 'lineHeight', 'link', 'colors', 'fullscreen'],
+    listAdvancedTypes: true,
+    colorsBackground:[
+      '#61BD6D', '#1ABC9C', '#54ACD2', '#2C82C9', '#9365B8', '#475577', '#CCCCCC',
+      '#41A85F', '#00A885', '#3D8EB9', '#2969B0', '#553982', '#28324E', '#000000',
+      '#F7DA64', '#FBA026', '#EB6B56', '#E25041', '#A38F84', '#EFEFEF', '#FFFFFF',
+      '#FAC51C', '#F37934', '#D14841', '#B8312F', '#7C706B', '#D1D5D8', '#6DC1C0', '#d66d51', 'REMOVE'
+    ],
+    colorsText:[
+      '#61BD6D', '#1ABC9C', '#54ACD2', '#2C82C9', '#9365B8', '#475577', '#CCCCCC',
+      '#41A85F', '#00A885', '#3D8EB9', '#2969B0', '#553982', '#28324E', '#000000',
+      '#F7DA64', '#FBA026', '#EB6B56', '#E25041', '#A38F84', '#EFEFEF', '#FFFFFF',
+      '#FAC51C', '#F37934', '#D14841', '#B8312F', '#7C706B', '#D1D5D8', '#6DC1C0', '#d66d51', 'REMOVE'
+    ],
+    toolbarButtons: ['paragraphFormat', 'fontSize', 'fontFamily', 'textColor', 'backgroundColor', 'bold', 'italic', 'underline', 'undo', 'redo', 'formatOL', 'formatUL', 'align', 'indent', 'outdent', 'lineHeight', 'insertLink', 'insertImage', 'html', 'fullscreen'],
+    pluginsEnabled: ['paragraphFormat', 'fontSize', 'fontFamily', 'align', 'codeBeautifier', 'codeView', 'draggable', 'image', 'imageManager', 'inlineClass', 'lineBreaker', 'lineHeight', 'link', 'colors', 'fullscreen', 'lists', 'formatOL', 'formatUL'],
     attribution: false
   };
 
@@ -223,10 +236,6 @@ export class CoursesCreateComponent implements OnInit, OnDestroy {
         url: selected.view,
         name: selected.name
       },
-      height: 'auto',
-      maxHeight: '90vh',
-      width: 'auto',
-      maxWidth: '90%',
       autoFocus: false
     });
   }

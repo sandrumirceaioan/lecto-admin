@@ -44,7 +44,7 @@
       </section>
 
       <section class="fx-row fx-layout-center-center">
-        <button mat-flat-button color="accent" [disabled]="!userForm.valid || (loading$ | async)"
+        <button mat-flat-button color="primary" [disabled]="!userForm.valid || (loading$ | async)"
             class="save-button fx-fill p-10" (click)="updateCategory()">
             <mat-spinner *ngIf="loading$ | async" class="text-white" diameter="20"></mat-spinner>
             <span *ngIf="!(loading$ | async)">

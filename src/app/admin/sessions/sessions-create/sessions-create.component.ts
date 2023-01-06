@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from 'src/app/shared/modules/material.module';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, filter, finalize, forkJoin, map, Observable, of, Subject, Subscription, switchMap, tap } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, map, Observable, Subscription, switchMap } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { AdminService } from '../../admin.service';
@@ -125,10 +125,12 @@ export class SessionsCreateComponent implements OnInit, OnDestroy {
 
       cursuri: this.fb.array(this.session && this.session.cursuri && this.session.cursuri.length ? this.session.cursuri.map(item => this.createCourse(item)) : [], [Validators.required]),
 
-      locatie: this.fb.group({
-        data: new FormControl(this.session && this.session.locatie && this.session.locatie.data ? this.session.locatie.data : null),
-        oferte: this.fb.array(this.session && this.session.locatie && this.session.locatie.oferte && this.session.locatie.oferte.length ? this.session.locatie.oferte.map(item => this.createOffer(item)) : [])
-      }),
+      locatii: this.fb.array(this.session && this.session.locatii && this.session.locatii.length ? this.session.locatii.map(item => this.createLocation(item)) : [], [Validators.required]),
+      
+      // this.fb.group({
+      //   data: new FormControl(this.session && this.session.locatie && this.session.locatie.data ? this.session.locatie.data : null),
+      //   oferte: this.fb.array(this.session && this.session.locatie && this.session.locatie.oferte && this.session.locatie.oferte.length ? this.session.locatie.oferte.map(item => this.createOffer(item)) : [])
+      // }),
     });
 
     // autocomplete location
@@ -158,20 +160,6 @@ export class SessionsCreateComponent implements OnInit, OnDestroy {
         switchMap(value => this.coursesService.searchCourses(value))
       );
 
-
-    // session form change validators
-    this.sessionGroup.get('type').valueChanges.subscribe(val => {
-      if (val === 'local') {
-        this.sessionGroup.get('locatie').reset();
-        this.sessionGroup.get('locatie').setValidators([Validators.required]);
-      } else {
-        this.sessionGroup.get('locatie').reset();
-        this.sessionGroup.get('locatie').clearValidators();
-      }
-
-      this.sessionGroup.get('locatie').updateValueAndValidity({ emitEvent: true });
-    });
-
   }
 
   convertToUrl(value) {
@@ -183,22 +171,43 @@ export class SessionsCreateComponent implements OnInit, OnDestroy {
   }
 
   // LOCATION GROUP
+  createLocation(location) {
+    return this.fb.group({
+      data: location.data,
+      oferte: this.fb.array(location.oferte && location.oferte.length ? location.oferte.map(item => this.createOffer(item)) : [], [Validators.required]),
+    });
+  }
+
   onSelectedLocation(event: MatAutocompleteSelectedEvent, auto: MatAutocomplete) {
     let value = event.option.value ? event.option.value : null;
     if (!value) return false;
 
-    this.locatie.get('data').setValue(value);
-    this.locatie.setControl('oferte', this.fb.array([]));
+    this.addLocation(value);
 
+    this.sessionGroup.get('searchLocation').patchValue('');
     auto.options.forEach((item) => {
       item.deselect();
     });
-    this.sessionGroup.get('searchLocation').patchValue('');
-    this.sessionGroup.updateValueAndValidity();
   }
 
   getLocationLabel(selected) {
     return selected && selected.locatie ? selected.locatie : null;
+  }
+
+  addLocation(value) {
+    const locationArray = this.sessionGroup.get('locatii') as FormArray;
+    let index = locationArray.controls.findIndex((x) => x.value.data._id === value._id);
+    if (index !== -1) {
+      this.alertService.danger('Locatia a fost deja adaugata');
+      return false;
+    }
+
+    const group = this.fb.group({
+      data: value,
+      oferte: this.fb.array([], [Validators.required]),
+    });
+
+    locationArray.push(group);
   }
 
   createOffer(oferta) {
@@ -208,18 +217,23 @@ export class SessionsCreateComponent implements OnInit, OnDestroy {
     });
   }
 
-  addOffer() {
+  addOffer(locatie) {
     const group = this.fb.group({
       nume: new FormControl(null, [Validators.required]),
       valoare: new FormControl(null, [Validators.required])
-    })
-
-    const offerArray = this.sessionGroup.get('locatie.oferte') as FormArray;
-    offerArray.push(group);
+    });
+    const offerArray = locatie.get('oferte') as FormArray;
+    offerArray.push(group, {emitEvent: false});
+    this.sessionGroup.updateValueAndValidity({emitEvent: false});
   }
 
-  removeOffer(index) {
-    let offerArray = this.sessionGroup.get('locatie.oferte') as FormArray;
+  trackByFn(index, item) {
+    return index;  
+  }
+  
+
+  removeOffer(locatie, index) {
+    const offerArray = locatie.get('oferte') as FormArray;
     offerArray.removeAt(index);
   }
 
@@ -237,12 +251,8 @@ export class SessionsCreateComponent implements OnInit, OnDestroy {
     return this.sessionGroup.get('cursuri') as FormArray;
   }
 
-  get locatie() {
-    return this.sessionGroup.get('locatie') as FormGroup;
-  }
-
-  get oferte() {
-    return this.sessionGroup.get('locatie.oferte') as FormArray;
+  get locatii() {
+    return this.sessionGroup.get('locatii') as FormArray;
   }
 
 
@@ -465,7 +475,7 @@ export class SessionsCreateComponent implements OnInit, OnDestroy {
 
 
     this.saveSessionSubscription = this.sessionsService[method](...params).subscribe(() => {
-      if (this.mode === 'create') this.router.navigate(['/admin/cursuri']);
+      if (this.mode === 'create') this.router.navigate(['/admin/sesiuni']);
     });
   }
 

@@ -1,5 +1,5 @@
 <div class="content">
-  <div class="table-header" fxLayout="row" fxLayoutAlign="space-between center">
+  <div class="table-header fx-row fx-layout-between-center">
     <div class="search-bar">
       <mat-form-field>
         <mat-label>Cauta</mat-label>
@@ -9,7 +9,7 @@
         </button>
       </mat-form-field>
     </div>
-    <div class="actions" fxLayoutAlign="end center">
+    <div class="actions fx-row fx-layout-end-center fx-gap-15">
       <button class="mb-10" mat-flat-button color="primary" [routerLink]="'/admin/sesiuni/adauga'">
         <mat-icon class="mr-10">add</mat-icon>
         Adauga sesiune
@@ -29,7 +29,7 @@
       <ng-container matColumnDef="titlu">
         <th mat-header-cell class="dc-label" *matHeaderCellDef mat-sort-header>Titlu</th>
         <td mat-cell class="dc-content" *matCellDef="let element">
-          <a mat-button [routerLink]="'/admin/sesiuni/' + element._id">
+          <a mat-button [routerLink]="'/admin/sesiuni/' + element._id" class="fx-row fx-layout-start-center">
             {{element.titlu}}
           </a>
         </td>
@@ -55,14 +55,15 @@
                 <span *ngIf="curs.data.pret.participare && curs.options.pret.participare">, participare: <del class="text-warn">{{curs.data.pret.participare}}</del>&nbsp;&nbsp;<span class="text-success">{{curs.options.pret.participare}} RON</span></span>
               </small>
             </li>
-            <li>
-              <span *ngIf="element.type === 'local'">
-                <a class="course-name text-dark" [routerLink]="'/admin/locatii/' + element.locatie.data._id">{{element.locatie.data.locatie}}</a> -
-                <span *ngIf="element.locatie.oferte && element.locatie.oferte.length">
-                  <small>oferte de la {{getLocationBestOffer(element.locatie.oferte)}} RON <span *ngIf="element.locatie.oferte.length > 1">, pana la </span>{{getLocationWorstOffer(element.locatie.oferte)}} RON</small>
-                </span>
+
+            <ng-container *ngIf="element.type === 'local'">
+            <li *ngFor="let locatie of element.locatii" >
+              <a [routerLink]="'/admin/locatii/' + locatie.data._id" class="course-name text-success">{{ locatie.data.locatie }}</a> - 
+              <span *ngIf="locatie.oferte && locatie.oferte.length">
+                <small>oferte de la {{getLocationBestOffer(locatie.oferte)}} RON <span *ngIf="locatie.oferte.length > 1">, pana la </span>{{getLocationWorstOffer(locatie.oferte)}} RON</small>
               </span>
             </li>
+            </ng-container>
           </ul>
         </td>
       </ng-container>

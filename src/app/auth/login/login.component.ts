@@ -20,7 +20,7 @@ import { MaterialModule } from 'src/app/shared/modules/material.module';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  showPasswordText: boolean = true;
+  showPasswordText: boolean = false;
   remember: any = null;
   loginForm = new FormGroup<LoginForm>({
     email: new FormControl(null, [Validators.required, Validators.email]),

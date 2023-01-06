@@ -21,6 +21,7 @@ import { CourseResolve } from './app/admin/courses/course.resolve';
 import { SessionResolve } from './app/admin/sessions/session.resolve';
 import { SessionDataResolve } from './app/admin/sessions/session-data.resolve';
 import { PageResolve } from './app/admin/pages/page.resolve';
+import { SettingsResolve } from './app/admin/settings/settings.resolve';
 
 if (environment.production) {
   enableProdMode();
@@ -41,6 +42,7 @@ bootstrapApplication(AppComponent, {
     SessionResolve,
     SessionDataResolve,
     PageResolve,
+    SettingsResolve,
     importProvidersFrom(
       BrowserModule,
       BrowserAnimationsModule,

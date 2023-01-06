@@ -134,3 +134,7 @@
 .mat-stepper-vertical-line::before {
     display: none !important;
 }
+
+.mdc-checkbox__mixedmark {
+    border-color: mat.get-color-from-palette($white) !important;
+}

@@ -9,6 +9,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { debounceTime, merge, Observable, Subject, Subscription, tap } from 'rxjs';
 import { SessionsService } from './sessions.service';
 import { MatDialog } from '@angular/material/dialog';
+import { ImageDialogComponent } from '../../shared/components/dialogs/image-dialog/image-dialog.component';
 import { Session } from '../../shared/models/session.model';
 import { AdminService } from '../admin.service';
 

@@ -134,6 +134,7 @@
             padding: 25px 20px 0 20px;
 
             .selected-teachers {
+                padding-bottom:10px;
                 border-bottom: 1px solid #eeeeee;
 
                 .teacher-info {
@@ -148,6 +149,9 @@
 
                     .details {
                         margin-left: 15px;
+                        p {
+                            margin: 0px 5px;
+                        }
                     }
                 }
 

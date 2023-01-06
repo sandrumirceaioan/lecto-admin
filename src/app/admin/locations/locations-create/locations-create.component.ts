@@ -76,8 +76,9 @@ export class LocationsCreateComponent implements OnInit, OnDestroy {
       H1: 'Heading 1',
       H2: 'Heading 2'
     },
-    toolbarButtons: ['paragraphFormat', 'fontSize', 'fontFamily', 'textColor', 'backgroundColor', 'bold', 'italic', 'underline', 'undo', 'redo', 'align', 'indent', 'outdent', 'formatUL', 'lineHeight', 'insertLink', 'insertImage', 'html', 'fullscreen'],
-    pluginsEnabled: ['paragraphFormat', 'fontSize', 'fontFamily', 'align', 'codeBeautifier', 'codeView', 'draggable', 'image', 'imageManager', 'inlineClass', 'lineBreaker', 'lineHeight', 'link', 'colors', 'fullscreen'],
+    listAdvancedTypes: true,
+    toolbarButtons: ['paragraphFormat', 'fontSize', 'fontFamily', 'textColor', 'backgroundColor', 'bold', 'italic', 'underline', 'undo', 'redo', 'formatOL', 'formatUL', 'align', 'indent', 'outdent', 'lineHeight', 'insertLink', 'insertImage', 'html', 'fullscreen'],
+    pluginsEnabled: ['paragraphFormat', 'fontSize', 'fontFamily', 'align', 'codeBeautifier', 'codeView', 'draggable', 'image', 'imageManager', 'inlineClass', 'lineBreaker', 'lineHeight', 'link', 'colors', 'fullscreen', 'lists', 'formatOL', 'formatUL'],
     attribution: false
   };
 
@@ -192,6 +193,7 @@ export class LocationsCreateComponent implements OnInit, OnDestroy {
     this.locationsForm.setControl('galerie', this.fb.array([], [Validators.required]));
     this.locationsForm.setControl('galerie', this.fb.array(this.selectedFiles.map(item => this.createImage(item)), [Validators.required]));
     this.locationsForm.updateValueAndValidity();
+    console.log(this.locationsForm.value);
   }
 
   // set selected files to preview and form

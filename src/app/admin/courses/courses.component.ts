@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from 'src/app/shared/modules/material.module';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -20,7 +20,7 @@ import { AdminService } from '../admin.service';
     CommonModule,
     MaterialModule,
     FormsModule,
-    RouterModule
+    RouterLink
   ],
   templateUrl: './courses.component.html',
   styleUrls: ['./courses.component.scss']
@@ -101,9 +101,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
       name: element.locatie
     },
     height: 'auto',
-    maxHeight: '90vh',
     width: 'auto',
-    maxWidth: '90%',
     autoFocus: false
   });
 }

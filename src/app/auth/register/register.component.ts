@@ -19,8 +19,8 @@ import { MaterialModule } from 'src/app/shared/modules/material.module';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-  showPasswordText: boolean = true;
-  showRPasswordText: boolean = true;
+  showPasswordText: boolean = false;
+  showRPasswordText: boolean = false;
 
   registerForm = new FormGroup<RegisterForm>({
     firstName: new FormControl(null, [Validators.required]),

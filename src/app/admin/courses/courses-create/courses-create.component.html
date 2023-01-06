@@ -1,10 +1,10 @@
-<div class="content" flexLayout="column">
+<div class="content">
 
-    <form [formGroup]="courseForm" fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="25px">
-        <mat-card fxFlex="50" fxFlex.lt-sm="100" fxFill="false">
-            <section fxLayout="column">
+    <form [formGroup]="courseForm" class="fx-row fx-lt-md-column fx-gap-25">
+        <mat-card class="fx-column fx-50 fx-lt-sm-100 p-20">
+            <section class="fx-column">
 
-                <h2 class="text-accent">Informatii Generale Curs</h2>
+                <h4 class="text-accent">Informatii Generale Curs</h4>
                 <mat-divider class="mb-20"></mat-divider>
 
                 <!-- titlu curs -->
@@ -23,15 +23,14 @@
                 </mat-form-field>
 
                 <!-- certificare curs -->
-                <div formGroupName="certificare" fxFlex fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px"
-                    class="mb-15">
-                    <div class="checkbox-container" fxLayoutAlign="center center" fxFlex>
+                <div formGroupName="certificare" class="fx-row fx-lt-md-column fx-gap-20 mb-15">
+                    <div class="lecto-checkbox-container fx-flex fx-column fx-layout-center-center">
                         <mat-checkbox formControlName="anc">Certificat
                             ANC
                         </mat-checkbox>
                     </div>
 
-                    <div class="checkbox-container" fxLayoutAlign="center center" fxFlex>
+                    <div class="lecto-checkbox-container fx-flex fx-column fx-layout-center-center">
                         <mat-checkbox formControlName="participare">
                             Certificat Participare
                         </mat-checkbox>
@@ -39,15 +38,14 @@
                 </div>
 
                 <!-- pret curs -->
-                <div formGroupName="pret" fxFlex fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px"
-                    class="mb-15">
-                    <mat-form-field appearance="fill" class="mb-5" fxFlex>
+                <div formGroupName="pret" class="fx-row fx-lt-md-column fx-gap-20 mb-15">
+                    <mat-form-field appearance="fill" class="fx-flex mb-5">
                         <mat-label>Pret Certificat ANC</mat-label>
                         <input type="number" matInput formControlName="anc" />
                         <mat-error *ngIf="courseForm.get('pret.anc').hasError('required')">Pret necesar
                         </mat-error>
                     </mat-form-field>
-                    <mat-form-field appearance="fill" class="mb-5" fxFlex>
+                    <mat-form-field appearance="fill" class="fx-flex mb-5">
                         <mat-label>Pret Certificat Participare</mat-label>
                         <input type="number" matInput formControlName="participare" />
                         <mat-error *ngIf="courseForm.get('pret.participare').hasError('required')">Pret necesar
@@ -66,37 +64,35 @@
                     </mat-error>
                 </mat-form-field>
 
-                <h2 class="text-accent">Imagine Curs</h2>
+                <h4 class="text-accent">Imagine Curs</h4>
                 <mat-divider class="mb-20"></mat-divider>
 
                 <!-- imagine curs -->
-                <div class="files-upload mb-20" fxLayout="column">
+                <div class="files-upload fx-column mb-20">
                     <label for="dzone" appDnd (fileDropped)="onDroppedFiles($event)">
-                        <div class="files-selector" fxFlex fxLayoutAlign="center center">
+                        <div class="files-selector fx-row fx-layout-center-center">
                             <input id="dzone" class="input-selector" type="file" class="file-input"
-                                (change)="onFileSelected($event)" #fileUpload style="display: none;"
-                                onclick="value = null">
-                            <button mat-raised-button color="accent" (click)="fileUpload.click();" type="button">
+                                   (change)="onFileSelected($event)" #fileUpload style="display: none;"
+                                   onclick="value = null">
+                            <button mat-raised-button color="primary" (click)="fileUpload.click();" type="button">
                                 <mat-icon>cloud_upload</mat-icon>
                                 &nbsp;&nbsp;Adauga imagine
                             </button>
                         </div>
                     </label>
-                    <div class="files-preview" fxFlex>
-                        <span *ngIf="!selectedFiles.length" class="text-gray">Nu ai selectat nici o
-                            imagine...</span>
+                    <div class="files-preview">
+                        <small *ngIf="!selectedFiles.length" class="text-gray">Nu ai selectat nici o
+                            imagine...</small>
 
-                        <ul fxLayout="column">
-                            <li *ngFor="let selected of selectedFiles; let i = index" fxLayout="row">
+                        <ul class="fx-column">
+                            <li *ngFor="let selected of selectedFiles; let i = index" class="fx-row">
                                 <div class="preview">
                                     <img [src]="selected.preview" [alt]="selected.name" (click)="openDialog(selected)">
                                 </div>
-                                <div class="details" fxFlex>
-                                    <span class="file-name">{{selected.name}}</span><br />
-                                    <span class="file-size"><small>{{formatBytes(selected.file.size)}}</small></span>
-
+                                <div class="details fx-flex fx-row fx-layout-start-center">
+                                    <button mat-flat-button (click)="openDialog(selected)"><span class="file-name text-dark">{{selected.name}}</span></button>
                                 </div>
-                                <div class="actions" fxFlex fxLayoutAlign="end center">
+                                <div class="actions fx-flex fx-row fx-layout-end-center">
                                     <button mat-icon-button color="default" (click)="onFileRemoved()">
                                         <mat-icon>close</mat-icon>
                                     </button>
@@ -110,10 +106,10 @@
             </section>
         </mat-card>
 
-        <mat-card fxFlex="50" fxFlex.lt-sm="100" fxFill="false">
-            <section fxLayout="column">
-                <h2 class="text-accent">Descriere Curs <small *ngIf="courseForm.get('titlu').value"
-                        class="text-gray">({{courseForm.get('titlu').value}})</small></h2>
+        <mat-card class="fx-50 fx-lt-md-100 p-20">
+            <section class="fx-column">
+                <h4 class="text-accent">Descriere Curs <small *ngIf="courseForm.get('titlu').value"
+                        class="text-gray">({{courseForm.get('titlu').value}})</small></h4>
                 <mat-divider class="mb-20"></mat-divider>
 
                 <!-- location content -->
@@ -124,12 +120,13 @@
                 </mat-error>
             </section>
 
-            <section fxLayout="row" fxLayoutAlign="end center" fxLayoutAlign.lt-sm="center center">
-                <button mat-flat-button color="accent" [disabled]="!courseForm.valid || (loading$ | async)"
-                    class="save-button create-contract-btn p-10" (click)="createCourse()" fxLayout="row"
-                    fxLayoutAlign="center center" fxFill>
+            <section class="fx-row fx-layout-center-center">
+                <button mat-flat-button color="primary" [disabled]="!courseForm.valid || (loading$ | async)"
+                        class="save-button fx-fill p-10" (click)="createCourse()">
                     <mat-spinner *ngIf="loading$ | async" class="text-white" diameter="20"></mat-spinner>
-                    <span *ngIf="!(loading$ | async)">Salveaza</span>
+                    <span *ngIf="!(loading$ | async)">
+                        Salveaza
+                    </span>
                 </button>
             </section>
         </mat-card>

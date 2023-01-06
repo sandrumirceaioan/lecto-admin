@@ -54,15 +54,15 @@
                             <input id="dzone" class="input-selector" type="file" class="file-input"
                                    (change)="onFileSelected($event)" #fileUpload style="display: none;"
                                    onclick="value = null">
-                            <button mat-raised-button color="accent" (click)="fileUpload.click();" type="button">
+                            <button mat-raised-button color="primary" (click)="fileUpload.click();" type="button">
                                 <mat-icon>cloud_upload</mat-icon>
                                 &nbsp;&nbsp;Adauga imagine
                             </button>
                         </div>
                     </label>
                     <div class="files-preview">
-                        <span *ngIf="!selectedFiles.length" class="text-gray">Nu ai selectat nici o
-                            imagine...</span>
+                        <small *ngIf="!selectedFiles.length" class="text-gray">Nu ai selectat nici o
+                            imagine...</small>
 
                         <ul class="fx-column">
                             <li *ngFor="let selected of selectedFiles; let i = index" class="fx-row">
@@ -86,7 +86,7 @@
             </section>
 
             <section class="fx-row fx-layout-center-center">
-                <button mat-flat-button color="accent" [disabled]="!teacherForm.valid || (loading$ | async)"
+                <button mat-flat-button color="primary" [disabled]="!teacherForm.valid || (loading$ | async)"
                         class="save-button fx-fill p-10" (click)="createTeacher()">
                     <mat-spinner *ngIf="loading$ | async" class="text-white" diameter="20"></mat-spinner>
                     <span *ngIf="!(loading$ | async)">

@@ -1,5 +1,5 @@
 <div class="content">
-    <div class="table-header" fxLayout="row" fxLayoutAlign="space-between center">
+    <div class="table-header fx-row fx-layout-between-center">
       <div class="search-bar">
         <mat-form-field>
           <mat-label>Cauta</mat-label>
@@ -9,7 +9,7 @@
           </button>
         </mat-form-field>
       </div>
-      <div class="actions" fxLayoutAlign="end center">
+      <div class="actions fx-row fx-layout-end-center fx-gap-15">
         <button class="mb-10" mat-flat-button color="primary" [routerLink]="'/admin/pagini/adauga'">
           <mat-icon class="mr-10">add</mat-icon>
           Adauga pagina
@@ -39,7 +39,7 @@
         <ng-container matColumnDef="titlu">
           <th mat-header-cell class="dc-label" *matHeaderCellDef mat-sort-header>Titlu</th>
           <td mat-cell class="dc-content" *matCellDef="let element">
-            <a mat-button [routerLink]="'/admin/pagini/' + element._id">
+            <a mat-button [routerLink]="'/admin/pagini/' + element._id" class="fx-row fx-layout-start-center">
             {{element.titlu}}
             </a>
           </td>
@@ -71,7 +71,7 @@
           <th mat-header-cell class="dc-actions" *matHeaderCellDef>Actiuni</th>
           <td mat-cell class="dc-content" *matCellDef="let element">
             <button mat-icon-button [routerLink]="'/admin/pagini/' + element._id">
-              <mat-icon color="accent">edit</mat-icon>
+              <mat-icon color="primary">edit</mat-icon>
             </button>
           </td>
         </ng-container>

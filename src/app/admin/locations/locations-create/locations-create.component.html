@@ -6,6 +6,17 @@
                 <h4 class="text-accent">Informatii Generale Locatie</h4>
                 <mat-divider class="mb-20"></mat-divider>
 
+                <!-- location resort -->
+                <mat-form-field appearance="fill">
+                    <mat-label>Statiune</mat-label>
+                    <input type="text" matInput formControlName="resort" [matAutocomplete]="autoGroup">
+                    <mat-autocomplete #autoGroup="matAutocomplete" [displayWith]="getResortLabel.bind(this)">
+                        <mat-option *ngFor="let item of filteredResorts | async" [value]="item">
+                            {{ item.resort }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+
                 <!-- location name -->
                 <mat-form-field appearance="fill" class="mt-5 mb-5">
                     <mat-label>Nume locatie</mat-label>
@@ -19,21 +30,6 @@
                     <mat-label>URL locatie</mat-label>
                     <input matInput formControlName="url" placeholder="ex. hotel-aro-palace">
                     <mat-error *ngIf="locationsForm.get('url').hasError('required')">URL-ul locatiei este necesar
-                    </mat-error>
-                </mat-form-field>
-
-                <!-- location city -->
-                <mat-form-field appearance="fill">
-                    <mat-label>Localitate</mat-label>
-                    <input type="text" matInput formControlName="localitate" [matAutocomplete]="autoGroup">
-                    <mat-autocomplete #autoGroup="matAutocomplete" (optionSelected)="onSelectedLocation($event)">
-                        <mat-optgroup *ngFor="let group of romania | async" [label]="group.nume">
-                            <mat-option *ngFor="let item of group.localitati" [value]="item.nume">
-                                {{item.nume ? item.nume : item.simplu || 'N/A' }}
-                            </mat-option>
-                        </mat-optgroup>
-                    </mat-autocomplete>
-                    <mat-error *ngIf="locationsForm.get('oras').hasError('required')">Orasul locatiei este necesar
                     </mat-error>
                 </mat-form-field>
 

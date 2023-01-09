@@ -1,0 +1,116 @@
+<div class="content">
+
+    <form [formGroup]="resortsForm" class="fx-row fx-lt-md-column fx-gap-25">
+        <mat-card class="fx-column fx-50 fx-lt-sm-100 p-20">
+            <section class="fx-column fx-flex">
+                <h4 class="text-accent">Informatii Generale Statiune</h4>
+                <mat-divider class="mb-20"></mat-divider>
+
+                <!-- resort name -->
+                <mat-form-field appearance="fill" class="mt-5 mb-5">
+                    <mat-label>Nume statiune</mat-label>
+                    <input matInput formControlName="resort" placeholder="ex. Poiana Brasov" (change)="convertToUrl(resortsForm.get('resort').value)">
+                    <mat-error *ngIf="resortsForm.get('resort').hasError('required')">Numele statiunii este necesar
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- resort url -->
+                <mat-form-field appearance="fill" class="mt-10 mb-5">
+                    <mat-label>URL statiune</mat-label>
+                    <input matInput formControlName="url" placeholder="ex. hotel-aro-palace">
+                    <mat-error *ngIf="resortsForm.get('url').hasError('required')">URL-ul statiunii este necesar
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- resort city -->
+                <mat-form-field appearance="fill">
+                    <mat-label>Localitate</mat-label>
+                    <input type="text" matInput formControlName="localitate" [matAutocomplete]="autoGroup">
+                    <mat-autocomplete #autoGroup="matAutocomplete" (optionSelected)="onSelectedResort($event)">
+                        <mat-optgroup *ngFor="let group of romania | async" [label]="group.nume">
+                            <mat-option *ngFor="let item of group.localitati" [value]="item.nume">
+                                {{item.nume ? item.nume : item.simplu || 'N/A' }}
+                            </mat-option>
+                        </mat-optgroup>
+                    </mat-autocomplete>
+                    <mat-error *ngIf="resortsForm.get('oras').hasError('required')">Localitatea este necesara
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- resort status -->
+                <mat-form-field appearance="fill" class="mb-5">
+                    <mat-label>Status</mat-label>
+                    <mat-select formControlName="status">
+                        <mat-option [value]="true">Activ</mat-option>
+                        <mat-option [value]="false">Inactiv</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="resortsForm.get('status').hasError('required')">Statusul statiunii este necesar
+                    </mat-error>
+                </mat-form-field>
+
+                <h4 class="text-accent">Imagine Principala Statiune</h4>
+                <mat-divider class="mb-20"></mat-divider>
+
+                <!-- imagine pagina -->
+                <div class="files-upload fx-column mb-20">
+                    <label for="dzone" appDnd (fileDropped)="onDroppedFiles($event)">
+                        <div class="files-selector fx-row fx-layout-center-center">
+                            <input id="dzone" class="input-selector" type="file" class="file-input"
+                                   (change)="onFileSelected($event)" #fileUpload style="display: none;"
+                                   onclick="value = null">
+                            <button mat-raised-button color="primary" (click)="fileUpload.click();" type="button">
+                                <mat-icon>cloud_upload</mat-icon>
+                                &nbsp;&nbsp;Adauga imagine
+                            </button>
+                        </div>
+                    </label>
+                    <div class="files-preview">
+                        <small *ngIf="!selectedFiles.length" class="text-gray">Nu ai selectat nici o
+                            imagine...</small>
+
+                        <ul class="fx-column">
+                            <li *ngFor="let selected of selectedFiles; let i = index" class="fx-row">
+                                <div class="preview">
+                                    <img [src]="selected.preview" [alt]="selected.name" (click)="openDialog(selected)">
+                                </div>
+                                <div class="details fx-flex fx-row fx-layout-start-center">
+                                    <button mat-flat-button (click)="openDialog(selected)"><span class="file-name text-dark">{{selected.name}}</span></button>
+                                </div>
+                                <div class="actions fx-flex fx-row fx-layout-end-center">
+                                    <button mat-icon-button color="default" (click)="onFileRemoved()">
+                                        <mat-icon>close</mat-icon>
+                                    </button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </mat-card>
+
+        <mat-card class="fx-50 fx-lt-md-100 p-20">
+            <section class="fx-column fx-flex">
+                <h4 class="text-accent">Descriere Statiune <small *ngIf="resortsForm.get('resort').value"
+                           class="text-gray">({{resortsForm.get('resort').value}})</small></h4>
+                <mat-divider class="mb-20"></mat-divider>
+
+                <!-- resort content -->
+                <textarea [froalaEditor]="froalaOptions" formControlName="descriere"></textarea>
+                <mat-error
+                           *ngIf="resortsForm.get('resort').touched && resortsForm.get('descriere').hasError('required')">
+                    <small>Descrierea statiunii este necesara</small>
+                </mat-error>
+            </section>
+
+            <section class="fx-row fx-layout-center-center">
+                <button mat-flat-button color="primary" [disabled]="!resortsForm.valid || (loading$ | async)"
+                        class="save-button fx-fill p-10" (click)="createResort()">
+                    <mat-spinner *ngIf="loading$ | async" class="text-white" diameter="20"></mat-spinner>
+                    <span *ngIf="!(loading$ | async)">
+                        Salveaza
+                    </span>
+                </button>
+            </section>
+        </mat-card>
+    </form>
+</div>

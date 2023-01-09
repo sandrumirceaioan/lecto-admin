@@ -2,11 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from 'src/app/shared/modules/material.module';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, filter, finalize, Observable, Subscription, switchMap, tap } from 'rxjs';
-import { Location, LocationGroup } from '../../../shared/models/location.model';
+import { debounceTime, filter, map, Observable, startWith, Subscription, switchMap } from 'rxjs';
+import { Location } from '../../../shared/models/location.model';
 import { LocationsService } from '../locations.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { DndDirective } from '../../../shared/directives/dnd.directive';
 import { EditorModule } from '../../../shared/modules/editor.module';
 import { environment } from '../../../../environments/environment';
@@ -14,6 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ImageDialogComponent } from '../../../shared/components/dialogs/image-dialog/image-dialog.component';
 import { AdminService } from '../../admin.service';
 import { AuthService } from '../../../shared/services/auth.service';
+import { Resort } from '../../../shared/models/resort.model';
 
 @Component({
   selector: 'app-locations-create',
@@ -35,7 +36,6 @@ export class LocationsCreateComponent implements OnInit, OnDestroy {
   saveLocationSubscription: Subscription = new Subscription();
   locationsForm: FormGroup;
   location: Location;
-  romania: Observable<LocationGroup[]>;
   mode: 'create' | 'edit';
 
   minLengthTerm = 1;
@@ -82,6 +82,8 @@ export class LocationsCreateComponent implements OnInit, OnDestroy {
     attribution: false
   };
 
+  resorts: Resort[];
+  filteredResorts: Observable<Resort[]>;
   loading$: Observable<boolean>;
 
   constructor(
@@ -97,18 +99,19 @@ export class LocationsCreateComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loading$ = this.adminService.loading$;
     this.location = this.route.snapshot.data['data'] ? this.route.snapshot.data['data'].location : null;
+    this.resorts = this.route.snapshot.data['data'] ? this.route.snapshot.data['data'].resorts : null;
     this.mode = !this.location ? 'create' : 'edit';
 
     // form initialization
     this.locationsForm = this.fb.group({
+      resort: new FormControl(this.location && this.location.resort ? this.location.resort : null, [Validators.required]),
+
       locatie: new FormControl(this.location && this.location.locatie ? this.location.locatie : null, [Validators.required]),
       url: new FormControl(this.location && this.location.url ? this.location.url : null, [Validators.required]),
       descriere: new FormControl(this.location && this.location.descriere ? this.location.descriere : null, [Validators.required]),
       galerie: this.fb.array(this.location && this.location.galerie && this.location.galerie.length ? this.location.galerie.map(item => this.createImage(item)) : [], [Validators.required]),
-      localitate: new FormControl(this.location && this.location.oras ? this.location.oras : null, [Validators.required]),
-      oras: new FormControl(this.location && this.location.oras ? this.location.oras : null, [Validators.required]),
-      judet: new FormControl(this.location && this.location.judet ? this.location.judet : null, [Validators.required]),
       status: new FormControl(this.location && this.location.status ? this.location.status : (this.location && this.location.status === false ? false : null), [Validators.required]),
+
     });
 
     if (this.mode === 'edit') {
@@ -123,31 +126,32 @@ export class LocationsCreateComponent implements OnInit, OnDestroy {
       })
     }
 
-    // autocomplete filtering
-    this.romania = this.locationsForm.get('localitate').valueChanges
-      .pipe(
-        filter(res => {
-          return res !== null && res.length
-        }),
-        distinctUntilChanged(),
-        debounceTime(250),
-        tap(() => {
-          this.isLoading = true;
-        }),
-        switchMap(value => this.locationsService.getRomanianLocations(value)
-          .pipe(
-            finalize(() => {
-              this.isLoading = false
-            }),
-          )
-        )
-      );
+    this.filteredResorts = this.locationsForm.get('resort').valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value || '')),
+    );
+  }
 
+  private _filter(value: string | Resort): Resort[] {
+    const filterValue = typeof value === 'string' ? value.toLowerCase() : value.resort.toLowerCase();
+    return this.resorts.filter(resort => resort.resort.toLowerCase().includes(filterValue));
+  }
+
+  onSelectedResort(event: MatAutocompleteSelectedEvent) {
+    let value = event.option.value ? event.option.value : null;
+    if (!value) return false;
+
+    this.locationsForm.get('resort').setValue(value.resort);
+    this.locationsForm.updateValueAndValidity();
+  }
+
+  getResortLabel(selected) {
+    return selected && selected.resort ? selected.resort : null;
   }
 
   // view image
   openDialog(selected: any): void {
-      this.dialog.open(ImageDialogComponent, {
+    this.dialog.open(ImageDialogComponent, {
       data: {
         url: selected.view,
         name: selected.name
@@ -193,7 +197,6 @@ export class LocationsCreateComponent implements OnInit, OnDestroy {
     this.locationsForm.setControl('galerie', this.fb.array([], [Validators.required]));
     this.locationsForm.setControl('galerie', this.fb.array(this.selectedFiles.map(item => this.createImage(item)), [Validators.required]));
     this.locationsForm.updateValueAndValidity();
-    console.log(this.locationsForm.value);
   }
 
   // set selected files to preview and form
@@ -216,7 +219,6 @@ export class LocationsCreateComponent implements OnInit, OnDestroy {
   }
 
   // GALLERY FORM ARRAY
-
   createImage(image) {
     return this.fb.group({
       name: image.name,
@@ -255,26 +257,8 @@ export class LocationsCreateComponent implements OnInit, OnDestroy {
     galerieArray.removeAt(index);
   }
 
-
-  // LOCATION
-
-  onSelectedLocation(event: MatAutocompleteSelectedEvent) {
-    let value = event.option.value ? event.option.value : null;
-    let label = event.option.group.label ? event.option.group.label : null;
-    this.locationsForm.get('oras').setValue(value);
-    this.locationsForm.get('judet').setValue(label);
-    this.locationsForm.updateValueAndValidity();
-  }
-
-  convertToUrl(value) {
-    let url = value.toLowerCase()
-    .replace(/ /g, '-')
-    .replace(/[^\w-]+/g, '');
-    this.locationsForm.get('url').setValue(url);
-    this.locationsForm.updateValueAndValidity({emitEvent: true});
-  }
-
   createLocation() {
+    console.log(this.locationsForm.value);
     let method = this.mode === 'create' ? 'createLocation' : 'updateLocationById';
     let params = this.mode === 'create' ? [this.locationsForm.value] : [this.location._id, this.locationsForm.value];
 
@@ -290,6 +274,14 @@ export class LocationsCreateComponent implements OnInit, OnDestroy {
 
 
   // HELPERS
+  convertToUrl(value) {
+    let url = value.toLowerCase()
+      .replace(/ /g, '-')
+      .replace(/[^\w-]+/g, '');
+    this.locationsForm.get('url').setValue(url);
+    this.locationsForm.updateValueAndValidity({ emitEvent: true });
+  }
+
   preview(file) {
     return new Promise((resolve) => {
       let reader = new FileReader();

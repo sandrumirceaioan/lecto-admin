@@ -8,15 +8,17 @@ import { catchError, map, Observable, throwError, Subject } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AdminService } from '../admin.service';
 import { Location } from '../../shared/models/location.model';
+import { Resort } from 'src/app/shared/models/resort.model';
 
 @Injectable({
     providedIn: 'root',
 })
-export class LocationsService {
+export class ResortsService {
     apiPath: string = environment.BACKEND_URL;
     appPath: string = environment.BACKEND_APP;
-    locations: Location[];
-    locationsSubject: Subject<{ locations: Location[], total: number }> = new Subject();
+    resorts: Location[];
+    resortsSubject: Subject<{ resorts: Resort[], total: number }> = new Subject();
+
 
     constructor(
         private http: HttpClient,
@@ -24,7 +26,7 @@ export class LocationsService {
         private adminService: AdminService
     ) { }
 
-    getLocations(payload?: any): Observable<Location[]> {
+    getResorts(payload?: any): Observable<Resort[]> {
         this.adminService.setLoading(true);
         let params = new HttpParams();
 
@@ -35,11 +37,11 @@ export class LocationsService {
         if (payload.filter) params = params.append('search', payload.filter.toString());
 
 
-        return this.http.get(`${this.apiPath}/locations/paginated`, { params }).pipe(
+        return this.http.get(`${this.apiPath}/resorts/paginated`, { params }).pipe(
             map((result: any) => {
                 this.adminService.setLoading(false);
-                this.locationsSubject.next(result);
-                return result.locations;
+                this.resortsSubject.next(result);
+                return result.resorts;
             }),
             catchError((error) => {
                 this.adminService.setLoading(false);
@@ -49,10 +51,11 @@ export class LocationsService {
         );
     }
 
-    getAllLocations(): Observable<Location[]> {
-        return this.http.get(`${this.apiPath}/locations`).pipe(
+
+    getAllResorts(): Observable<Resort[]> {
+        return this.http.get(`${this.apiPath}/resorts`).pipe(
             map((result: any) => {
-                this.locations = result;
+                this.resorts = result;
                 return result;
             }),
             catchError((error) => {
@@ -62,28 +65,24 @@ export class LocationsService {
         );
     }
 
-    createLocation(location): Observable<Location> {
+
+    createResort(resort): Observable<Resort> {
         this.adminService.setLoading(true);
         let formData = new FormData();
 
-        if (location.resort) formData.append("resort", location.resort._id);
-        if (location.locatie) formData.append("locatie", location.locatie);
-        if (location.url) formData.append("url", location.url);
-        if (location.descriere) formData.append("descriere", location.descriere);
-        formData.append("status", JSON.stringify(location.status));
+        if (resort.resort) formData.append("resort", resort.resort);
+        if (resort.url) formData.append("url", resort.url);
+        if (resort.descriere) formData.append("descriere", resort.descriere);
+        if (resort.oras) formData.append("oras", resort.oras);
+        if (resort.judet) formData.append("judet", resort.judet);
+        formData.append("status", JSON.stringify(resort.status));
 
-        if (location.galerie && location.galerie.length) {
-            formData.append("galerie", JSON.stringify(location.galerie));
+        if (resort.imagine && resort.imagine.file) formData.append("file", resort.imagine.file);
 
-            location.galerie.forEach(item => {
-                formData.append("images[]", item.file);
-            });
-        }
-
-        return this.http.post(`${this.apiPath}/locations/create`, formData).pipe(
+        return this.http.post(`${this.apiPath}/resorts/create`, formData).pipe(
             map((result: any) => {
                 this.adminService.setLoading(false);
-                this.alertService.success('Locatie salvata');
+                this.alertService.success('Statiune salvata');
                 return result;
             }),
             catchError((error) => {
@@ -94,8 +93,9 @@ export class LocationsService {
         );
     }
 
-    getLocationById(id): Observable<Location> {
-        return this.http.get(`${this.apiPath}/locations/one/${id}`).pipe(
+
+    getResortById(id): Observable<Resort> {
+        return this.http.get(`${this.apiPath}/resorts/one/${id}`).pipe(
             map((result: any) => {
                 return result;
             }),
@@ -106,13 +106,11 @@ export class LocationsService {
         );
     }
 
-
-    // search locations - used in sessions
-    searchLocations(filter): Observable<Location[]> {
+    getRomanianLocations(filter): Observable<any> {
         let params = new HttpParams();
         if (filter) params = params.append('search', filter.toString());
 
-        return this.http.get(`${this.apiPath}/locations/search`, { params }).pipe(
+        return this.http.get(`${this.apiPath}/resorts/filter`, { params }).pipe(
             map((result: any) => {
                 return result;
             }),
@@ -123,30 +121,44 @@ export class LocationsService {
         );
     }
 
+    // search resorts - used in locations
+    searchResorts(filter): Observable<Resort[]> {
+        let params = new HttpParams();
+        if (filter) params = params.append('search', filter.toString());
+        return this.http.get(`${this.apiPath}/resorts/search`, { params }).pipe(
+            map((result: any) => {
+                return result;
+            }),
+            catchError((error) => {
+                this.alertService.danger(error.error.message);
+                return throwError(() => error.error);
+            })
+        );
+    }
 
-    updateLocationById(id, location): Observable<Location> {
+    updateResortById(id, resort): Observable<Location> {
         this.adminService.setLoading(true);
         let formData = new FormData();
 
-        if (location.resort) formData.append("resort", location.resort._id);
-        if (location.locatie) formData.append("locatie", location.locatie);
-        if (location.url) formData.append("url", location.url);
-        if (location.descriere) formData.append("descriere", location.descriere);
-        formData.append("status", JSON.stringify(location.status));
+        if (resort.resort) formData.append("resort", resort.resort);
+        if (resort.url) formData.append("url", resort.url);
+        if (resort.descriere) formData.append("descriere", resort.descriere);
+        if (resort.oras) formData.append("oras", resort.oras);
+        if (resort.judet) formData.append("judet", resort.judet);
+        formData.append("status", JSON.stringify(resort.status));
 
-        if (location.galerie && location.galerie.length) {
-            formData.append("galerie", JSON.stringify(location.galerie));
+        if (resort.imagine) {
+            formData.append("imagine", JSON.stringify(resort.imagine));
 
-
-            location.galerie.forEach(item => {
-                if (item.file && !item.small && !item.original) formData.append("images[]", item.file);
-            });
+            if (resort.imagine.file && !resort.imagine.small && !resort.imagine.original) {
+                formData.append("file", resort.imagine.file);
+            }
         }
 
-        return this.http.post(`${this.apiPath}/locations/update/${id}`, formData).pipe(
+        return this.http.post(`${this.apiPath}/resorts/update/${id}`, formData).pipe(
             map((result: any) => {
                 this.adminService.setLoading(false);
-                this.alertService.success('Locatie salvata');
+                this.alertService.success('Statiune salvata');
                 return result;
             }),
             catchError((error) => {

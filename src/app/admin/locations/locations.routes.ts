@@ -1,5 +1,6 @@
 import { Routes } from "@angular/router";
 import { RoleGuard } from "src/app/shared/guards/role.guard";
+import { ResortsResolve } from "../resorts/resorts.resolve";
 import { LocationResolve } from "./location.resolve";
 
 export const LocationsRoutes: Routes = [
@@ -15,6 +16,9 @@ export const LocationsRoutes: Routes = [
         canActivate: [RoleGuard],
         loadComponent: () => import('./locations-create/locations-create.component').then((x) => x.LocationsCreateComponent),
         title: 'Lectoform - Adauga Locatie',
+        resolve: {
+            data: ResortsResolve
+        },
     },
     {
         path: ':id',

@@ -1,12 +1,11 @@
 <div class="content">
+
+  <!-- locations -->
   <div class="table-header fx-row fx-layout-between-center">
     <div class="search-bar">
       <mat-form-field>
-        <mat-label>Cauta</mat-label>
-        <input matInput type="text" class="dc-search" (keyup)="filterSubject.next(filter)" [(ngModel)]="filter">
-        <button mat-button *ngIf="filter" matSuffix mat-icon-button aria-label="Clear" (click)="filterSubject.next('')">
-          <mat-icon>close</mat-icon>
-        </button>
+        <mat-label>Cauta locatie</mat-label>
+        <input matInput type="text" class="dc-search2" (keyup)="filterSubject2.next(filter2)" [(ngModel)]="filter2">
       </mat-form-field>
     </div>
     <div class="actions fx-row fx-layout-end-center fx-gap-15">
@@ -23,8 +22,8 @@
       <mat-spinner></mat-spinner>
     </div>
 
-    <table mat-table [dataSource]="dataSource" matSort matSortDisableClear="true" [matSortActive]="defaultSort.active"
-      [matSortDirection]="defaultSort.direction">
+    <table #table2 mat-table [dataSource]="dataSource2" matSort matSortDisableClear="true" [matSortActive]="defaultSort2.active"
+      [matSortDirection]="defaultSort2.direction">
 
       <ng-container matColumnDef="imagine">
         <th mat-header-cell class="dc-label" *matHeaderCellDef></th>
@@ -45,20 +44,20 @@
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="oras">
-        <th mat-header-cell class="dc-label" *matHeaderCellDef mat-sort-header>Oras</th>
+      <ng-container matColumnDef="resort">
+        <th mat-header-cell class="dc-label" *matHeaderCellDef mat-sort-header>Statiune</th>
         <td mat-cell class="dc-content" *matCellDef="let element">
-          {{element.oras}}
+          {{element.resort.resort}}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="status">
         <th mat-header-cell class="dc-label" *matHeaderCellDef mat-sort-header>Status</th>
         <td mat-cell class="dc-content" *matCellDef="let element">
-          <span *ngIf="element.status" class="text-success">Activ</span>
-          <span *ngIf="!element.status" class="text-warn">Inactiv</span>
+            <span *ngIf="element.status" class="text-success">Activ</span>
+            <span *ngIf="!element.status" class="text-warn">Inactiv</span>
         </td>
-      </ng-container>
+    </ng-container>
 
       <ng-container matColumnDef="createdAt">
         <th mat-header-cell class="dc-label" *matHeaderCellDef>Creat in</th>
@@ -85,7 +84,7 @@
 
 
       <ng-container matColumnDef="noData">
-        <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+        <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns2.length">
           <ng-container>
             <div class="no-data-container">
               No data...
@@ -95,9 +94,9 @@
       </ng-container>
 
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
       <ng-container *ngIf="locationsTotal">
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="customer-row"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns2;" class="customer-row"></tr>
       </ng-container>
 
       <ng-container *ngIf="!locationsTotal">

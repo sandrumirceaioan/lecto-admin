@@ -3,10 +3,6 @@ export interface OfertaLocatie {
   pret: number; // 4090
   status: boolean;
 }
-export interface LocationGroup {
-  nume: string;
-  localitati: { nume?: string; simplu?: string; }[];
-}
 
 export interface GalleryImage {
   name: string;
@@ -16,11 +12,6 @@ export interface GalleryImage {
   main?: boolean;
 }
 
-export interface LocationGroup {
-  nume: string;
-  localitati: { nume?: string; simplu?: string; }[];
-}
-
 export interface Location {
   _id?: string;
   locatie: string;
@@ -28,8 +19,7 @@ export interface Location {
   imagine?: string;
   galerie?: GalleryImage[];
   descriere: string;
-  oras: string;
-  judet: string;
+  resort: any;
   status: boolean;
   createdBy?: any;
   createdAt?: Date;

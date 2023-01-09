@@ -2,28 +2,25 @@ import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { forkJoin, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { ResortsService } from '../resorts/resorts.service';
-import { LocationsService } from './locations.service';
+import { ResortsService } from './resorts.service';
 
 @Injectable()
-export class LocationResolve implements Resolve<any> {
+export class ResortResolve implements Resolve<any> {
     constructor(
-        private locationsService: LocationsService,
-        private resortsService: ResortsService
+        private resortsService: ResortsService,
     ) { }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        const locationId = route.params['id'];
+        const resortId = route.params['id'];
 
         return forkJoin({
-            location: this.locationsService.getLocationById(locationId),
-            resorts: this.resortsService.getAllResorts()
+            resort: this.resortsService.getResortById(resortId),
         }).pipe(
             map((result: any) => {
                 return result;
             }),
             catchError((error) => {
-                console.error('LOCATION RESOLVE ERROR: ', error);
+                console.error('RESORT RESOLVE ERROR: ', error);
                 return throwError(() => error.error);
             })
         );

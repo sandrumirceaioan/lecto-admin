@@ -12,6 +12,7 @@ export class AdminService {
     private sideMenuItems: SideMenuItem[] = [
         { path: 'utilizatori', title: 'Utilizatori', icon: 'people', allow: [UserRoles.admin, UserRoles.user] },
         { path: 'profesori', title: 'Profesori', icon: 'school', allow: [UserRoles.admin, UserRoles.user] },
+        { path: 'statiuni', title: 'Statiuni', icon: 'map', allow: [UserRoles.admin, UserRoles.user] },
         { path: 'locatii', title: 'Locatii', icon: 'place', allow: [UserRoles.admin, UserRoles.user] },
         { path: 'cursuri', title: 'Cursuri', icon: 'folder_special', allow: [UserRoles.admin, UserRoles.user] },
         { path: 'sesiuni', title: 'Sesiuni', icon: 'date_range', allow: [UserRoles.admin, UserRoles.user] },
@@ -30,5 +31,4 @@ export class AdminService {
             this.loading$.next(value);
         }, 0);
     }
-
 }

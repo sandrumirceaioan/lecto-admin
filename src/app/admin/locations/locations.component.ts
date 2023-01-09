@@ -12,6 +12,7 @@ import { LocationsService } from './locations.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ImageDialogComponent } from '../../shared/components/dialogs/image-dialog/image-dialog.component';
 import { AdminService } from '../admin.service';
+import { Resort } from '../../shared/models/resort.model';
 
 @Component({
   selector: 'app-locations',
@@ -26,23 +27,23 @@ import { AdminService } from '../admin.service';
   styleUrls: ['./locations.component.scss']
 })
 export class LocationsComponent implements OnInit, OnDestroy {
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort2: MatSort;
+  @ViewChild(MatPaginator, { static: false }) paginator2: MatPaginator;
 
   loading$: Observable<boolean>;
 
-  displayedColumns: string[] = ['imagine', 'locatie', 'oras', 'status', 'createdAt', 'createdBy', 'actions'];
-  public dataSource: MatTableDataSource<Location>;
+  displayedColumns2: string[] = ['imagine', 'locatie', 'resort', 'status', 'createdAt', 'createdBy', 'actions'];
+  public dataSource2: MatTableDataSource<Location>;
   public locationsTotal: number;
-  public noData: Location[] = [<Location>{}];
-  public filterSubject = new Subject<string>();
-  public defaultSort: Sort = { active: 'locatie', direction: 'asc' };
+  public noData2: Location[] = [<Location>{}];
+  public filterSubject2 = new Subject<string>();
+  public defaultSort2: Sort = { active: 'locatie', direction: 'asc' };
 
-  filter: string = '';
+  filter2: string = '';
+
   locationsSubcription: Subscription = new Subscription();
   locationsSubjectSubcription: Subscription = new Subscription();
-  totalSubcription: Subscription = new Subscription();
-  paginatorSubscription: Subscription = new Subscription();
+  paginatorSubscription2: Subscription = new Subscription();
 
   constructor(
     private readonly locationsService: LocationsService,
@@ -53,44 +54,45 @@ export class LocationsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loading$ = this.adminService.loading$;
     this.locationsSubjectSubcription = this.locationsService.locationsSubject.subscribe(data => {
-        this.initializeData(data.locations);
+        this.initializeData2(data.locations);
         this.locationsTotal = data.total;
     });
   }
 
   public ngAfterViewInit(): void {
-    this.paginator.pageIndex = 0;
-    this.filter = '';
+    this.paginator2.pageIndex = 0;
+    this.filter2 = '';
     this.loadLocations();
 
-    let filter$ = this.filterSubject.pipe(
+    let filter2$ = this.filterSubject2.pipe(
       debounceTime(500),
       tap((value: string) => {
-        this.paginator.pageIndex = 0;
-        this.filter = value;
+        this.paginator2.pageIndex = 0;
+        this.filter2 = value;
       })
     );
 
-    let sort$ = this.sort.sortChange.pipe(tap(() => this.paginator.pageIndex = 0));
-    this.paginatorSubscription.add(merge(filter$, sort$, this.paginator.page).pipe(
+    let sort2$ = this.sort2.sortChange.pipe(tap(() => this.paginator2.pageIndex = 0));
+
+    this.paginatorSubscription2.add(merge(filter2$, sort2$, this.paginator2.page).pipe(
       tap(() => this.loadLocations())
     ).subscribe());
   }
 
   private loadLocations(): void {
     let payload = {
-      sortDirection: this.sort.direction,
-      sortField: this.sort.active,
-      pageIndex: this.paginator.pageIndex * this.paginator.pageSize,
-      pageSize: this.paginator.pageSize,
-      filter: this.filter.toLocaleLowerCase()
+      sortDirection: this.sort2.direction,
+      sortField: this.sort2.active,
+      pageIndex: this.paginator2.pageIndex * this.paginator2.pageSize,
+      pageSize: this.paginator2.pageSize,
+      filter: this.filter2.toLocaleLowerCase()
     };
 
-    this.locationsSubcription = this.locationsService.getLocations(payload).subscribe(locations => this.initializeData(locations));
+    this.locationsSubcription = this.locationsService.getLocations(payload).subscribe(locations => this.initializeData2(locations));
   }
 
-  private initializeData(locations: Location[]): void {
-    this.dataSource = new MatTableDataSource(locations.length ? locations : this.noData);
+  private initializeData2(locations: Location[]): void {
+    this.dataSource2 = new MatTableDataSource(locations.length ? locations : this.noData2);
   }
 
   // view image
@@ -111,7 +113,7 @@ export class LocationsComponent implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
     this.locationsSubcription.unsubscribe();
     this.locationsSubjectSubcription.unsubscribe();
-    this.paginatorSubscription.unsubscribe();
+    this.paginatorSubscription2.unsubscribe();
   }
 
 }

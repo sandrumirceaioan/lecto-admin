@@ -22,6 +22,10 @@ import { SessionResolve } from './app/admin/sessions/session.resolve';
 import { SessionDataResolve } from './app/admin/sessions/session-data.resolve';
 import { PageResolve } from './app/admin/pages/page.resolve';
 import { SettingsResolve } from './app/admin/settings/settings.resolve';
+import { ResortResolve } from './app/admin/resorts/resort.resolve';
+import { ResortsResolve } from './app/admin/resorts/resorts.resolve';
+
+
 
 if (environment.production) {
   enableProdMode();
@@ -36,6 +40,8 @@ bootstrapApplication(AppComponent, {
     RoleGuard,
     UserResolve,
     DiscountResolve,
+    ResortResolve,
+    ResortsResolve,
     LocationResolve,
     TeacherResolve,
     CourseResolve,

@@ -16,4 +16,6 @@ app.get('/*', (req, res) =>
     res.sendFile('index.html', {root: 'dist/lecto-admin/'}),
 );
 
+console.log(`Node Express server listening on http://localhost:${process.env.PORT}`);
 app.listen(process.env.PORT || 8080);
+

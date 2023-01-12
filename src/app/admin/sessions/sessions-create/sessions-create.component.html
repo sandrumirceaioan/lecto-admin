@@ -123,8 +123,7 @@
                                 </div>
                                 <div class="descriere">
                                     <span class="name">{{loc.get('data').value.locatie}}</span><br />
-                                    <span class="city">{{loc.get('data').value.oras}},
-                                        {{loc.get('data').value.judet}}</span>
+                                    <span class="city">{{loc.get('data').value.resort.resort}}</span>
                                 </div>
                             </div>
 
@@ -224,7 +223,7 @@
                                         </mat-select>
                                     </mat-form-field>
 
-                                    <p><small class="text-gray" *ngIf="!curs.get('teachers').value.length">* Nu ai
+                                    <p *ngIf="!curs.get('teachers').value.length"><small class="text-gray">* Nu ai
                                             adaugat
                                             nici un profesor formator</small></p>
                                     <div formArrayName="teachers" class="selected-teachers fx-row fx-layout-between-center" *ngFor="let teacher of curs.get('teachers').value; let j=index">
@@ -471,7 +470,7 @@
                                             </mat-error>
                                         </mat-form-field>
                                     </div>
-                                    <p><small class="text-gray fx-flex" *ngIf="!curs.get('options.pret.anc').value && curs.get('options.pret.participare')">* Nu ai adaugat preturi optionale - se aplica preturile cursului original
+                                    <p *ngIf="!curs.get('options.pret.anc').value && curs.get('options.pret.participare')"><small class="text-gray fx-flex">* Nu ai adaugat preturi optionale - se aplica preturile cursului original
                                         </small></p>
                                 </div>
                             </div>
